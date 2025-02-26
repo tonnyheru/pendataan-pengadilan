@@ -184,15 +184,15 @@
         <div class="content-3-5 d-flex flex-column align-items-center h-100 flex-lg-row"
             style="font-family: 'Poppins', sans-serif">
             <div class="position-relative d-none d-lg-block h-100 width-left">
-                <img class="position-absolute img-fluid centered"
-                    src="http://api.elements.buildwithangga.com/storage/files/2/assets/Empty%20State/EmptyState3/Empty-3-5.png"
+                <img style="border-radius: 10px 20px 30px 40px; margin-left: 20px; margin-right: 20px;" class="position-absolute img-fluid centered"
+                    src="{{asset('assets/image/pengadilan.jpg')}}"
                     alt="" />
             </div>
             <div class="d-flex mx-auto align-items-left justify-content-left width-right mx-lg-0">
                 <div class="right mx-lg-0 mx-auto">
-                    <div class="align-items-center justify-content-center d-lg-none d-flex">
-                        <img class="img-fluid"
-                            src="http://api.elements.buildwithangga.com/storage/files/2/assets/Empty%20State/EmptyState3/Empty-3-5.png"
+                    <div class="align-items-center justify-content-center d-flex">
+                        <img class="img-fluid" width="200" height="200"
+                            src="{{asset('assets/image/logo_pengadilan.png')}}"
                             alt="" />
                     </div>
                     <h3 class="title-text">Log In to continue</h3>

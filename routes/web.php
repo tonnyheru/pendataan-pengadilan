@@ -17,8 +17,8 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
+    return redirect()->route('login');
+})->name('home');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('anggota', [StudentsController::class, 'index'])->name('anggota.index');
@@ -27,12 +27,15 @@ Route::middleware(['auth'])->group(function () {
     Route::get('anggota/edit/{id}', [StudentsController::class, 'edit'])->name('anggota.edit');
     Route::patch('anggota/update/{id}', [StudentsController::class, 'update'])->name('anggota.update');
     Route::delete('anggota/delete/{id}', [StudentsController::class, 'destroy'])->name('anggota.destroy');
+    Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 });
 
 
 Route::middleware(['guest'])->group(function () {
     Route::get('/login', [AuthController::class, 'index'])->name('login');
     Route::post('/login', [AuthController::class, 'authenticate']);
+    Route::get('/register', [AuthController::class, 'showRegisterForm'])->name('register');
+    Route::post('/register', [AuthController::class, 'register']);
 });
 
 Route::get('/logout', [AuthController::class, 'logout'])->name('logout')->middleware('auth');
