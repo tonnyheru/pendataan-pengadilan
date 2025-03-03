@@ -43,6 +43,9 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
         Route::get('/permission/{uid}', [RoleController::class, 'permission'])->name('role.permission');
         Route::put('/permission/{uid}', [RoleController::class, 'permission_store'])->name('role.update_permission');
     });
+    Route::prefix('select2')->group(function () {
+        Route::get('/role', [RoleController::class, 'select2'])->name('select2.role');
+    });
 });
 
 // Route::get('/', function () {
