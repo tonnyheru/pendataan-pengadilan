@@ -2,38 +2,70 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\AuthCommon;
+use App\Models\RolePermission;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class AuthController extends Controller
 {
-    public function index()
+    public function login()
     {
-        return view('auth.index');
+        $auth = AuthCommon::user();
+        if (isset($auth->username)) {
+            return redirect('app/dashboard');
+        }
+        return view("auth.login");
     }
 
-    public function authenticate(Request $request)
+    public function login_process(Request $request)
     {
-        $credentials = $request->validate([
-            'email' => ['required', 'email'],
-            'password' => ['required'],
+        $request->validate([
+            'username' => 'required',
+            'password' => 'required',
         ]);
 
-        if (Auth::attempt($credentials)) {
-            $request->session()->regenerate();
+        $credential = $request->only('username', 'password');
 
-            return redirect()->intended('anggota')->with('success', 'Login berhasil.');
+        if (AuthCommon::check_credential($credential)) {
+            $user = AuthCommon::getUser();
+            $slug = [];
+            $permit = RolePermission::where('role_uid', $user->role->uid)->get();
+            foreach ($permit as $k => $v) {
+                $slug[] = $v->permissions->slug;
+            }
+            AuthCommon::setUser($user);
+            app('session')->put('slug_permit', $slug);
+            return redirect('/app/dashboard');
+            // if(in_array($user->role_id, [2,3])){
+            // } 
+
+            AuthCommon::logout();
         }
 
-        return redirect()->back()->with('error', 'Email atau password salah.');
+        // if (AuthCommon::check_credential($credential)) {
+        //     $user = AuthCommon::getUser();
+        //     AuthCommon::setUser($user);
+        //     $role = $user->role->slug;
+        //     app('session')->put('role_permit', $role);
+        //     if ($role == "client") {
+        //         return redirect('/inventory/backup-data');
+        //     } else {
+        //         return redirect('/inventory/dashboard');
+        //     }
 
+        //     AuthCommon::logout();
+        // }
+
+
+        return redirect('/login')
+            ->withInput()
+            ->withErrors(['login_failed' => 'Username atau password anda salah.']);
     }
 
-    public function logout(Request $request)
+    public function logout()
     {
-        Auth::logout();
-        $request->session()->invalidate();
-        $request->session()->regenerateToken();
+        AuthCommon::logout();
         return redirect('/login');
     }
 }
