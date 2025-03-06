@@ -272,7 +272,7 @@ class UserController extends Controller
     {
         if (!PermissionCommon::check('profile.view')) abort(403);
         $user = AuthCommon::getUser();
-        return view('pages.settings.profile.index', compact('user'));
+        return view('pages.profile.index', compact('user'));
     }
 
     public function edit_profile()
@@ -280,7 +280,7 @@ class UserController extends Controller
         if (!PermissionCommon::check('profile.view')) abort(403);
         $data = AuthCommon::getUser();
         $uid = $data->uid;
-        $body = view('pages.settings.profile.edit_profile', compact('data', 'uid'))->render();
+        $body = view('pages.profile.edit_profile', compact('data', 'uid'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="saveProfile()">Save</button>';
 
@@ -374,7 +374,7 @@ class UserController extends Controller
         if (!PermissionCommon::check('profile.view')) abort(403);
         $data = AuthCommon::getUser();
         $uid = $data->uid;
-        $body = view('pages.settings.profile.change_pass', compact('data', 'uid'))->render();
+        $body = view('pages.profile.change_pass', compact('data', 'uid'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="savePassword()">Save</button>';
 

@@ -18,7 +18,7 @@ class MutasiController extends Controller
     public function index(MutasiDataTable $dataTable)
     {
         if (!PermissionCommon::check('mutasi.list')) abort(403);
-        return $dataTable->render('pages.manajemen_data.mutasi.list');
+        return $dataTable->render('pages.administrasi.mutasi.list');
     }
 
     /**
@@ -27,7 +27,7 @@ class MutasiController extends Controller
     public function create()
     {
         if (!PermissionCommon::check('mutasi.create')) abort(403);
-        $body = view('pages.manajemen_data.mutasi.create')->render();
+        $body = view('pages.administrasi.mutasi.create')->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
 

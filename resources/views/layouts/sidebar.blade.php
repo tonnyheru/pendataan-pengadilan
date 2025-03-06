@@ -8,9 +8,8 @@
     <div class="sidenav-header d-flex align-items-center">
       <a class="navbar-brand text-center">
         <img src="{{ asset('img/logo.png') }}" 
-          style="max-height: 2rem !important;"> <br>
-        <span class="text-sm font-weight-bold ">Pengadilan Negeri</span><br>
-        <span class="text-sm font-weight-bold">Bale Bandung</span>
+          style="max-height: 2rem !important;"> 
+        <span class="text-sm font-weight-bold ">PN Bale Bandung</span>
         
       </a>
       <div class="ml-auto">
@@ -43,10 +42,12 @@
 
       $obj_menu->start_group()
       ->start_accordion()
-      ->sub_item_accordion('Manajemen Data','manajemen',["mutasi.list"],'fas fa-database')
-      ->start_item_accordion('manajemen', (
-      Request::is('app/mutasi')
+      ->sub_item_accordion('Administrasi','administrasi',["mutasi.list", "pemohon.list"],'fas fa-database')
+      ->start_item_accordion('administrasi', (
+      Request::is('app/mutasi') ||
+      Request::is('app/pemohon')
       ))
+      ->item('Pemohon', 'fas fa-clipboard-user', 'app/pemohon', Request::is('app/pemohon'), "pemohon.list")
       ->item('Mutasi Data', 'fas fa-file-exclamation', 'app/mutasi', Request::is('app/mutasi'), "mutasi.list")
       ->end_item_accordion()
       ->end_accordion()
@@ -70,6 +71,11 @@
       ->item('Manage User', 'ni ni-circle-08', 'app/user', Request::is('app/user'), "user.list")
       ->end_item_accordion()
       ->end_accordion()
+      ->end_group();
+
+      $obj_menu
+      ->start_group()
+      ->item('Profile', 'fas fa-user-cog', 'app/profile', Request::is('app/profile'), "profile.view")
       ->end_group();
 
 

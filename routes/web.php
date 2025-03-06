@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\PemohonController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentsController;
@@ -38,6 +39,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::resources(['module' => ModuleController::class]);
     Route::resources(['permission' => PermissionController::class]);
     Route::resources(['mutasi' => MutasiController::class]);
+    Route::resources(['pemohon' => PemohonController::class]);
 
     Route::prefix('role')->group(function () {
         Route::get('/permission/{uid}', [RoleController::class, 'permission'])->name('role.permission');
@@ -46,6 +48,12 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::prefix('select2')->group(function () {
         Route::get('/role', [RoleController::class, 'select2'])->name('select2.role');
     });
+
+    Route::get('/form_profile', [UserController::class, 'edit_profile'])->name('form.profile');
+    Route::get('/form_password', [UserController::class, 'form_password'])->name('password.profile');
+    Route::put('/update_profile/{uid}', [UserController::class, 'update_profile'])->name('update.profile');
+    Route::put('/profile/change_password/{uid}', [UserController::class, 'change_password'])->name('changepass.profile');
+    Route::get('/profile', [UserController::class, 'profile'])->name('user.profile');
 });
 
 // Route::get('/', function () {

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 03, 2025 at 08:54 AM
+-- Generation Time: Mar 06, 2025 at 09:48 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -163,7 +163,9 @@ INSERT INTO `modules` (`uid`, `description`, `name`, `created_at`, `created_by`,
 ('10aa1d11-270c-47ab-8c03-d20bc20225e8', 'Role', 'Role', '2024-10-17 07:29:42', NULL, '2024-10-17 07:29:42', NULL),
 ('3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', 'User', 'User', '2024-10-17 07:29:49', NULL, '2024-10-17 07:29:49', NULL),
 ('42634834-66e0-45bf-8835-99f2004a3b05', 'Dashboard', 'Dashboard', '2024-10-17 03:56:14', NULL, '2024-10-17 03:57:23', NULL),
-('78eefbc3-b248-4d7c-a355-a83ed0103c4b', 'Module', 'Module', '2024-10-17 07:29:38', NULL, '2024-10-17 07:29:38', NULL);
+('78eefbc3-b248-4d7c-a355-a83ed0103c4b', 'Module', 'Module', '2024-10-17 07:29:38', NULL, '2024-10-17 07:29:38', NULL),
+('98bb7a50-9edb-4356-90c8-409cf75cd962', 'Pemohon', 'Pemohon', '2025-03-06 05:40:47', NULL, '2025-03-06 06:23:17', NULL),
+('a9e39221-3834-4e48-88f2-455daae1cf24', 'Profile', 'Profile', '2025-03-06 02:20:40', NULL, '2025-03-06 02:20:40', NULL);
 
 -- --------------------------------------------------------
 
@@ -196,6 +198,28 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pemohon`
+--
+
+CREATE TABLE `pemohon` (
+  `uid` varchar(40) NOT NULL,
+  `name` varchar(255) DEFAULT NULL,
+  `nik` varchar(20) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `no_telp` varchar(20) DEFAULT NULL,
+  `jenis_kelamin` enum('PRIA','WANITA') DEFAULT NULL,
+  `agama` varchar(20) DEFAULT NULL,
+  `status` varchar(1) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` varchar(40) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_by` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `permissions`
 --
 
@@ -219,11 +243,16 @@ INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `
 ('1e65f1cc-4a52-4a25-949f-18e436984511', 'Module List View Permit', 'Module List View', 'module.list', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:45', NULL, '2024-10-17 07:30:45', NULL),
 ('2c37e04b-3293-46d9-aee1-6f1ab7c1f40c', 'Mutasi Create Permit', 'Mutasi Create', 'mutasi.create', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:06', NULL, '2025-03-03 03:56:06', NULL),
 ('30d81e9f-7196-49c9-adbf-ab69396f2c1b', 'Mutasi Delete Permit', 'Mutasi Delete', 'mutasi.delete', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:21', NULL, '2025-03-03 03:56:21', NULL),
+('3d12e466-c9f3-4a82-ac6f-84bf0c15a16e', 'Pemohon Create Permit', 'Pemohon Create', 'pemohon.create', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:38', NULL, '2025-03-06 06:23:38', NULL),
 ('48c95475-d35a-44c6-8047-9e2ab901ae44', 'Mutasi Update Permit', 'Mutasi Update', 'mutasi.update', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:55:13', NULL, '2025-03-03 03:55:13', NULL),
 ('4b4a3ae2-ce54-47a5-b682-0ef8e86ae0f6', 'User Create Permit', 'User Create', 'user.create', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:34:20', NULL, '2024-10-17 07:34:20', NULL),
 ('54932999-cc85-4131-a857-107714f4edc5', 'Role Update Permit', 'Role Update', 'role.update', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:33:04', NULL, '2024-10-17 07:33:04', NULL),
 ('55c3c286-5727-44cc-8693-ab369406fd1d', 'User List View Permit', 'User List View', 'user.list', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:33:47', NULL, '2024-10-17 07:33:47', NULL),
 ('5851c5a8-325b-434e-a36c-75ba0f2e2bd6', 'Module Create Permit', 'Module Create', 'module.create', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:57', NULL, '2024-10-17 07:30:57', NULL),
+('6e54c5fe-a64f-4fa4-b1b6-0621fa29005b', 'Pemohon Update Permit', 'Pemohon Update', 'pemohon.update', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:42', NULL, '2025-03-06 06:24:42', NULL),
+('79028af7-0408-4ec0-8e9e-22b1b751ae0a', 'Pemohon Delete Permit', 'Pemohon Delete', 'pemohon.delete', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:58', NULL, '2025-03-06 06:24:58', NULL),
+('7f214497-e3c8-44d0-86b2-b8cc63260740', 'Profile View Permit', 'Profile View', 'profile.view', 'a9e39221-3834-4e48-88f2-455daae1cf24', '2025-03-06 02:21:07', NULL, '2025-03-06 02:21:07', NULL),
+('8e977c1b-cea8-4a86-b04b-e63d44db6940', 'Pemohon List View Permit', 'Pemohon List View', 'pemohon.list', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:54', NULL, '2025-03-06 06:24:13', NULL),
 ('96803e1a-f019-4518-a8fb-12334d079922', 'Module Update Permit', 'Module Update', 'module.update', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:31:15', NULL, '2024-10-17 07:31:15', NULL),
 ('aa1f7900-4741-4f75-8854-9506cc4bacc9', 'Role Delete Permit', 'Role Delete', 'role.delete', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:33:15', NULL, '2024-10-17 07:33:15', NULL),
 ('be784f9b-9c10-409d-ae84-21f270d680de', 'Module Delete Permit', 'Module Delete', 'module.delete', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:31:53', NULL, '2024-10-17 07:31:53', NULL),
@@ -271,6 +300,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'Disdukcapil', 'disdukcapil', 'Operator Disdukcapil'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'Operator', 'operator', 'Operator Pengadilan'),
+('55512b81-ef39-42c2-8fb0-783e3d61cab5', 'Pemohon', 'pemohon', 'Pemohon usulan / warga sipil'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin');
 
 -- --------------------------------------------------------
@@ -292,11 +324,16 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '1e65f1cc-4a52-4a25-949f-18e436984511'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c37e04b-3293-46d9-aee1-6f1ab7c1f40c'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '30d81e9f-7196-49c9-adbf-ab69396f2c1b'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '48c95475-d35a-44c6-8047-9e2ab901ae44'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '4b4a3ae2-ce54-47a5-b682-0ef8e86ae0f6'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '54932999-cc85-4131-a857-107714f4edc5'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '55c3c286-5727-44cc-8693-ab369406fd1d'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '5851c5a8-325b-434e-a36c-75ba0f2e2bd6'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '6e54c5fe-a64f-4fa4-b1b6-0621fa29005b'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '79028af7-0408-4ec0-8e9e-22b1b751ae0a'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '8e977c1b-cea8-4a86-b04b-e63d44db6940'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '96803e1a-f019-4518-a8fb-12334d079922'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'aa1f7900-4741-4f75-8854-9506cc4bacc9'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'be784f9b-9c10-409d-ae84-21f270d680de'),
@@ -427,6 +464,14 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `pemohon`
+--
+ALTER TABLE `pemohon`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `updated_by` (`updated_by`);
+
+--
 -- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
@@ -528,6 +573,13 @@ ALTER TABLE `modules`
 ALTER TABLE `mutasi`
   ADD CONSTRAINT `mutasi_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `mutasi_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pemohon`
+--
+ALTER TABLE `pemohon`
+  ADD CONSTRAINT `pemohon_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `pemohon_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `permissions`

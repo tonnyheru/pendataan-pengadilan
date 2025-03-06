@@ -1,127 +1,197 @@
+<!DOCTYPE html>
 <!--
 =========================================================
-* Argon Dashboard 2 - v2.0.4
+* Argon Dashboard 2 PRO - v2.0.4
 =========================================================
 
-* Product Page: https://www.creative-tim.com/product/argon-dashboard
-* Copyright 2022 Creative Tim (https://www.creative-tim.com)
-* Licensed under MIT (https://www.creative-tim.com/license)
+* Product Page:  https://www.creative-tim.com/product/argon-dashboard-pro 
+* Copyright 2024 Creative Tim (https://www.creative-tim.com)
 * Coded by Creative Tim
 
 =========================================================
 
 * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
--->
-<!DOCTYPE html>
-<html lang="en">
+--><html lang="en">
 
 <head>
-  <meta charset="utf-8" />
+  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <link rel="apple-touch-icon" sizes="76x76" href="{{asset('argon2/assets/img/apple-icon.png')}}">
-  <link rel="icon" type="image/png" href="{{asset('img/logo.png')}}">
+  <link rel="apple-touch-icon" sizes="76x76" href="favicons/img-apple-icon.png">
+  <link rel="icon" type="image/png" href="{{ asset('img/logo.png') }}">
   <title>
-    Login | Pengadilan Negeri Bale Bandung
+    Login | Pengadilan Negeri Bale Bandung  
   </title>
+  <!-- Extra details for Live View on GitHub Pages -->
+  <!-- Canonical SEO -->
+  <!--  Social tags      -->
+  <meta name="keywords" content="creative tim, html dashboard, html css dashboard, web dashboard, bootstrap 5 dashboard, bootstrap 5, css3 dashboard, bootstrap 5 admin, Argon Dashboard bootstrap 5 dashboard, frontend, responsive bootstrap 5 dashboard, soft design, soft dashboard bootstrap 5 dashboard">
+  <meta name="description" content="Argon Dashboard PRO is a beautiful Bootstrap 5 admin dashboard with a large number of components, designed to look beautiful, clean and organized. If you are looking for a tool to manage dates about your business, this dashboard is the thing for you.">
+  
   <!--     Fonts and icons     -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600,700" rel="stylesheet">
   <!-- Nucleo Icons -->
-  <link href="{{asset('argon2/assets/css/nucleo-icons.css')}}" rel="stylesheet" />
-  <link href="{{asset('argon2/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <link href="{{asset('argon2/assets/css/css-nucleo-icons.css')}}" rel="stylesheet">
+  <link href="{{asset('argon2/assets/css/css-nucleo-svg.css')}}" rel="stylesheet">
   <!-- Font Awesome Icons -->
-  <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
-  <link href="{{asset('argon2/assets/css/nucleo-svg.css')}}" rel="stylesheet" />
+  <script src="{{asset('argon2/assets/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
+  <link href="{{asset('argon2/assets/css/css-nucleo-svg.css')}}" rel="stylesheet">
   <!-- CSS Files -->
-  <link id="pagestyle" href="{{asset('argon2/assets/css/argon-dashboard.css?v=2.0.4')}}" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Lexend+Deca&display=swap" rel="stylesheet">
+  <link id="pagestyle" href="{{asset('argon2/assets/css/css-argon-dashboard.min.css')}}" rel="stylesheet">
+  <!-- Anti-flicker snippet (recommended)  -->
   <style>
-      body{
-        font-family: 'Lexend Deca', sans-serif !important;
+    .async-hide {
+      opacity: 0 !important
     }
   </style>
-  <style>
-    @media (min-width: 1400px) {
-        .container, .container-sm, .container-md, .container-lg, .container-xl, .container-xxl {
-            max-width: 1920px;
-        }
-    }
-
-    @media (max-width: 1200px) and (min-width: 992px) {
-      .hide-on-md {
-        display: none !important;
-      }
-    }
-  </style>
+  <script>
+    (function(a, s, y, n, c, h, i, d, e) {
+      s.className += ' ' + y;
+      h.start = 1 * new Date;
+      h.end = i = function() {
+        s.className = s.className.replace(RegExp(' ?' + y), '')
+      };
+      (a[n] = a[n] || []).hide = h;
+      setTimeout(function() {
+        i();
+        h.end = null
+      }, c);
+      h.timeout = c;
+    })(window, document.documentElement, 'async-hide', 'dataLayer', 4000, {
+      'GTM-K9BGS8K': true
+    });
+  </script>
+  <!-- Analytics-Optimize Snippet -->
+  <script>
+    (function(i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function() {
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+    ga('create', 'UA-46172202-22', 'auto', {
+      allowLinker: true
+    });
+    ga('set', 'anonymizeIp', true);
+    ga('require', 'GTM-K9BGS8K');
+    ga('require', 'displayfeatures');
+    ga('require', 'linker');
+    ga('linker:autoLink', ["2checkout.com", "avangate.com"]);
+  </script>
+  <!-- end Analytics-Optimize Snippet -->
+  <!-- Google Tag Manager -->
+  <script>
+    (function(w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start': new Date().getTime(),
+        event: 'gtm.js'
+      });
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src =
+        'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-NKDMSK6');
+  </script>
+  <!-- End Google Tag Manager -->
 </head>
 
-<body class="">
+<body class="bg-gray-100"><!-- Extra details for Live View on GitHub Pages --><!-- Google Tag Manager (noscript) -->
+  <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NKDMSK6" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+  <!-- End Google Tag Manager (noscript) -->
+  
   <main class="main-content  mt-0">
-    <section>
-      <div class="page-header min-vh-100">
-        <div class="container">
-          <div class="row">
-            <div class="col-xl-3 col-lg-5 col-md-7 d-flex flex-column mx-lg-0 mx-auto">
-              <div class="card card-plain">
-                <div class="card-header pb-0 text-start">
-                  <img class="img-fluid mx-auto d-block" width="200" height="200" src="{{asset('img/logo.png')}}" alt="">
-                  <h4 class="font-weight-bolder">Sign In</h4>
-                  <p class="mb-0">Enter your Username and password to sign in</p>
-                </div>
-                <div class="card-body">
-                  @if(session('error'))
-                  <div class="alert alert-warning alert-dismissible fade show" role="alert">
-                    {{session('error')}}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  @endif
-                  @error('login_failed')
-                  <div class="alert alert-danger alert-dismissible fade show text-white" role="alert">
-                    {{ $message }}
-                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                  </div>
-                  @enderror
-                  <form role="form" method="POST" action="{{ route('auth.login_process') }}">
-                    @csrf
-                    <div class="mb-3">
-                      <input type="text" name="username" class="form-control form-control-lg" placeholder="Username" aria-label="Email">
-                      @if($errors->has('username'))
-                        <span class="text-danger text-sm">{{ $errors->first('username') }}</span>
-                      @endif
-                    </div>
-                    <div class="mb-3">
-                      <input type="password" name="password" class="form-control form-control-lg" placeholder="Password" aria-label="Password">
-                      @if($errors->has('password'))
-                        <span class="text-danger text-sm">{{ $errors->first('password') }}</span>
-                      @endif
-                    </div>
-                    {{-- <div class="form-check form-switch">
-                      <input class="form-check-input" type="checkbox" id="rememberMe">
-                      <label class="form-check-label" for="rememberMe">Remember me</label>
-                    </div> --}}
-                    <div class="text-center">
-                      <button type="submit" class="btn btn-lg btn-primary btn-lg w-100 mt-4 mb-0" style="background: #016004 !important">Sign in</button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
-            <div class="col-9 d-lg-flex d-none h-100 my-auto pe-0 position-absolute top-0 end-0 text-center justify-content-center flex-column hide-on-md">
-              <div class="position-relative bg-gradient-dark h-100 m-3 px-7 border-radius-lg d-flex flex-column justify-content-center overflow-hidden" style="background-image: url('{{asset('img/pengadilan.jpg')}}'); background-size: cover;">
-                {{-- <span class="mask bg-gradient-dark opacity-6"></span> --}}
-                <h4 class="mt-5 text-white font-weight-bolder position-relative">Pengadilan Negeri Bale Bandung</h4>
-                <p class="text-white position-relative">Pengadilan Negeri Bale Bandung merupakan sebuah lembaga peradilan di lingkungan Peradilan Umum yang berkedudukan di Kabupaten Bandung. </p>
-              </div>
-            </div>
+    <div class="page-header align-items-start min-vh-50 pt-7 pb-9 m-3 border-radius-lg" style="background-image: url('{{asset('img/pengadilan.png')}}'); background-size: 80%; ">
+      <span class="mask bg-gradient-dark opacity-4"></span>
+      <div class="container">
+        <div class="row justify-content-center">
+          <div class="col-lg-5 text-center mx-auto">
+            <img src="{{asset('img/logo.png')}}" width="200">
+            <img src="{{asset('img/logo-cimahi.png')}}" width="150">
+            <h3 class="text-white mb-2 mt-5">Pengadilan Negeri Bale Bandung</h3>
+            <p class="text-lead text-white">Pengadilan Negeri Bale Bandung Kelas 1A merupakan sebuah lembaga peradilan di lingkungan Peradilan Umum yang berkedudukan di Kabupaten Bandung.</p>
           </div>
         </div>
       </div>
-    </section>
+    </div>
+    <div class="container">
+      <div class="row mt-lg-n10 mt-md-n11 mt-n10 justify-content-center">
+        <div class="col-xl-4 col-lg-5 col-md-7 mx-auto">
+          <div class="card mt-5">
+            <div class="card-header pb-0 text-start">
+              <h3 class="font-weight-bolder">Log In</h3>
+              <p class="mb-0">Masukan username dan password untuk Log In</p>
+            </div>
+            <div class="card-body">
+              @if(session('error'))
+              <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{session('error')}}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              @endif
+              @error('login_failed')
+              <div class="alert alert-danger alert-dismissible fade show text-white" role="alert">
+                {{ $message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+              </div>
+              @enderror
+              <form role="form" class="text-start" method="POST" action="{{ route('auth.login_process') }}">
+                @csrf
+                <label>Username</label>
+                <div class="mb-3">
+                  <input type="text" name="username" class="form-control" placeholder="Username" aria-label="Userame">
+                  @if($errors->has('username'))
+                    <span class="text-danger text-sm">{{ $errors->first('username') }}</span>
+                  @endif
+                </div>
+                <label>Password</label>
+                <div class="mb-3">
+                  <input type="password" name="password" class="form-control" placeholder="Password" aria-label="Password">
+                  @if($errors->has('password'))
+                    <span class="text-danger text-sm">{{ $errors->first('password') }}</span>
+                  @endif
+                </div>
+                <div class="text-center">
+                  <button type="submit" class="btn btn-primary w-100 mt-4 mb-0" style="background: #016004 !important">Log In</button>
+                </div>
+              </form>
+            </div>
+            
+          </div>
+        </div>
+      </div>
+    </div>
   </main>
+  <!-- -------- START FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
+  <footer class="footer py-5">
+    <div class="container">
+      <div class="row">
+        <div class="col-8 mx-auto text-center mt-1">
+          <p class="mb-0 text-secondary">
+            Copyright &copy; <script>
+              document.write(new Date().getFullYear())
+            </script> by Tony Heru Susanto.
+          </p>
+        </div>
+      </div>
+    </div>
+  </footer>
+  <!-- -------- END FOOTER 3 w/ COMPANY DESCRIPTION WITH LINKS & SOCIAL ICONS & COPYRIGHT ------- -->
   <!--   Core JS Files   -->
-  <script src="{{asset('argon2/assets/js/core/popper.min.js')}}"></script>
-  <script src="{{asset('argon2/assets/js/core/bootstrap.min.js')}}"></script>
-  <script src="{{asset('argon2/assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
-  <script src="{{asset('argon2/assets/js/plugins/smooth-scrollbar.min.js')}}"></script>
+  <script src="{{asset('argon2/assets/js/core-popper.min.js')}}"></script>
+  <script src="{{asset('argon2/assets/js/core-bootstrap.min.js')}}"></script>
+  <script src="{{asset('argon2/assets/js/plugins-perfect-scrollbar.min.js')}}"></script>
+  <script src="{{asset('argon2/assets/js/plugins-smooth-scrollbar.min.js')}}"></script>
+  <!-- Kanban scripts -->
+  <script src="{{asset('argon2/assets/js/dragula-dragula.min.js')}}"></script>
+  <script src="{{asset('argon2/assets/js/jkanban-jkanban.js')}}"></script>
   <script>
     var win = navigator.platform.indexOf('Win') > -1;
     if (win && document.querySelector('#sidenav-scrollbar')) {
@@ -132,9 +202,9 @@
     }
   </script>
   <!-- Github buttons -->
-  <script async defer src="https://buttons.github.io/buttons.js"></script>
+  <script async defer src="{{asset('argon2/assets/js/buttons.github.io-buttons.js')}}"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
-  <script src="{{asset('argon2/assets/js/argon-dashboard.min.js?v=2.0.4')}}"></script>
+  <script src="{{asset('argon2/assets/js/js-argon-dashboard.min.js')}}"></script>
 </body>
 
 </html>
