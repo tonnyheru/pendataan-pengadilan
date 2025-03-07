@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\UsersDataTable;
-use App\Helpers\ActionLogger;
 use App\Helpers\AuthCommon;
 use App\Helpers\PermissionCommon;
 use App\Models\User;
@@ -96,7 +95,6 @@ class UserController extends Controller
                 ]);
 
                 if ($trx) {
-                    ActionLogger::log('create', json_encode(['user_uid' => $trx->uid, 'nama_user' => $trx->name]));
                     if ($request->hasFile('profile')) {
                         $path = $file->move(public_path('upload'), $filename);
                     }
@@ -202,7 +200,6 @@ class UserController extends Controller
 
                 $trx = $user->update($formData);
                 if ($trx) {
-                    ActionLogger::log('update', json_encode(['user_uid' => $user->uid, 'nama_user' => $user->name]));
                     if ($request->hasFile('profile')) {
                         $file = $request->file('profile');
                         $path = $file->move(public_path('upload'), $formData['profile_picture']);
@@ -245,7 +242,6 @@ class UserController extends Controller
         try {
             $user = User::with('role')->where('uid', $uid)->first();
             if ($user) {
-                ActionLogger::log('delete', json_encode(['user_uid' => $user->uid, 'nama_user' => $user->name]));
                 $delete = $user->delete();
                 if ($delete) {
                     return response()->json([
@@ -414,7 +410,6 @@ class UserController extends Controller
 
                 $trx = $user->update($formData);
                 if ($trx) {
-                    ActionLogger::log('changepassword', json_encode(['user_uid' => $user->uid, 'nama_user' => $user->name]));
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Diubah'

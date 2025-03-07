@@ -41,6 +41,37 @@ class PemohonController extends Controller
     public function store(Request $request)
     {
         if (!PermissionCommon::check('pemohon.create')) abort(403);
+        $data = $request->except('_token');
+        dd($data);
+        try {
+            // $trx = Role::create([
+            //     'uid' => Str::uuid()->toString(),
+            //     'name' => $data['name'],
+            //     'slug' => $slug,
+            //     'description' => $data['description'],
+            // ]);
+            // if ($trx) {
+            //     return response([
+            //         'status' => true,
+            //         'message' => 'Berhasil Membuat Role'
+            //     ], 200);
+            // } else {
+            //     return response([
+            //         'status' => false,
+            //         'message' => 'Gagal Membuat Role'
+            //     ], 400);
+            // }
+        } catch (\Throwable $th) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal'
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
     }
 
     /**

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\ModuleDataTable;
-use App\Helpers\ActionLogger;
 use App\Helpers\PermissionCommon;
 use App\Helpers\Utils;
 use App\Models\Module;
@@ -56,7 +55,6 @@ class ModuleController extends Controller
                 'description' => $data['description'],
             ]);
             if ($trx) {
-                ActionLogger::log('create', json_encode(['module_uid' => $trx->uid, 'nama_module' => $trx->name]));
                 return response([
                     'status' => true,
                     'message' => 'Berhasil Membuat Module'
@@ -126,7 +124,6 @@ class ModuleController extends Controller
         try {
             $trx = $module->update($formData);
             if ($trx) {
-                ActionLogger::log('update', json_encode(['module_uid' => $module->uid, 'nama_module' => $module->name]));
                 return response([
                     'status' => true,
                     'message' => 'Data Berhasil Diubah'
@@ -158,7 +155,6 @@ class ModuleController extends Controller
     {
         if (!PermissionCommon::check('module.delete')) abort(403);
         try {
-            ActionLogger::log('delete', json_encode(['module_uid' => $module->uid, 'nama_module' => $module->name]));
             $delete = $module->delete();
             if ($delete) {
                 return response()->json([

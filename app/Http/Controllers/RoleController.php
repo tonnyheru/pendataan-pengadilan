@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\RolesDataTable;
-use App\Helpers\ActionLogger;
 use App\Helpers\PermissionCommon;
 use App\Helpers\Utils;
 use App\Models\Module;
@@ -62,7 +61,6 @@ class RoleController extends Controller
                 'description' => $data['description'],
             ]);
             if ($trx) {
-                ActionLogger::log('create', json_encode(['role_uid' => $trx->uid, 'nama_role' => $trx->name]));
                 return response([
                     'status' => true,
                     'message' => 'Berhasil Membuat Role'
@@ -133,7 +131,6 @@ class RoleController extends Controller
             $formData['slug'] = Utils::formatSlug($formData['name']);
             $trx = $role->update($formData);
             if ($trx) {
-                ActionLogger::log('update', json_encode(['role_uid' => $role->uid, 'nama_role' => $role->name]));
                 return response([
                     'status' => true,
                     'message' => 'Data Berhasil Diubah'
@@ -165,7 +162,6 @@ class RoleController extends Controller
     {
         if (!PermissionCommon::check('role.delete')) abort(403);
         try {
-            ActionLogger::log('delete', json_encode(['role_uid' => $role->uid, 'nama_role' => $role->name]));
             $delete = $role->delete();
             if ($delete) {
                 return response()->json([

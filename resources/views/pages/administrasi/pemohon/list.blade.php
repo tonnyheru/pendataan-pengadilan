@@ -1,6 +1,6 @@
 @extends('layouts.root')
 
-@section('title', 'Permission')
+@section('title', 'Pemohon')
 
 @section('breadcrum')
 <div class="col-lg-6 col-7">
