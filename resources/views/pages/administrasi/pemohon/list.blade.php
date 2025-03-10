@@ -107,7 +107,7 @@
         if($('[name="_method"]').val() == undefined) {
           el_form[0].reset()
         }
-        window.LaravelDataTables["mutasi-table"].draw()
+        window.LaravelDataTables["pemohon-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){
@@ -158,7 +158,7 @@
             type: 'success',
             confirmButtonColor: '#007bff'
           })
-        window.LaravelDataTables["mutasi-table"].draw()
+        window.LaravelDataTables["pemohon-table"].draw()
         }).fail((xhr) => {
           Swal.fire({
             title: xhr.responseJSON.message,
@@ -168,6 +168,28 @@
           })
         })
       }
+    })
+  }
+
+  
+  function show(id) {
+    Ryuna.blockUI()
+    $.get(_url.show.replace(':id', id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
     })
   }
 </script>

@@ -36,7 +36,16 @@ class PemohonDataTable extends DataTable
                 $html .= '</div>';
                 return $html;
             })
-            ->rawColumns(['action']);
+            ->addColumn('nik', function ($data) {
+                return '<a href="javascript:show(\'' . $data->uid . '\')">' . $data->nik . '</a>';
+            })
+            ->filterColumn('nik', function ($query, $keyword) {
+                $query->where('nik', 'like', "%{$keyword}%");
+            })
+            ->orderColumn('nik', function ($query, $direction) {
+                $query->orderBy('nik', $direction);
+            })
+            ->rawColumns(['action','nik']);
     }
 
     /**
@@ -94,7 +103,11 @@ class PemohonDataTable extends DataTable
                 ->width(60)
                 ->addClass('text-center');
         }
-        $column[] = Column::make('name');
+        $column[] = Column::make('name')->title('Nama Pemohon');
+        $column[] = Column::make('nik');
+        $column[] = Column::make('alamat')->title('Alamat Pemohon');
+        $column[] = Column::make('email')->title('Alamat Pemohon');
+        $column[] = Column::make('no_telp')->title('Alamat Pemohon');
         return $column;
     }
 

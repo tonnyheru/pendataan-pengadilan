@@ -77,16 +77,6 @@
       <textarea name="alamat" placeholder="Alamat" class="form-control">{{ @$data->description }}</textarea>
     </div>
 
-    <div class="form-group col-md-6">
-      <label>Username <span class="text-danger">*</span></label>
-      <input type="text" name="username" class="form-control" placeholder="Username" value="{{ @$data->name }}">
-    </div>
-    <div class="form-group col-md-6">
-      <label>Password <span class="text-danger">*</span></label>
-      <input type="password" name="password" class="form-control" placeholder="Username" value="{{ @$data->name }}">
-    </div>
-
-
 </div>
 
 <script>
