@@ -1,14 +1,14 @@
 @extends('layouts.root')
 
-@section('title', 'Pemohon')
+@section('title', 'Usulan')
 
 @section('breadcrum')
 <div class="col-lg-6 col-7">
   <h6 class="h2 text-white d-inline-block mb-0">Administrasi</h6>
   <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
-      <li class="breadcrumb-item"><a href="#"><i class="fas fa-clipboard-user"></i></a></li>
-      <li class="breadcrumb-item active" aria-current="page">Pemohon</li>
+      <li class="breadcrumb-item"><a href="#"><i class="fas fa-user-md-chat"></i></a></li>
+      <li class="breadcrumb-item active" aria-current="page">Usulan</li>
     </ol>
   </nav>
 </div>
@@ -35,10 +35,10 @@
 {!! $dataTable->scripts() !!}
 <script>
   let _url = {
-    create: `{{ route('pemohon.create') }}`,
-    edit: `{{ route('pemohon.edit', ':id') }}`,
-    show: `{{ route('pemohon.show', ':id') }}`,
-    destroy: `{{ route('pemohon.destroy', ':id') }}`
+    create: `{{ route('usulan.create') }}`,
+    edit: `{{ route('usulan.edit', ':id') }}`,
+    show: `{{ route('usulan.show', ':id') }}`,
+    destroy: `{{ route('usulan.destroy', ':id') }}`
   }
 
   function create(){
@@ -108,7 +108,7 @@
         if($('[name="_method"]').val() == undefined) {
           el_form[0].reset()
         }
-        window.LaravelDataTables["pemohon-table"].draw()
+        window.LaravelDataTables["usulan-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){
@@ -159,7 +159,7 @@
             type: 'success',
             confirmButtonColor: '#007bff'
           })
-        window.LaravelDataTables["pemohon-table"].draw()
+        window.LaravelDataTables["usulan-table"].draw()
         }).fail((xhr) => {
           Swal.fire({
             title: xhr.responseJSON.message,

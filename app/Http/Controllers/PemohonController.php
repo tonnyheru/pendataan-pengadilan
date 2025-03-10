@@ -45,6 +45,8 @@ class PemohonController extends Controller
         $request->validate([
             'name' => 'required',
             'nik' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
             'email' => 'required',
             'no_telp' => 'required',
             'jenis_kelamin' => 'required',
@@ -54,6 +56,8 @@ class PemohonController extends Controller
         ], [
             'name.required' => 'Nama Lengkap tidak boleh kosong',
             'nik.required' => 'NIK tidak boleh kosong',
+            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
+            'tanggal_lahir.required' => 'Tanggal Lahir tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'no_telp.required' => 'No Telpon tidak boleh kosong',
             'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
@@ -118,7 +122,24 @@ class PemohonController extends Controller
      */
     public function edit(Pemohon $pemohon)
     {
-        //
+        if (!PermissionCommon::check('pemohon.update')) abort(403);
+        if ($pemohon) {
+            $uid = $pemohon->uid;
+            $data = $pemohon;
+            $body = view('pages.administrasi.pemohon.edit', compact('uid', 'data'))->render();
+            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
+            return [
+                'title' => 'Edit Data Pemohon',
+                'body' => $body,
+                'footer' => $footer
+            ];
+        } else {
+            return response([
+                'status' => false,
+                'message' => 'Failed Connect to Server'
+            ], 400);
+        }
     }
 
     /**
@@ -126,7 +147,56 @@ class PemohonController extends Controller
      */
     public function update(Request $request, Pemohon $pemohon)
     {
-        //
+        if (!PermissionCommon::check('pemohon.update')) abort(403);
+        $request->validate([
+            'name' => 'required',
+            'nik' => 'required',
+            'tempat_lahir' => 'required',
+            'tanggal_lahir' => 'required',
+            'email' => 'required',
+            'no_telp' => 'required',
+            'jenis_kelamin' => 'required',
+            'agama' => 'required',
+            'status' => 'required',
+            'alamat' => 'required',
+        ], [
+            'name.required' => 'Nama Lengkap tidak boleh kosong',
+            'nik.required' => 'NIK tidak boleh kosong',
+            'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
+            'tanggal_lahir.required' => 'Tanggal Lahir tidak boleh kosong',
+            'email.required' => 'Email tidak boleh kosong',
+            'no_telp.required' => 'No Telpon tidak boleh kosong',
+            'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
+            'agama.required' => 'Agama tidak boleh kosong',
+            'status.required' => 'Status tidak boleh kosong',
+            'alamat.required' => 'Alamat tidak boleh kosong',
+        ]);
+        $formData = $request->except(["_token", "_method"]);
+        try {
+            $trx = $pemohon->update($formData);
+            if ($trx) {
+                return response([
+                    'status' => true,
+                    'message' => 'Data Berhasil Diubah'
+                ], 200);
+            } else {
+                return response([
+                    'status' => false,
+                    'message' => 'Data Gagal Diubah'
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
     }
 
     /**

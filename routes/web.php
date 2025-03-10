@@ -9,6 +9,7 @@ use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UsulanController;
 use App\Http\Middleware\PengadilanAuth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -40,6 +41,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::resources(['permission' => PermissionController::class]);
     Route::resources(['mutasi' => MutasiController::class]);
     Route::resources(['pemohon' => PemohonController::class]);
+    Route::resources(['usulan' => UsulanController::class]);
 
     Route::prefix('role')->group(function () {
         Route::get('/permission/{uid}', [RoleController::class, 'permission'])->name('role.permission');

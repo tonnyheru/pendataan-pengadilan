@@ -42,12 +42,14 @@
 
       $obj_menu->start_group()
       ->start_accordion()
-      ->sub_item_accordion('Administrasi','administrasi',["mutasi.list", "pemohon.list"],'fas fa-database')
+      ->sub_item_accordion('Administrasi','administrasi',["mutasi.list", "usulan.list", "mutasi.list"],'fas fa-database')
       ->start_item_accordion('administrasi', (
       Request::is('app/mutasi') ||
-      Request::is('app/pemohon')
+      Request::is('app/pemohon') ||
+      Request::is('app/usulan') 
       ))
       ->item('Pemohon', 'fas fa-clipboard-user', 'app/pemohon', Request::is('app/pemohon'), "pemohon.list")
+      ->item('Usulan', 'fas fa-user-md-chat', 'app/usulan', Request::is('app/usulan'), "usulan.list")
       ->item('Mutasi Data', 'fas fa-file-exclamation', 'app/mutasi', Request::is('app/mutasi'), "mutasi.list")
       ->end_item_accordion()
       ->end_accordion()

@@ -11,6 +11,18 @@
     </div>
 
     <div class="form-group col-md-6">
+      <label>Tempat Lahir</label>
+      <input type="text" name="tempat_lahir" class="form-control" placeholder="Tempat Lahir" value="{{ @$data->tempat_lahir }}">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Tanggal Lahir <span class="text-danger">*</span></label>
+      <div class='date'>
+        <input type='text' class="form-control" name="tanggal_lahir" id='tanggal_lahir' style="background-color: white; " placeholder="Pilih Tanggal Lahir" value="{{ @$data->tanggal_lahir }}" />
+      </div>
+    </div>
+
+    <div class="form-group col-md-6">
       <label>Email</label>
       <input type="email" name="email" class="form-control" placeholder="Email" value="{{ @$data->email }}">
     </div>
@@ -24,11 +36,11 @@
     <div class="form-group col-md-12">
       <label>Jenis Kelamin <span class="text-danger">*</span></label><br>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="jenis_kelamin0" {{ @$data->jenis_kelamin == "pria" ? "checked" : "" }} name="jenis_kelamin" class="custom-control-input" value="pria">
+        <input type="radio" id="jenis_kelamin0" {{ @$data->jenis_kelamin == "PRIA" ? "checked" : "" }} name="jenis_kelamin" class="custom-control-input" value="pria">
         <label class="custom-control-label" for="jenis_kelamin0">Pria</label>
       </div>
       <div class="custom-control custom-radio custom-control-inline">
-        <input type="radio" id="jenis_kelamin1" {{ @$data->jenis_kelamin == "wanita" ? "checked" : "" }} name="jenis_kelamin" class="custom-control-input" value="wanita">
+        <input type="radio" id="jenis_kelamin1" {{ @$data->jenis_kelamin == "WANITA" ? "checked" : "" }} name="jenis_kelamin" class="custom-control-input" value="wanita">
         <label class="custom-control-label" for="jenis_kelamin1">Wanita</label>
       </div>
     </div>
@@ -56,7 +68,7 @@
       <label>Agama <span class="text-danger">*</span></label>
       <select name="agama" class="form-control select2" aria-describedby="validationtxtAgama" id="txtAgama">
           @foreach($agama as $key => $value)
-          <option value="{{$key}}" {{ @$data->agama == $key ? "checked" : "" }}>{{$value}}</option>
+          <option value="{{$key}}" {{ @$data->agama == $key ? "selected" : "" }}>{{$value}}</option>
           @endforeach
       </select>
       <div id="validationtxtAgama" class="invalid-feedback"></div>
@@ -66,7 +78,7 @@
       <label>Status <span class="text-danger">*</span></label>
       <select name="status" class="form-control select2" aria-describedby="validationtxtStatus" id="txtStatus">
           @foreach($status as $key => $value)
-          <option value="{{$key}}" {{ @$data->status == $key ? "checked" : "" }}>{{$value}}</option>
+          <option value="{{$key}}" {{ @$data->status == $key ? "selected" : "" }}>{{$value}}</option>
           @endforeach
       </select>
       <div id="validationtxtStatus" class="invalid-feedback"></div>
@@ -74,11 +86,15 @@
 
     <div class="form-group col-md-12">
       <label>Alamat <span class="text-danger">*</span></label>
-      <textarea name="alamat" placeholder="Alamat" class="form-control">{{ @$data->description }}</textarea>
+      <textarea name="alamat" placeholder="Alamat" class="form-control">{{ @$data->alamat }}</textarea>
     </div>
 
 </div>
 
 <script>
   $('.select2').select2();
+  $('#tanggal_lahir').flatpickr({
+    static: true,
+    dateFormat: "Y-m-d",
+  })
 </script>
