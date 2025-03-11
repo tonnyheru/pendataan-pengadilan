@@ -71,6 +71,8 @@ class PemohonController extends Controller
                 'uid' => Str::uuid()->toString(),
                 'name' => $data['name'],
                 'nik' => $data['nik'],
+                'tempat_lahir' => $data['tempat_lahir'],
+                'tanggal_lahir' => $data['tanggal_lahir'],
                 'email' => $data['email'],
                 'no_telp' => $data['no_telp'],
                 'jenis_kelamin' => $data['jenis_kelamin'],

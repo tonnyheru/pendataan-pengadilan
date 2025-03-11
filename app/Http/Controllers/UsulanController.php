@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsulanDataTable;
 use App\Helpers\PermissionCommon;
+use App\Models\Pemohon;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -25,10 +26,10 @@ class UsulanController extends Controller
     public function create()
     {
         if (!PermissionCommon::check('usulan.create')) abort(403);
-        $body = view('pages.administrasi.usulan.create')->render();
+        $pemohon = Pemohon::all();
+        $body = view('pages.administrasi.usulan.create', compact('pemohon'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
-
         return [
             'title' => 'Tambahkan Usulan',
             'body' => $body,

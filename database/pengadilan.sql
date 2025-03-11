@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 10, 2025 at 10:15 AM
+-- Generation Time: Mar 11, 2025 at 09:53 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -225,6 +225,7 @@ CREATE TABLE `pemohon` (
 --
 
 INSERT INTO `pemohon` (`uid`, `name`, `nik`, `tanggal_lahir`, `tempat_lahir`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `agama`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('96a50cef-981f-40ff-bbc5-543354570163', 'Rifky Pratama', '0987098709870987', '2004-03-31', 'Sleman', 'Dekat UNIBI, kampus tercinta', 'rifky@gmail.com', '081212341234', 'PRIA', 'islam', 'k', '2025-03-11 02:38:28', NULL, '2025-03-11 02:39:29', NULL),
 ('d825dab2-809b-4361-865a-ca190a62d7ff', 'Tonny Heru Susanto', '1234123412341234', '2001-03-01', 'Bandung', 'disini', 'tonnyheru@gmail.com', '081212341234', 'PRIA', 'kristen', 'ch', '2025-03-10 01:10:45', NULL, '2025-03-10 01:41:43', NULL);
 
 -- --------------------------------------------------------

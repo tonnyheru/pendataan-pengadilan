@@ -100,6 +100,7 @@ class UsulanDataTable extends DataTable
             ->width(150);
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('jenis_perkara');
+        $column[] = Column::make('jenis_perkara')->title('Status');
         return $column;
     }
 
