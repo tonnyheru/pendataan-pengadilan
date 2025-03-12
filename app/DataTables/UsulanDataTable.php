@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
+use App\Models\Pemohon;
 use App\Models\Usulan;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -33,10 +34,74 @@ class UsulanDataTable extends DataTable
                 if (PermissionCommon::check('usulan.delete')) {
                     $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
                 }
-                $html .= '</div>';
+                $html .= '</div><br>';
+
+                if (PermissionCommon::check('usulan.approve_panitra')) {
+                    $html .= '<button onclick="approve_panitra(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
+                    $html .= '<button onclick="reject_panitra(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
+                }
+
+                if (PermissionCommon::check('usulan.approve_disdukcapil')) {
+                    $html .= '<button onclick="approve_disdukcapil(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
+                    $html .= '<button onclick="reject_disdukcapil(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
+                }
                 return $html;
             })
-            ->rawColumns(['action']);
+            ->addColumn('dokumen', function ($item) {
+                $html = '';
+                $html .= '<button onclick="show_doc(\'' . $item->path_ktp . '\',\'file_ktp\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat KTP"><i class="fas fa-file-pdf"></i> Lihat KTP </button>';
+                $html .= '<button onclick="show_doc(\'' . $item->path_kk . '\',\'file_kk\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat KK"><i class="fas fa-file-pdf"></i> Lihat KK </button><br>';
+                $html .= '<button onclick="show_doc(\'' . $item->path_akta . '\',\'file_akta\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat Akta"><i class="fas fa-file-pdf"></i> Lihat Akta </button>';
+                if ($item->path_pendukung) {
+                    $html .= '<button onclick="show_doc(\'' . $item->path_pendukung . '\',\'file_pendukung\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat Dokumen Pendukung"><i class="fas fa-file-pdf"></i> Pendukung </button>';
+                }
+                // $html = '<div class="btn-group btn-group-sm">';
+                // $html .= '</div>';
+                return $html;
+            })
+            ->addColumn('pemohon', function ($data) {
+                $pemohon = "";
+                if (isset($data->pemohon)) {
+                    $pemohon = $data->pemohon->name;
+                }
+                return $pemohon;
+            })
+            ->filterColumn('pemohon', function ($query, $keyword) {
+                // Assuming you have a relationship between the user and role (e.g., user->role->name)
+                $query->whereHas('pemohon', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('pemohon', function ($query, $direction) {
+                $query->orderBy(
+                    Pemohon::select('name')
+                        ->whereColumn('pemohon.uid', 'usulan.pemohon_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
+
+            ->addColumn('status', function ($data) {
+                switch ($data->is_approve) {
+                    case '0':
+                        return '<span class="badge bg-danger text-white">Ditolak</span>';
+                        break;
+                    case '1':
+                        return '<span class="badge bg-warning text-white">Perlu Disetujui Panitra</span>';
+                        break;
+                    case '2':
+                        return '<span class="badge bg-info text-white">Perlu Disetujui Disdukcapil</span>';
+                        break;
+                    case '3':
+                        return '<span class="badge bg-success text-white">Disetujui</span>';
+                        break;
+
+                    default:
+                        return '';
+                        break;
+                }
+            })
+            ->rawColumns(['action', 'dokumen', 'status']);
     }
 
     /**
@@ -73,7 +138,7 @@ class UsulanDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-6'B><'col-sm-3'f><'col-sm-3'l>> <'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>")
-            ->orderBy(2)
+            ->orderBy(3)
             ->scrollY(350)
             // ->selectStyleSingle()
             ->buttons($button);
@@ -87,20 +152,25 @@ class UsulanDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('usulan.update') || PermissionCommon::check('usulan.delete')) {
+        if (PermissionCommon::check('usulan.update') || PermissionCommon::check('usulan.delete') || PermissionCommon::check('usulan.approve_panitra') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
                 ->width(60)
                 ->addClass('text-center');
         }
-        $column[] = Column::computed('jenis_perkara')->title("Dokumen - Dokumen")
+        $column[] = Column::computed('dokumen')
             ->exportable(false)
             ->printable(false)
-            ->width(150);
+            ->width(60)
+            ->title("Dokumen - Dokumen")
+            ->addClass('text-center');
+        $column[] = Column::make('status')
+            ->width(100)
+            ->title('Status Approval');
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('jenis_perkara');
-        $column[] = Column::make('jenis_perkara')->title('Status');
+        $column[] = Column::make('pemohon');
         return $column;
     }
 

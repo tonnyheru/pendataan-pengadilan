@@ -32,4 +32,9 @@ class Pemohon extends Model
     protected $casts = [
         'uid' => 'string',
     ];
+
+    public function usulan()
+    {
+        return $this->hasMany(Usulan::class, 'pemohon_uid', 'uid');
+    }
 }

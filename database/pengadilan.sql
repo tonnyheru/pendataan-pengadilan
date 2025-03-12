@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 11, 2025 at 09:53 AM
+-- Generation Time: Mar 12, 2025 at 10:08 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -262,7 +262,9 @@ INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `
 ('54932999-cc85-4131-a857-107714f4edc5', 'Role Update Permit', 'Role Update', 'role.update', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:33:04', NULL, '2024-10-17 07:33:04', NULL),
 ('55c3c286-5727-44cc-8693-ab369406fd1d', 'User List View Permit', 'User List View', 'user.list', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:33:47', NULL, '2024-10-17 07:33:47', NULL),
 ('5851c5a8-325b-434e-a36c-75ba0f2e2bd6', 'Module Create Permit', 'Module Create', 'module.create', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:57', NULL, '2024-10-17 07:30:57', NULL),
+('64cc6edf-0f5d-422a-9583-325bdca9f369', 'Usulan Approve Disdukcapil', 'Usulan Approve Disdukcapil', 'usulan.approve_disdukcapil', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-12 05:07:51', NULL, '2025-03-12 05:07:51', NULL),
 ('6e54c5fe-a64f-4fa4-b1b6-0621fa29005b', 'Pemohon Update Permit', 'Pemohon Update', 'pemohon.update', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:42', NULL, '2025-03-06 06:24:42', NULL),
+('7776567b-4902-4324-bab0-51959b7a0d76', 'Usulan Approve Panitra Permit', 'Usulan Approve Panitra', 'usulan.approve_panitra', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-12 05:07:31', NULL, '2025-03-12 05:07:31', NULL),
 ('79028af7-0408-4ec0-8e9e-22b1b751ae0a', 'Pemohon Delete Permit', 'Pemohon Delete', 'pemohon.delete', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:58', NULL, '2025-03-06 06:24:58', NULL),
 ('7f214497-e3c8-44d0-86b2-b8cc63260740', 'Profile View Permit', 'Profile View', 'profile.view', 'a9e39221-3834-4e48-88f2-455daae1cf24', '2025-03-06 02:21:07', NULL, '2025-03-06 02:21:07', NULL),
 ('7f32c8e5-1b4a-450b-bdcb-394b895c9cc7', 'Usulan Delete Permit', 'Usulan Delete', 'usulan.delete', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:03:01', NULL, '2025-03-10 04:03:01', NULL),
@@ -317,7 +319,8 @@ CREATE TABLE `roles` (
 INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'Disdukcapil', 'disdukcapil', 'Operator Disdukcapil'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'Operator', 'operator', 'Operator Pengadilan'),
-('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin');
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin'),
+('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'Panitra Muda', 'panitra_muda', 'Panitra Muda');
 
 -- --------------------------------------------------------
 
@@ -335,6 +338,18 @@ CREATE TABLE `role_permissions` (
 --
 
 INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '46d77d3e-690f-4305-bdb5-6f77e4a173c8'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '47ba3e64-04be-4844-a58d-b12edce8a10d'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '6e54c5fe-a64f-4fa4-b1b6-0621fa29005b'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '79028af7-0408-4ec0-8e9e-22b1b751ae0a'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '7f32c8e5-1b4a-450b-bdcb-394b895c9cc7'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', '8e977c1b-cea8-4a86-b04b-e63d44db6940'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '1e65f1cc-4a52-4a25-949f-18e436984511'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c37e04b-3293-46d9-aee1-6f1ab7c1f40c'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '30d81e9f-7196-49c9-adbf-ab69396f2c1b'),
@@ -360,7 +375,10 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f2238d3b-9cc8-4cba-ae56-1abe592c990e'),
-('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001');
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001'),
+('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', '7776567b-4902-4324-bab0-51959b7a0d76'),
+('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
+('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab');
 
 -- --------------------------------------------------------
 
@@ -415,7 +433,10 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`uid`, `id`, `name`, `profile_picture`, `username`, `password`, `active`, `role_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`, `active_status`, `avatar`, `dark_mode`, `messenger_color`) VALUES
-('a9467865-37c1-4104-bd63-b26a33c915db', 5, 'Administrator', NULL, 'admin', '$2y$12$ZW/e7ChmDQjTZ5S04FD9ZuGlnSkFxPcLplevfGfcrIYTLQNDDU6hm', 1, '731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2024-10-18 06:52:21', NULL, '2024-11-14 18:22:45', NULL, 0, 'avatar.png', 0, '#2180f3');
+('37035b97-0a5d-498c-b5f5-c75cee6f106e', 9, 'Operator', NULL, 'operator', '$2y$10$uAkukMsRWh7CjjK/wLo0zOAcIPYw8uEoXTtG2r9CD2I//hyXMDuYy', 1, '4dd36f70-7a68-44e3-9b43-42d85c179f77', '2025-03-12 00:48:57', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:57', NULL, 0, 'avatar.png', 0, NULL),
+('9d6da855-258b-4464-a0c5-769742e1c65e', 8, 'Panitra', NULL, 'panitra', '$2y$10$9pe53pKFeG87jvL39AD28OnupkhkliVtbg4rDqqYO9jTuBUsJ8oUC', 1, '8cc01301-8a87-49d0-9005-d6d71b4b4b3b', '2025-03-12 00:48:31', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:31', NULL, 0, 'avatar.png', 0, NULL),
+('a9467865-37c1-4104-bd63-b26a33c915db', 5, 'Super Admin', NULL, 'admin', '$2y$12$ZW/e7ChmDQjTZ5S04FD9ZuGlnSkFxPcLplevfGfcrIYTLQNDDU6hm', 1, '731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2024-10-18 06:52:21', NULL, '2025-03-12 00:49:12', NULL, 0, 'avatar.png', 0, '#2180f3'),
+('a9c33661-69a2-44b6-bf89-28b11ca14994', 7, 'Disdukcapil', NULL, 'disdukcapil', '$2y$10$TinXKy.WIvF400cS34SfxOCBvhr9jEynaZCK2Dhz40Ay5Rd1ey6zG', 1, '03a16a0c-88a3-4811-ae39-9afbd62c238c', '2025-03-12 00:48:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:15', NULL, 0, 'avatar.png', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -430,7 +451,9 @@ CREATE TABLE `usulan` (
   `path_ktp` varchar(255) DEFAULT NULL,
   `path_kk` varchar(255) DEFAULT NULL,
   `path_akta` varchar(255) DEFAULT NULL,
+  `path_pendukung` varchar(255) DEFAULT NULL,
   `pemohon_uid` varchar(40) DEFAULT NULL,
+  `catatan` text DEFAULT NULL,
   `is_approve` varchar(1) DEFAULT NULL,
   `approved_at` timestamp NULL DEFAULT NULL,
   `approved_by` varchar(40) DEFAULT NULL,
@@ -439,6 +462,14 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usulan`
+--
+
+INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `pemohon_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('1eb367fe-4e00-49f7-8f47-fda1e2190ddf', 'PERKARA KE 1', 'ASUSILA', 'b8f9811b9584ca811ed02cc155024afe1741763102_kop asdsad.pdf', 'c473ee06f249e674cb0b418a525e48701741763102_tiara.png', 'b8f9811b9584ca811ed02cc155024afe1741763102_Transkrip.pdf', 'b8f9811b9584ca811ed02cc155024afe1741763102_Dokumen Mochammad Qaysa Al-Haq_removed.pdf', '96a50cef-981f-40ff-bbc5-543354570163', NULL, '1', NULL, NULL, '2025-03-12 07:05:02', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 07:05:02', NULL),
+('2ed11b0d-56aa-4303-9d80-98904136b296', 'ASDNOM', 'PTOKL', '1741750179_A4 - 6 (1).pdf', '1741750179_terbaru (1).png', '1741750179_Screenshot 2025-03-11 151342.png', '1741750179_flowchart_perubahan nama (2).png', 'd825dab2-809b-4361-865a-ca190a62d7ff', NULL, '1', NULL, NULL, '2025-03-12 03:29:39', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 03:29:39', NULL);
 
 --
 -- Indexes for dumped tables
@@ -604,7 +635,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

@@ -27,11 +27,18 @@
       <select name="pemohon_uid" class="form-control select2-pemohon">
         <option value="" data-jk="" data-nik="asd"></option>
         @foreach ($pemohon as $item)
-            <option value="{{ $item->uid }}" data-nik="{{ $item->nik }}" data-jk="{{ ucfirst(strtolower($item->jenis_kelamin)) }}">{{ $item->name }}</option>
+            <option value="{{ $item->uid }}" @if($item->uid == @$data->pemohon_uid) selected @endif data-nik="{{ $item->nik }}" data-jk="{{ ucfirst(strtolower($item->jenis_kelamin)) }}">{{ $item->name }}</option>
         @endforeach
       </select>
     </div>
 
+    @if(@$data)
+    <div class="col-md-12">
+        <div class="alert alert-warning">
+            Peringatan : <strong>Jika tidak ada perubahan pada dokumen, maka tinggalkan kosong saja.</strong>
+        </div>
+    </div>
+    @endif
     <div class="col-md-12 justify-content-md-start row">
         @php
         $dokumen = [
@@ -43,11 +50,11 @@
         @endphp
         @foreach($dokumen as $key => $dok)
         <div class="col-md-3">
-            <label for="foto_{{$key}}">{{ $dok }} @if($key != 'pendukung')<span class="text-danger">*</span>@endif</label>
+            <label for="foto_{{$key}}">{{ $dok }} @if($key != 'pendukung') @if(!@$data)<span class="text-danger">*</span> @endif @endif</label>
             <div class="{{$key}}_picker my-1 position-relative rounded overflow-hidden d-flex justify-content-center align-items-center" style="height: 150px; width: 150px; border: 1.5px dotted #dee2e6; cursor: pointer;">
                 <div class="text-center {{$key}}-upload-placeholder">
                     <i class="fas fa-upload fa-2x"></i>
-                    <p class="small">Klik di sini untuk mengunggah gambar</p>
+                    <p class="small">Klik di sini untuk mengunggah gambar atau pdf</p>
                 </div>
                 <img id="{{$key}}Preview" src="" alt="Image Preview" class="img-thumbnail position-absolute w-100 h-100" style="object-fit: cover; display: none;">
                 <div id="{{$key}}-pdfPlaceholder" class="text-center position-absolute w-100 h-100 d-none flex-column justify-content-center align-items-center">
@@ -61,7 +68,7 @@
                     </div>
                 </div>
             </div>
-            <input type="file" accept="image/jpeg, image/png, image/gif, application/pdf" name="profile" id="foto_{{$key}}" autocomplete="off" style="display: none;">
+            <input type="file" accept="image/jpeg, image/png, image/gif, application/pdf" name="file_{{$key}}" id="foto_{{$key}}" autocomplete="off" style="display: none;">
         </div>
         @endforeach
     </div>

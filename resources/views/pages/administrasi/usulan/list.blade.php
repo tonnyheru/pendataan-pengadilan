@@ -38,7 +38,8 @@
     create: `{{ route('usulan.create') }}`,
     edit: `{{ route('usulan.edit', ':id') }}`,
     show: `{{ route('usulan.show', ':id') }}`,
-    destroy: `{{ route('usulan.destroy', ':id') }}`
+    destroy: `{{ route('usulan.destroy', ':id') }}`,
+    show_doc: `{{ route('file.preview', ['filename' => ':filename', 'type' => ':type']) }}`
   }
 
   function create(){
@@ -172,7 +173,6 @@
     })
   }
 
-  
   function show(id) {
     Ryuna.blockUI()
     $.get(_url.show.replace(':id', id)).done((res) => {
@@ -192,6 +192,32 @@
         confirmButtonColor: '#007bff'
       })
     })
+  }
+
+  function show_doc(doc, type) {
+    Ryuna.blockUI()
+    $.get(_url.show_doc.replace(':filename', doc).replace(':type', type)).done((res) => {
+      console.log(res)
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  function approve_panitra(id) {
+    
   }
 </script>
 @endsection

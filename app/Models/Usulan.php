@@ -20,7 +20,9 @@ class Usulan extends Model
         'path_ktp',
         'path_kk',
         'path_akta',
+        'path_pendukung',
         'pemohon_uid',
+        'catatan',
         'is_approve',
         'approved_at',
         'approved_by',
@@ -31,4 +33,9 @@ class Usulan extends Model
     protected $casts = [
         'uid' => 'string',
     ];
+
+    public function pemohon()
+    {
+        return $this->belongsTo(Pemohon::class, 'pemohon_uid', 'uid');
+    }
 }
