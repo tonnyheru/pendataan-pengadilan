@@ -49,6 +49,10 @@ class UserController extends Controller
         $request->validate([
             'profile' => 'mimes:jpg,jpeg,png|max:2048',
             'name' => 'required',
+            'nip' => 'required',
+            'ekstansi' => 'required',
+            'email' => 'required',
+            'no_telp' => 'required',
             'username' => 'required|unique:users,username',
             'password' => 'required',
         ]);
@@ -88,6 +92,10 @@ class UserController extends Controller
                     'name' => $data['name'],
                     'username' => $data['username'],
                     'password' => $pass,
+                    'nip' => $data['nip'],
+                    'ekstansi' => $data['ekstansi'],
+                    'email' => $data['email'],
+                    'no_telp' => $data['no_telp'],
                     'role_uid' => $data['role'],
                     'active' => '1',
                     'profile_picture' => $filename,
@@ -161,6 +169,15 @@ class UserController extends Controller
     {
         if (!PermissionCommon::check('user.update')) abort(403);
         try {
+            $request->validate([
+                'profile' => 'mimes:jpg,jpeg,png|max:2048',
+                'name' => 'required',
+                'nip' => 'required',
+                'ekstansi' => 'required',
+                'email' => 'required',
+                'no_telp' => 'required',
+                'username' => "required|unique:users,username,$uid,uid",
+            ]);
             $formData = $request->except(["_token", "_method"]);
             $user = User::with('role')->where('uid', $uid)->first();
             if ($user) {
@@ -221,6 +238,7 @@ class UserController extends Controller
                 ], 400);
             }
         } catch (\Throwable $th) {
+            throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
@@ -291,6 +309,10 @@ class UserController extends Controller
     {
         if (!PermissionCommon::check('profile.view')) abort(403);
         try {
+            $request->validate([
+                'name' => 'required',
+                'username' => 'required',
+            ]);
             $formData = $request->except(["_token", "_method"]);
             $user = User::with('role')->where('uid', $uid)->first();
             if ($user) {

@@ -7,6 +7,23 @@
           <input type="text" name="name" class="form-control" placeholder="Nama" value="{{ @$data->name }}">
         </div> 
         <div class="form-group col-md-12">
+          <label>NIP</label>
+          <input type="text" name="nip" class="form-control" placeholder="NIP" value="{{ @$data->nip }}">
+        </div> 
+        <div class="form-group col-md-12">
+          <label>Ekstansi</label>
+          <input type="text" name="ekstansi" class="form-control" placeholder="Ekstansi" value="{{ @$data->ekstansi }}">
+        </div> 
+        <div class="form-group col-md-6">
+          <label>Email <span class="text-danger">*</span></label>
+          <input type="email" name="email" class="form-control" placeholder="Email" value="{{ @$data->email }}">
+        </div>
+    
+        <div class="form-group col-md-6">
+          <label>No Telpon <span class="text-danger">*</span></label>
+          <input type="text" name="no_telp" class="form-control" placeholder="No Telpon" value="{{ @$data->no_telp }}">
+        </div>
+        <div class="form-group col-md-12">
           <label>Username</label>
           <input type="text" name="username" class="form-control" placeholder="Username" value="{{ @$data->username }}">
         </div> 

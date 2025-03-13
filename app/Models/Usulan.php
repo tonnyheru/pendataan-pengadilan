@@ -38,4 +38,9 @@ class Usulan extends Model
     {
         return $this->belongsTo(Pemohon::class, 'pemohon_uid', 'uid');
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'uid');
+    }
 }

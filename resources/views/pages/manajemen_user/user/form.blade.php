@@ -1,18 +1,38 @@
 <div class="row">
     <div class="form-group col-md-12">
-      <label>Name</label>
-      <input type="text" name="name" class="form-control" placeholder="Name" value="{{ @$data->name }}">
+      <label>Nama Petugas <span class="text-danger">*</span></label>
+      <input type="text" name="name" class="form-control" placeholder="Nama Petugas" value="{{ @$data->name }}">
+    </div>
+
+    <div class="form-group col-md-12">
+      <label>NIP <span class="text-danger">*</span></label>
+      <input type="text" name="nip" class="form-control" maxlength="20" placeholder="NIP" value="{{ @$data->nip }}">
+    </div>
+
+    <div class="form-group col-md-12">
+      <label>Ekstansi <span class="text-danger">*</span></label>
+      <input type="text" name="ekstansi" class="form-control" placeholder="Ekstansi" value="{{ @$data->ekstansi }}">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>Email <span class="text-danger">*</span></label>
+      <input type="email" name="email" class="form-control" placeholder="Email" value="{{ @$data->email }}">
+    </div>
+
+    <div class="form-group col-md-6">
+      <label>No Telpon <span class="text-danger">*</span></label>
+      <input type="text" name="no_telp" class="form-control" placeholder="No Telpon" value="{{ @$data->no_telp }}">
     </div>
   
     @if (!isset($data))
     <div class="form-group col-md-6">
-      <label>Username</label>
+      <label>Username <span class="text-danger">*</span></label>
       <input type="text" name="username" class="form-control" placeholder="Username" value="{{ @$data->username }}">
     </div>
     
     <div class="col-md-6">
       <div class="form-group" id="group_pw">
-        <label>Password</label>
+        <label>Password <span class="text-danger">*</span></label>
         <div class="input-group">
           <input type="password" id="password" name="password" class="form-control" placeholder="Password" >
           <div class="input-group-append">
@@ -23,14 +43,15 @@
     </div>
     @else
     <div class="form-group col-md-12">
-      <label>Username</label>
+      <label>Username <span class="text-danger">*</span></label>
       <input type="text" name="username" class="form-control" placeholder="Username" value="{{ @$data->username }}">
     </div>
     @endif
+    
 
     
     <div class="form-group col-md-12">
-      <label>Role</label>
+      <label>Role <span class="text-danger">*</span></label>
         {{-- <input type="text" name="role" class="form-control" placeholder="User Group" value="{{ @$data->role }}"> --}}
         <select class="form-control" name="role" id="select2-role">
             @if(isset($data->role->uid))

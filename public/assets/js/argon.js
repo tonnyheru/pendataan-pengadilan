@@ -37,18 +37,18 @@ var Layout = (function () {
         setTimeout(() => {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
             $(() => {
-                if (window.location.href.includes("/inventory/dashboard")) {
-                    if ($("#chart-ekspor").children().length > 0) {
+                if (window.location.href.includes("/app/dashboard")) {
+                    if ($("#chart-persentase-usulan").children().length > 0) {
                         // Chart has been rendered, destroy it
                         chartEkspor.destroy();
                         var chartEkspor = new ApexCharts(
-                            document.querySelector("#chart-ekspor"),
+                            document.querySelector("#chart-persentase-usulan"),
                             optionsEkspor
                         );
                         chartEkspor.render();
                     } else {
                         var chartEkspor = new ApexCharts(
-                            document.querySelector("#chart-ekspor"),
+                            document.querySelector("#chart-persentase-usulan"),
                             optionsEkspor
                         );
                         chartEkspor.render();
@@ -85,18 +85,18 @@ var Layout = (function () {
         setTimeout(() => {
             $($.fn.dataTable.tables(true)).DataTable().columns.adjust();
             $(() => {
-                if (window.location.href.includes("/inventory/dashboard")) {
-                    if ($("#chart-ekspor").children().length > 0) {
+                if (window.location.href.includes("/app/dashboard")) {
+                    if ($("#chart-persentase-usulan").children().length > 0) {
                         // Chart has been rendered, destroy it
                         chartEkspor.destroy();
                         var chartEkspor = new ApexCharts(
-                            document.querySelector("#chart-ekspor"),
+                            document.querySelector("#chart-persentase-usulan"),
                             optionsEkspor
                         );
                         chartEkspor.render();
                     } else {
                         var chartEkspor = new ApexCharts(
-                            document.querySelector("#chart-ekspor"),
+                            document.querySelector("#chart-persentase-usulan"),
                             optionsEkspor
                         );
                         chartEkspor.render();

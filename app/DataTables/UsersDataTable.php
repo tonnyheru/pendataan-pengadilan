@@ -110,6 +110,8 @@ class UsersDataTable extends DataTable
             ->width(60)
             ->addClass('text-center');
         $column[] = Column::make('name');
+        $column[] = Column::make('nip');
+        $column[] = Column::make('ekstansi');
         $column[] = Column::make('username');
         $column[] = Column::make('role');
         return $column;

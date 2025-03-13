@@ -39,7 +39,8 @@
     edit: `{{ route('usulan.edit', ':id') }}`,
     show: `{{ route('usulan.show', ':id') }}`,
     destroy: `{{ route('usulan.destroy', ':id') }}`,
-    show_doc: `{{ route('file.preview', ['filename' => ':filename', 'type' => ':type']) }}`
+    show_doc: `{{ route('file.preview', ['filename' => ':filename', 'type' => ':type']) }}`,
+    show_catatan: `{{ route('catatan.preview', ':id') }}`
   }
 
   function create(){
@@ -215,9 +216,126 @@
       })
     })
   }
-
-  function approve_panitra(id) {
-    
+  function show_catatan(id) {
+    Ryuna.blockUI()
+    $.get(_url.show_catatan.replace(':id', id)).done((res) => {
+      console.log(res)
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
   }
+  @php 
+    use App\Helpers\PermissionCommon;
+  @endphp
+  @if(PermissionCommon::check('usulan.approve_panitra') || PermissionCommon::check('usulan.approve_disdukcapil'))
+  _url.approve = `{{ route('usulan.approvement', ':id') }}`
+  _url.reject = `{{ route('usulan.rejectment', ':id') }}`
+  function approve(id, dimension) {
+    Ryuna.blockUI()
+    $.get(_url.approve.replace(':id',id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  function reject(id) {
+    Ryuna.blockUI()
+    $.get(_url.reject.replace(':id',id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  function approve_reject_store(type) {
+    $('#response_container').empty();
+    Ryuna.blockElement('.modal-content');
+    let el_form = $('#myForm')
+    let target = el_form.attr('action')
+    let formData = new FormData(el_form[0])
+  
+    $.ajax({
+      url: target,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+    }).done((res) => {
+      if(res?.status == true){
+        let html = '<div class="alert alert-success alert-dismissible fade show">'
+        html += `${res?.message}`
+        html += '</div>'
+        Ryuna.noty('success', '', res?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+  
+        if($('[name="_method"]').val() == undefined) {
+          el_form[0].reset()
+        }
+        window.LaravelDataTables["usulan-table"].draw()
+        Ryuna.close_modal()
+      }
+    }).fail((xhr) => {
+      if(xhr?.status == 422){
+        let errors = xhr.responseJSON.errors
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += '<ul>';
+        for(let key in errors){
+          html += `<li>${errors[key]}</li>`;
+        }
+        html += '</ul>'
+        html += '</div>'
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }else{
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += `${xhr?.responseJSON?.message}`
+        html += '</div>'
+        Ryuna.noty('error', '', xhr?.responseJSON?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }
+    })
+  }
+
+  @endif
 </script>
 @endsection

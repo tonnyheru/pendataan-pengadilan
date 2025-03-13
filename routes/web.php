@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Middleware\PengadilanAuth;
+use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -66,14 +67,35 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
         }
         // return response()->file(public_path("upload/$filename"));
     })->name('file.preview');
+    Route::get('/catatan/{uid}', function ($uid) {
+        try {
+            $usulan = Usulan::find($uid);
+            if ($usulan) {
+                $catatan = json_decode($usulan->catatan);
+                $body = view('pages.administrasi.usulan.catatan', compact('usulan', 'catatan'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+                return [
+                    'title' => 'Lihat Catatan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
+    })->name('catatan.preview');
 
 
     Route::prefix('approvement')->group(function () {
         Route::get('/approve_usulan/{uid}', [UsulanController::class, 'approvement'])->name('usulan.approvement');
         Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_store'])->name('usulan.approvement_store');
 
-        Route::get('/reject_usulan/{uid}', [UsulanController::class, 'approvement'])->name('usulan.approvement');
-        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'approvement_store'])->name('usulan.approvement_store');
+        Route::get('/reject_usulan/{uid}', [UsulanController::class, 'rejectment'])->name('usulan.rejectment');
+        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_store'])->name('usulan.rejectment_store');
     });
     Route::prefix('role')->group(function () {
         Route::get('/permission/{uid}', [RoleController::class, 'permission'])->name('role.permission');

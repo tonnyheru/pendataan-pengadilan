@@ -37,14 +37,19 @@ class UsulanDataTable extends DataTable
                 $html .= '</div><br>';
 
                 if (PermissionCommon::check('usulan.approve_panitra')) {
-                    $html .= '<button onclick="approve_panitra(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
-                    $html .= '<button onclick="reject_panitra(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
+                    if ($item->is_approve == 1) {
+                        $html .= '<button onclick="approve(\'' . $item->uid . '\',\'panitra\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
+                        $html .= '<button onclick="reject(\'' . $item->uid . '\',\'panitra\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button><br>';
+                    }
                 }
 
                 if (PermissionCommon::check('usulan.approve_disdukcapil')) {
-                    $html .= '<button onclick="approve_disdukcapil(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
-                    $html .= '<button onclick="reject_disdukcapil(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
+                    if ($item->is_approve == 2) {
+                        $html .= '<button onclick="approve(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
+                        $html .= '<button onclick="reject(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button><br>';
+                    }
                 }
+                $html .= '<button onclick="show_catatan(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-eye"></i> Lihat Catatan </button>';
                 return $html;
             })
             ->addColumn('dokumen', function ($item) {
