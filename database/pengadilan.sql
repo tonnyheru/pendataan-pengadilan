@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2025 at 05:40 AM
+-- Generation Time: Mar 13, 2025 at 07:09 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -318,9 +318,8 @@ CREATE TABLE `roles` (
 
 INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'Disdukcapil', 'disdukcapil', 'Operator Disdukcapil'),
-('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'Operator', 'operator', 'Operator Pengadilan'),
-('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin'),
-('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'Panitra Muda', 'panitra_muda', 'Panitra Muda');
+('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'Admin', 'admin', 'Admin Pengadilan'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin');
 
 -- --------------------------------------------------------
 
@@ -377,11 +376,7 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f2238d3b-9cc8-4cba-ae56-1abe592c990e'),
-('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001'),
-('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', '7776567b-4902-4324-bab0-51959b7a0d76'),
-('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
-('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
-('8cc01301-8a87-49d0-9005-d6d71b4b4b3b', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab');
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001');
 
 -- --------------------------------------------------------
 
@@ -441,7 +436,6 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`uid`, `id`, `name`, `profile_picture`, `username`, `password`, `nip`, `ekstansi`, `email`, `no_telp`, `active`, `role_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`, `active_status`, `avatar`, `dark_mode`, `messenger_color`) VALUES
 ('37035b97-0a5d-498c-b5f5-c75cee6f106e', 9, 'Operator', NULL, 'operator', '$2y$10$uAkukMsRWh7CjjK/wLo0zOAcIPYw8uEoXTtG2r9CD2I//hyXMDuYy', NULL, NULL, NULL, NULL, 1, '4dd36f70-7a68-44e3-9b43-42d85c179f77', '2025-03-12 00:48:57', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:57', NULL, 0, 'avatar.png', 0, NULL),
-('9d6da855-258b-4464-a0c5-769742e1c65e', 8, 'Panitra Ganteng', NULL, 'panitra', '$2y$10$9pe53pKFeG87jvL39AD28OnupkhkliVtbg4rDqqYO9jTuBUsJ8oUC', '444444', 'Kantor Pusat', 'panitra@gmail.com', '098798769876', 1, '8cc01301-8a87-49d0-9005-d6d71b4b4b3b', '2025-03-12 00:48:31', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 20:23:15', NULL, 0, 'avatar.png', 0, NULL),
 ('a9467865-37c1-4104-bd63-b26a33c915db', 5, 'Super Admin', NULL, 'admin', '$2y$12$ZW/e7ChmDQjTZ5S04FD9ZuGlnSkFxPcLplevfGfcrIYTLQNDDU6hm', '132456', 'Kantor Pusat Pengadilan', 'admin@email.com', '081212341234', 1, '731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2024-10-18 06:52:21', NULL, '2025-03-12 20:21:34', NULL, 0, 'avatar.png', 0, '#2180f3'),
 ('a9c33661-69a2-44b6-bf89-28b11ca14994', 7, 'Disdukcapil', NULL, 'disdukcapil', '$2y$10$TinXKy.WIvF400cS34SfxOCBvhr9jEynaZCK2Dhz40Ay5Rd1ey6zG', NULL, NULL, NULL, NULL, 1, '03a16a0c-88a3-4811-ae39-9afbd62c238c', '2025-03-12 00:48:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:15', NULL, 0, 'avatar.png', 0, NULL);
 
@@ -469,15 +463,6 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `usulan`
---
-
-INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `pemohon_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('324f38bc-58e2-45f8-89bb-bee849f9f663', 'PERKARA KE 2', 'UBAH NAMA', '40c1b994c67e183cbe7d25955bce404f1741829838_Poster Dilarang Merokok Ilustratif Krem dan Jingga.jpg', '78f1292cfe96e173ec4d0fdd58363fcd1741829838_IMG_20250225_080855 (1).jpg', '40c1b994c67e183cbe7d25955bce404f1741829838_Jadwal.pdf', '40c1b994c67e183cbe7d25955bce404f1741829838_cyber-initiative-tokyo-2024-mochammad-qaysa.pdf', 'd825dab2-809b-4361-865a-ca190a62d7ff', '[{\"role\":\"Panitra Muda\",\"name\":\"Panitra\",\"status\":\"0\",\"catatan\":\"ditolak karena malaz\",\"timestamp\":\"2025-03-13 09:52:05\"}]', '0', '2025-03-13 02:52:05', '9d6da855-258b-4464-a0c5-769742e1c65e', '2025-03-13 01:37:18', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 02:52:05', NULL),
-('a38c96c3-cdf2-4ae3-b2ad-443e09803267', 'PERKARA KE 1', 'ASUSILA', '2b4a6c57c2b25e3c4080acd39ac67b161741829758_A4 - 6.pdf', 'd7888d57580b6e27ed1b72b3181a651a1741829758_WhatsApp Image 2025-03-03 at 12.54.14 PM.jpeg', '2b4a6c57c2b25e3c4080acd39ac67b161741829758_WhatsApp Image 2025-03-03 at 12.53.08 PM.jpeg', '2b4a6c57c2b25e3c4080acd39ac67b161741829758_panduan_kp.pdf', '96a50cef-981f-40ff-bbc5-543354570163', '[{\"role\":\"Panitra Muda\",\"name\":\"Panitra\",\"status\":\"2\",\"catatan\":\"disetujui karena tidur\",\"timestamp\":\"2025-03-13 09:50:11\"},{\"role\":\"Disdukcapil\",\"name\":\"Disdukcapil\",\"status\":\"3\",\"catatan\":\"disetujui karena bagus\",\"timestamp\":\"2025-03-13 09:53:32\"}]', '3', '2025-03-13 02:53:32', 'a9c33661-69a2-44b6-bf89-28b11ca14994', '2025-03-13 01:35:59', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 02:53:32', NULL),
-('cd2daf6d-5d70-468e-831c-9d2d6951ac99', 'PERKARA KE 3', 'ASUSILA', 'ce99687f90c9d600bfcfb1fb93616bf91741831381_Screenshot 2025-03-11 151342.png', 'e262501e633781bb49afd08f178f22711741831381_20250305132250_page-0001.jpg', 'ce99687f90c9d600bfcfb1fb93616bf91741831381_WhatsApp Image 2025-03-03 at 12.54.14 PM.jpeg', 'ce99687f90c9d600bfcfb1fb93616bf91741831381_WhatsApp Image 2025-03-03 at 12.53.08 PM.jpeg', '96a50cef-981f-40ff-bbc5-543354570163', '[{\"role\":\"Panitra Muda\",\"name\":\"Panitra\",\"status\":\"2\",\"catatan\":\"dengan ini saya nyatakan bersalah\",\"timestamp\":\"2025-03-13 09:38:35\"},{\"role\":\"Disdukcapil\",\"name\":\"Disdukcapil\",\"status\":\"0\",\"catatan\":\"ditolak lagii gezzz\",\"timestamp\":\"2025-03-13 09:53:24\"}]', '0', '2025-03-13 02:53:24', 'a9c33661-69a2-44b6-bf89-28b11ca14994', '2025-03-13 02:03:01', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 02:53:24', NULL);
 
 --
 -- Indexes for dumped tables
