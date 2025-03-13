@@ -240,7 +240,7 @@
   @php 
     use App\Helpers\PermissionCommon;
   @endphp
-  @if(PermissionCommon::check('usulan.approve_panitra') || PermissionCommon::check('usulan.approve_disdukcapil'))
+  @if(PermissionCommon::check('usulan.approve_disdukcapil'))
   _url.approve = `{{ route('usulan.approvement', ':id') }}`
   _url.reject = `{{ route('usulan.rejectment', ':id') }}`
   function approve(id, dimension) {

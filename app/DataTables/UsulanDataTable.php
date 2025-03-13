@@ -34,22 +34,15 @@ class UsulanDataTable extends DataTable
                 if (PermissionCommon::check('usulan.delete')) {
                     $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
                 }
-                $html .= '</div><br>';
-
-                if (PermissionCommon::check('usulan.approve_panitra')) {
-                    if ($item->is_approve == 1) {
-                        $html .= '<button onclick="approve(\'' . $item->uid . '\',\'panitra\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
-                        $html .= '<button onclick="reject(\'' . $item->uid . '\',\'panitra\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button><br>';
-                    }
-                }
+                $html .= '</div>';
 
                 if (PermissionCommon::check('usulan.approve_disdukcapil')) {
-                    if ($item->is_approve == 2) {
+                    if ($item->is_approve == 1) {
                         $html .= '<button onclick="approve(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
-                        $html .= '<button onclick="reject(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button><br>';
+                        $html .= '<button onclick="reject(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
                     }
                 }
-                $html .= '<button onclick="show_catatan(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-eye"></i> Lihat Catatan </button>';
+                $html .= '<br><button onclick="show_catatan(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-eye"></i> Lihat Catatan </button>';
                 return $html;
             })
             ->addColumn('dokumen', function ($item) {
@@ -92,12 +85,9 @@ class UsulanDataTable extends DataTable
                         return '<span class="badge bg-danger text-white">Ditolak</span>';
                         break;
                     case '1':
-                        return '<span class="badge bg-warning text-white">Perlu Disetujui Panitra</span>';
-                        break;
-                    case '2':
                         return '<span class="badge bg-info text-white">Perlu Disetujui Disdukcapil</span>';
                         break;
-                    case '3':
+                    case '2':
                         return '<span class="badge bg-success text-white">Disetujui</span>';
                         break;
 
@@ -157,7 +147,7 @@ class UsulanDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('usulan.update') || PermissionCommon::check('usulan.delete') || PermissionCommon::check('usulan.approve_panitra') || PermissionCommon::check('usulan.approve_disdukcapil')) {
+        if (PermissionCommon::check('usulan.update') || PermissionCommon::check('usulan.delete') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

@@ -31,12 +31,12 @@
               $stat = 'Ditolak';
               $badge = 'bg-danger';
               break;
-            case '2':
-              $status = 'Disetujui Panitra Muda';
-              $stat = 'Disetujui';
+            case '1':
+              $status = 'Pembuatan Usulan';
+              $stat = 'Perlu Persetujuan';
               $badge = 'bg-success';
               break;
-            case '3':
+            case '2':
               $status = 'Disetujui Disdukcapil';
               $stat = 'Disetujui';
               $badge = 'bg-success';

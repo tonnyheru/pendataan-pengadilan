@@ -358,7 +358,7 @@ class UsulanController extends Controller
 
     public function approvement($uid)
     {
-        if (!PermissionCommon::check('usulan.approve_panitra') && !PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
+        if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
 
         $usulan = Usulan::find($uid);
         if ($usulan) {
@@ -391,11 +391,8 @@ class UsulanController extends Controller
                 $slug = auth()->user()->role->slug;
 
                 switch ($slug) {
-                    case 'panitra_muda':
-                        $formData['is_approve'] = '2';
-                        break;
                     case 'disdukcapil':
-                        $formData['is_approve'] = '3';
+                        $formData['is_approve'] = '2';
                         break;
                     default:
                         $formData['is_approve'] = '';
@@ -443,7 +440,7 @@ class UsulanController extends Controller
 
     public function rejectment($uid)
     {
-        if (!PermissionCommon::check('usulan.approve_panitra') && !PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
+        if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
 
         $usulan = Usulan::find($uid);
         if ($usulan) {

@@ -7,9 +7,9 @@
     <!-- Brand -->
     <div class="sidenav-header d-flex align-items-center">
       <a class="navbar-brand text-center">
-        <img src="{{ asset('img/logo.png') }}" 
+        <img src="{{ auth()->user()->role->slug == 'disdukcapil' ? asset('img/logo-cimahi.png') : asset('img/logo.png') }}" 
           style="max-height: 2rem !important;"> 
-        <span class="text-sm font-weight-bold ">PN Bale Bandung</span>
+        <span class="text-sm font-weight-bold ">@if(auth()->user()->role->slug == 'disdukcapil') Disdukcapil Cimahi  @else PN Bale Bandung @endif</span>
         
       </a>
       <div class="ml-auto">

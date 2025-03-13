@@ -14,7 +14,7 @@ class DashboardController extends Controller
     {
         $statistics = [];
         $statistics['total_usulan'] = Usulan::count();
-        $statistics['total_usulan_approve'] = Usulan::where('is_approve', 3)->count();
+        $statistics['total_usulan_approve'] = Usulan::where('is_approve', 2)->count();
         $statistics['total_usulan_reject'] = Usulan::where('is_approve', 0)->count();
 
         $chartData = [
