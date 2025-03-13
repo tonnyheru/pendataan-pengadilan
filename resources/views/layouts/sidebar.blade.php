@@ -50,7 +50,7 @@
       ))
       ->item('Pemohon', 'fas fa-clipboard-user', 'app/pemohon', Request::is('app/pemohon'), "pemohon.list")
       ->item('Usulan', 'fas fa-user-md-chat', 'app/usulan', Request::is('app/usulan'), "usulan.list")
-      ->item('Mutasi Data', 'fas fa-file-exclamation', 'app/mutasi', Request::is('app/mutasi'), "mutasi.list")
+      // ->item('Mutasi Data', 'fas fa-file-exclamation', 'app/mutasi', Request::is('app/mutasi'), "mutasi.list")
       ->end_item_accordion()
       ->end_accordion()
       ->end_group();
