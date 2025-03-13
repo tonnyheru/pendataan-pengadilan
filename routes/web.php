@@ -14,6 +14,8 @@ use App\Http\Middleware\PengadilanAuth;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Mail;
+use App\Mail\SendEmail;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,6 +69,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
         }
         // return response()->file(public_path("upload/$filename"));
     })->name('file.preview');
+
     Route::get('/catatan/{uid}', function ($uid) {
         try {
             $usulan = Usulan::find($uid);
@@ -81,13 +84,51 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
                 ];
             }
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
             ], 400);
         }
     })->name('catatan.preview');
+
+
+
+    Route::get('/send-email/{uid}', [UsulanController::class, 'send_mail'])->name('usulan.sendmail');
+    Route::post('/send-email/{uid}', function (Request $request, $uid) {
+        try {
+            $request->validate([
+                'link' => 'required',
+            ]);
+            $data = $request->except('_token');
+            $usulan = Usulan::find($uid);
+            if ($usulan) {
+                $kepada = $usulan->pemohon->email;
+                $data['nama'] = $usulan->pemohon->name;
+                $data['alamat'] = $usulan->pemohon->alamat;
+                $data['no_telp'] = $usulan->pemohon->no_telp;
+                $data['email'] = $usulan->pemohon->email;
+                $data['no_perkara'] = $usulan->no_perkara;
+                $data['jenis_perkara'] = $usulan->jenis_perkara;
+                Mail::to($kepada)->send(new SendEmail($data));
+                return response([
+                    'status' => true,
+                    'message' => 'Berhasil Mengirim Email'
+                ], 200);
+            } else {
+                return response([
+                    'status' => false,
+                    'message' => 'Data Usulan Tidak Ditemukan',
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
+    })->name('usulan.sendmail_process');
+
 
 
     Route::prefix('approvement')->group(function () {

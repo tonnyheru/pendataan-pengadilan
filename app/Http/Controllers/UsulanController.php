@@ -512,4 +512,21 @@ class UsulanController extends Controller
             ], 400);
         }
     }
+
+    public function send_mail($uid)
+    {
+        if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
+
+        $usulan = Usulan::find($uid);
+        if ($usulan) {
+            $body = view('pages.administrasi.usulan.form_email', compact('usulan', 'uid'))->render();
+            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="processMail()">Kirim Email <i class="fas fa-paper-plane"></i></button>';
+            return [
+                'title' => 'Kirim Email',
+                'body' => $body,
+                'footer' => $footer
+            ];
+        }
+    }
 }

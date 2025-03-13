@@ -41,6 +41,9 @@ class UsulanDataTable extends DataTable
                         $html .= '<button onclick="approve(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
                         $html .= '<button onclick="reject(\'' . $item->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
                     }
+                    if ($item->is_approve == 2) {
+                        $html .= '<button onclick="sendMail(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-paper-plane"></i> Kirim Email </button>';
+                    }
                 }
                 $html .= '<br><button onclick="show_catatan(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-eye"></i> Lihat Catatan </button>';
                 return $html;
