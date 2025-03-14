@@ -32,6 +32,17 @@
       </select>
     </div>
 
+    <div class="form-group col-md-12">
+      <label>Delegasikan Ke <span class="text-danger">*</span></label>
+      <select name="delegasi" class="form-control select2-delegasi">
+        <option value=""></option>
+        <option value="disdukcapil_kota_cimahi" @if(@$data->delegasi == "disdukcapil_kota_cimahi") selected @endif>Disdukcapil Kota Cimahi</option>
+        <option value="disdukcapil_kabupaten_bandung" @if(@$data->delegasi == "disdukcapil_kabupaten_bandung") selected @endif>Disdukcapil Kabupaten Bandung</option>
+        <option value="disdukcapil_kabupaten_bandung_barat" @if(@$data->delegasi == "disdukcapil_kabupaten_bandung_barat") selected @endif>Disdukcapil Kabupaten Bandung Barat</option>
+
+      </select>
+    </div>
+
     @if(@$data)
     <div class="col-md-12">
         <div class="alert alert-warning">
@@ -165,6 +176,36 @@
 
     function formatSelection(res) {
       const $container = $(`<span><img width='50' class='img-thumbnail' src='${base_url}img/default-avatar.png'/></div> <span class='selection-text'></span> </span>`);
+      var nik = $(res.element).data('nik') || '';
+      $container.find('.selection-text').text(res.text + (nik ? ' - ' : '') + nik || '-');
+      return $container;
+    }
+
+    $('.select2-delegasi').select2({
+      placeholder: "Pilih Kantor Disdukcapil",
+      allowClear: true,
+      templateResult: formatResultDelegasi,
+      templateSelection: formatSelectionDelegasi
+    });
+
+    // Helper functions for Select2
+    function formatResultDelegasi(res) {
+      if (!res.id) return res.text;
+      const $container = $(
+        `<div class='select2-result-repository clearfix'>
+          <div class='select2-result-repository__avatar'><img src='${base_url}img/default-kantor.png'/></div>
+          <div class='select2-result-repository__meta'>
+            <div class='select2-result-repository__title'></div>
+            <div class='select2-result-repository__description'></div>
+          </div>
+        </div>`
+      );
+      $container.find(".select2-result-repository__title").text(res.text || '-');
+      return $container;
+    }
+
+    function formatSelectionDelegasi(res) {
+      const $container = $(`<span><img width='50' class='img-thumbnail' src='${base_url}img/default-kantor.png'/></div> <span class='selection-text'></span> </span>`);
       var nik = $(res.element).data('nik') || '';
       $container.find('.selection-text').text(res.text + (nik ? ' - ' : '') + nik || '-');
       return $container;

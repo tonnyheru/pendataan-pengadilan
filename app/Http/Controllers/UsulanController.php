@@ -47,6 +47,7 @@ class UsulanController extends Controller
             'no_perkara' => 'required|unique:usulan,no_perkara',
             'jenis_perkara' => 'required',
             'pemohon_uid' => 'required',
+            'delegasi' => 'required',
             'file_ktp' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_kk' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
@@ -56,6 +57,7 @@ class UsulanController extends Controller
             'no_perkara.unique' => 'Nomor Perkara sudah terdaftar',
             'jenis_perkara.required' => 'Jenis Perkara tidak boleh kosong',
             'pemohon_uid.required' => 'Pemohon tidak boleh kosong',
+            'delegasi.required' => 'Kantor Disdukcapil tidak boleh kosong',
             'file_ktp.required' => 'File KTP tidak boleh kosong',
             'file_ktp.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_ktp.max' => 'Ukuran file ktp maksimal 2MB',
@@ -109,6 +111,7 @@ class UsulanController extends Controller
                 'path_akta' => $data['path_akta'],
                 'path_pendukung' => $data['path_pendukung'] ?? null,
                 'pemohon_uid' => $data['pemohon_uid'],
+                'delegasi' => $data['delegasi'],
                 'is_approve' => '1',
                 'catatan' => json_encode([]),
                 'created_by' => auth()->user()->uid,
@@ -203,6 +206,7 @@ class UsulanController extends Controller
             'no_perkara' => "required|unique:usulan,no_perkara,$usulan->uid,uid",
             'jenis_perkara' => 'required',
             'pemohon_uid' => 'required',
+            'delegasi' => 'required',
             'file_ktp' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_kk' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
@@ -212,6 +216,7 @@ class UsulanController extends Controller
             'no_perkara.unique' => 'Nomor Perkara sudah terdaftar',
             'jenis_perkara.required' => 'Jenis Perkara tidak boleh kosong',
             'pemohon_uid.required' => 'Pemohon tidak boleh kosong',
+            'delegasi.required' => 'Kantor Disdukcapil tidak boleh kosong',
             'file_ktp.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_ktp.max' => 'Ukuran file ktp maksimal 2MB',
             'file_kk.mimes' => 'Format file harus JPG, PNG, atau PDF',
@@ -390,14 +395,12 @@ class UsulanController extends Controller
                 $role = auth()->user()->role->name;
                 $slug = auth()->user()->role->slug;
 
-                switch ($slug) {
-                    case 'disdukcapil':
-                        $formData['is_approve'] = '2';
-                        break;
-                    default:
-                        $formData['is_approve'] = '';
-                        break;
+                if (str_contains($slug, 'disdukcapil')) {
+                    $formData['is_approve'] = '2';
+                } else {
+                    $formData['is_approve'] = '1';
                 }
+
                 $catatan = json_decode($usulan->catatan);
                 $catatan[] = [
                     'role' => $role,

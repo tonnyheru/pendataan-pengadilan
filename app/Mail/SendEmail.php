@@ -28,7 +28,15 @@ class SendEmail extends Mailable
      */
     public function build()
     {
-        return $this->subject('[FOLLOW UP] TINDAK LANJUT USULAN DARI PEMOHON ' . strtoupper($this->data['nama']))
+        $email = $this->subject('[FOLLOW UP] TINDAK LANJUT USULAN DARI PEMOHON ' . strtoupper($this->data['nama']))
             ->view('emails.sendemail');
+        foreach ($this->data['attach'] as $attachment) {
+            $email->attach(public_path('upload/email') . '/' . $attachment, [
+                'as' => $attachment,
+                'mime' => mime_content_type(public_path('upload/email') . '/' . $attachment),
+            ]);
+        }
+
+        return $email;
     }
 }

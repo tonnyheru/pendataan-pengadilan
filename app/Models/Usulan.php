@@ -21,6 +21,7 @@ class Usulan extends Model
         'path_kk',
         'path_akta',
         'path_pendukung',
+        'delegasi',
         'pemohon_uid',
         'catatan',
         'is_approve',

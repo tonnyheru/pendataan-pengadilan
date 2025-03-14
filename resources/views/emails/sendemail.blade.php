@@ -14,14 +14,14 @@
       </tr>
       <tr>
         <td style="width:50%;padding:20px;vertical-align:top">
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Nama Pemohon</span> {{ $data['nama'] }}</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Nomor Telepon</span> {{ $data['no_telp'] }}</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Nomor Perkara</span> {{ $data['no_perkara'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px">Nama Pemohon</span> {{ @$data['nama'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Nomor Telepon</span> {{ @$data['no_telp'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Nomor Perkara</span> {{ @$data['no_perkara'] }}</p>
         </td>
         <td style="width:50%;padding:20px;vertical-align:top">
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Alamat</span> {{ $data['alamat'] }}</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> {{ $data['email'] }}</p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Jenis Perkara</span> {{ $data['jenis_perkara'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Alamat</span> {{ @$data['alamat'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Email</span> {{ @$data['email'] }}</p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;"><span style="display:block;font-weight:bold;font-size:13px;">Jenis Perkara</span> {{ @$data['jenis_perkara'] }}</p>
         </td>
       </tr>
       <tr>
@@ -29,8 +29,8 @@
       </tr>
       <tr>
         <td colspan="2" style="padding:20px;">
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;">Yang terhormat Bapak/Ibu <strong>{{ $data['nama'] }},</strong></p>
-          <p style="margin:0 0 10px 0;padding:0;font-size:14px;">Terima kasih telah menggunakan layanan kami, berikut kami lampirkan link untuk mengunduh dokumen terbaru. link unduhan : <a href="{{ $data['link'] }}"> unduh disini</a></p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;">Yang terhormat Bapak/Ibu <strong>{{ @$data['nama'] }},</strong></p>
+          <p style="margin:0 0 10px 0;padding:0;font-size:14px;">Terima kasih telah menggunakan layanan kami, berikut kami lampirkan dokumen yang sudah diperbaharui.</a></p>
       </tr>
     </tbody>
     <tfooter>

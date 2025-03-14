@@ -11,6 +11,7 @@ use App\Http\Controllers\StudentsController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Middleware\PengadilanAuth;
+use App\Mail\MailPemohon;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -96,35 +97,58 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
 
     Route::get('/send-email/{uid}', [UsulanController::class, 'send_mail'])->name('usulan.sendmail');
     Route::post('/send-email/{uid}', function (Request $request, $uid) {
-        try {
-            $request->validate([
-                'link' => 'required',
-            ]);
-            $data = $request->except('_token');
-            $usulan = Usulan::find($uid);
-            if ($usulan) {
-                $kepada = $usulan->pemohon->email;
-                $data['nama'] = $usulan->pemohon->name;
-                $data['alamat'] = $usulan->pemohon->alamat;
-                $data['no_telp'] = $usulan->pemohon->no_telp;
-                $data['email'] = $usulan->pemohon->email;
-                $data['no_perkara'] = $usulan->no_perkara;
-                $data['jenis_perkara'] = $usulan->jenis_perkara;
-                Mail::to($kepada)->send(new SendEmail($data));
-                return response([
-                    'status' => true,
-                    'message' => 'Berhasil Mengirim Email'
-                ], 200);
-            } else {
-                return response([
-                    'status' => false,
-                    'message' => 'Data Usulan Tidak Ditemukan',
-                ], 400);
+        $request->validate([
+            'attachments'   => 'required|array|min:1|max:3', // Minimal 1 file, maksimal 3 file
+            'attachments.*' => 'file|mimes:jpeg,png,gif,pdf|max:2048', // Format: JPG, PNG, GIF, PDF (maks 2MB)
+        ], [
+            'attachments.required' => 'File Lampiran Wajib Diisi',
+            'attachments.array' => 'File Lampiran Harus Berupa Array',
+            'attachments.min' => 'Minimal 1 File Lampiran',
+            'attachments.max' => 'Maksimal 3 File Lampiran',
+            'attachments.*.file' => 'File Lampiran Harus Berupa File',
+            'attachments.*.mimes' => 'Format File Lampiran Harus Berupa JPG, PNG, GIF, PDF',
+            'attachments.*.max' => 'Maksimal Ukuran File Lampiran 2MB',
+        ]);
+        $data = $request->except('_token');
+        $usulan = Usulan::find($uid);
+        if ($usulan) {
+            $attach = [];
+            $kepada = $usulan->pemohon->email;
+            $data['nama'] = $usulan->pemohon->name;
+            $data['alamat'] = $usulan->pemohon->alamat;
+            $data['no_telp'] = $usulan->pemohon->no_telp;
+            $data['email'] = $usulan->pemohon->email;
+            $data['no_perkara'] = $usulan->no_perkara;
+            $data['jenis_perkara'] = $usulan->jenis_perkara;
+
+            // dd($request->file('attachments'));
+
+            foreach ($request->file('attachments') as $file) {
+                $filename = md5(bin2hex(random_bytes(10))) . '_' . date('Y-m-d') . '_' . $file->getClientOriginalName();
+                $file->move(public_path('upload/email'), $filename);
+                $attach[] = 'upload/email/' . $filename;
+                $data['attach'][] = $filename;
             }
-        } catch (\Throwable $th) {
+            unset($data['attachments']);
+
+            // dd($data);
+            Mail::to($kepada)->send(new SendEmail($data));
+            return response([
+                'status' => true,
+                'message' => 'Berhasil Mengirim Email'
+            ], 200);
+        } else {
             return response([
                 'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
+                'message' => 'Data Usulan Tidak Ditemukan',
+            ], 400);
+        }
+        try {
+        } catch (\Throwable $th) {
+            dd($th);
+            return response([
+                'status' => false,
+                'message' => $th->getMessage(),
             ], 400);
         }
     })->name('usulan.sendmail_process');

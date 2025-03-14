@@ -81,7 +81,15 @@ class UsulanDataTable extends DataTable
                     $direction
                 );
             })
-
+            ->addColumn('delegasi', function ($data) {
+                return ucwords(str_replace("_", " ", $data->delegasi));
+            })
+            ->filterColumn('delegasi', function ($query, $keyword) {
+                $query->where('delegasi', 'like', "%{$keyword}%");
+            })
+            ->orderColumn('delegasi', function ($query, $direction) {
+                $query->orderBy('delegasi', $direction);
+            })
             ->addColumn('status', function ($data) {
                 switch ($data->is_approve) {
                     case '0':
@@ -110,6 +118,10 @@ class UsulanDataTable extends DataTable
      */
     public function query(Usulan $model): QueryBuilder
     {
+        if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
+            $role = auth()->user()->role->slug;
+            return $model->newQuery()->where('delegasi', $role);
+        }
         return $model->newQuery();
     }
 
@@ -169,6 +181,7 @@ class UsulanDataTable extends DataTable
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('jenis_perkara');
         $column[] = Column::make('pemohon');
+        $column[] = Column::make('delegasi')->title('Kantor Disdukcapil');
         return $column;
     }
 

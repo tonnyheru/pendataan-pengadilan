@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 13, 2025 at 09:33 AM
+-- Generation Time: Mar 14, 2025 at 10:47 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -317,7 +317,9 @@ CREATE TABLE `roles` (
 --
 
 INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
-('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'Disdukcapil', 'disdukcapil', 'Operator Disdukcapil'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'Disdukcapil Kota Cimahi', 'disdukcapil_kota_cimahi', 'Operator Disdukcapil Kota Cimahi'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'Disdukcapil Kabupaten Bandung Barat', 'disdukcapil_kabupaten_bandung_barat', 'Disdukcapil Kabupaten Bandung Barat'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'Disdukcapil Kabupaten Bandung', 'disdukcapil_kabupaten_bandung', 'Disdukcapil Kabupaten Bandung'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'Admin', 'admin', 'Admin Pengadilan'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'Super Admin', 'super_admin', 'Being a super admin');
 
@@ -341,6 +343,14 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '46d77d3e-690f-4305-bdb5-6f77e4a173c8'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '47ba3e64-04be-4844-a58d-b12edce8a10d'),
@@ -437,7 +447,9 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`uid`, `id`, `name`, `profile_picture`, `username`, `password`, `nip`, `ekstansi`, `email`, `no_telp`, `active`, `role_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`, `active_status`, `avatar`, `dark_mode`, `messenger_color`) VALUES
 ('37035b97-0a5d-498c-b5f5-c75cee6f106e', 9, 'Operator', NULL, 'operator', '$2y$10$uAkukMsRWh7CjjK/wLo0zOAcIPYw8uEoXTtG2r9CD2I//hyXMDuYy', NULL, NULL, NULL, NULL, 1, '4dd36f70-7a68-44e3-9b43-42d85c179f77', '2025-03-12 00:48:57', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:57', NULL, 0, 'avatar.png', 0, NULL),
 ('a9467865-37c1-4104-bd63-b26a33c915db', 5, 'Super Admin', NULL, 'admin', '$2y$12$ZW/e7ChmDQjTZ5S04FD9ZuGlnSkFxPcLplevfGfcrIYTLQNDDU6hm', '132456', 'Kantor Pusat Pengadilan', 'admin@email.com', '081212341234', 1, '731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2024-10-18 06:52:21', NULL, '2025-03-12 20:21:34', NULL, 0, 'avatar.png', 0, '#2180f3'),
-('a9c33661-69a2-44b6-bf89-28b11ca14994', 7, 'Disdukcapil', NULL, 'disdukcapil', '$2y$10$TinXKy.WIvF400cS34SfxOCBvhr9jEynaZCK2Dhz40Ay5Rd1ey6zG', NULL, NULL, NULL, NULL, 1, '03a16a0c-88a3-4811-ae39-9afbd62c238c', '2025-03-12 00:48:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-12 00:48:15', NULL, 0, 'avatar.png', 0, NULL);
+('a9c33661-69a2-44b6-bf89-28b11ca14994', 7, 'Disdukcapil Kota Cimahi', NULL, 'disdukcapil', '$2y$10$TinXKy.WIvF400cS34SfxOCBvhr9jEynaZCK2Dhz40Ay5Rd1ey6zG', '222222', 'Disdukcapil Kota Cimahi', 'disduk@gmail.com', '081212341234', 1, '03a16a0c-88a3-4811-ae39-9afbd62c238c', '2025-03-12 00:48:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 20:21:15', NULL, 0, 'avatar.png', 0, NULL),
+('b425d1d9-7613-44be-bb87-48fd6d0e2d89', 11, 'Disdukcapil Kabupaten Bandung Barat', NULL, 'disdukcapil2', '$2y$10$AyPaB9WQW7LIpymF1p002eOIy.z0u4tB5RMcTCuo.TNK0xBBPe2tG', '3333333', 'Disdukcapil Kabupaten Bandung Barat', 'disdukkabanbar@gmail.com', '081212341234', 1, '0ed489f1-ba09-401d-a6e7-769755f3d916', '2025-03-13 20:23:09', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 20:23:09', NULL, 0, 'avatar.png', 0, NULL),
+('c17c84ad-dfd5-40b4-8eb4-94fb5a863187', 10, 'Disdukcapil Kabupaten Bandung', NULL, 'disdukcapil1', '$2y$10$6W7GLw6D/bvfBdF0NkfQHe9bzdUtch7LtA5s86I6hN/YhYa3.KcEG', '1111111', 'Disdukcapil Kabupaten Bandung', 'disdukkaban@gmail.com', '081212341234', 1, '36b9c86f-ec74-4100-b097-7621ac8e15a6', '2025-03-13 20:22:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-13 20:22:07', NULL, 0, 'avatar.png', 0, NULL);
 
 -- --------------------------------------------------------
 
@@ -453,6 +465,7 @@ CREATE TABLE `usulan` (
   `path_kk` varchar(255) DEFAULT NULL,
   `path_akta` varchar(255) DEFAULT NULL,
   `path_pendukung` varchar(255) DEFAULT NULL,
+  `delegasi` varchar(255) DEFAULT NULL,
   `pemohon_uid` varchar(40) DEFAULT NULL,
   `catatan` text DEFAULT NULL,
   `is_approve` varchar(1) DEFAULT NULL,
@@ -463,6 +476,13 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usulan`
+--
+
+INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `delegasi`, `pemohon_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('d57f9a4a-83c8-4f47-bfbe-fdd1c4d0a5d4', 'PERKARA KE 1', 'ASUSILA', '3f91400903a0a688a00be4a516ea2b3a1741932372_flowchart_perubahan nama (1).png', '2d263a2254002619614690c221f9ba811741932372_picture-1585152466.jpg', '3f91400903a0a688a00be4a516ea2b3a1741932372_terbaru (1).png', '3f91400903a0a688a00be4a516ea2b3a1741932372_WhatsApp Image 2025-03-03 at 12.53.08 PM.jpeg', 'disdukcapil_kabupaten_bandung', 'd825dab2-809b-4361-865a-ca190a62d7ff', '[{\"role\":\"Disdukcapil Kabupaten Bandung\",\"name\":\"Disdukcapil Kabupaten Bandung\",\"status\":\"\",\"catatan\":\"catatan dari disdukcapil kabupaten bandung\",\"timestamp\":\"2025-03-14 13:34:09\"}]', '2', '2025-03-14 06:34:09', 'c17c84ad-dfd5-40b4-8eb4-94fb5a863187', '2025-03-14 06:06:12', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-14 09:45:25', 'a9467865-37c1-4104-bd63-b26a33c915db');
 
 --
 -- Indexes for dumped tables
@@ -628,7 +648,7 @@ ALTER TABLE `personal_access_tokens`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- Constraints for dumped tables
