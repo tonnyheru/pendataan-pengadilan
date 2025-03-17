@@ -7,9 +7,35 @@
     <!-- Brand -->
     <div class="sidenav-header d-flex align-items-center">
       <a class="navbar-brand text-center">
-        <img src="{{ auth()->user()->role->slug == 'disdukcapil' ? asset('img/logo-cimahi.png') : asset('img/logo.png') }}" 
-          style="max-height: 2rem !important;"> 
-        <span class="text-sm font-weight-bold ">@if(auth()->user()->role->slug == 'disdukcapil') Disdukcapil Cimahi  @else PN Bale Bandung @endif</span>
+        @php
+        $logo = asset('img/logo.png');
+        $title = 'PN Bale Bandung';
+        $block = '';
+        $slug = auth()->user()->role->slug;
+        switch ($slug) {
+          case 'disdukcapil_kota_cimahi':
+            $logo = asset('img/logo-cimahi.png');
+            $title = 'Disdukcapil Cimahi';
+            break;
+          case 'disdukcapil_kabupaten_bandung':
+            $logo = asset('img/logo-bandung.png');
+            $title = 'Disdukcapil Kabupaten <br> Bandung';
+            $block = 'd-block';
+            break;
+          case 'disdukcapil_kabupaten_bandung_barat':
+            $logo = asset('img/logo-barat.png');
+            $title = 'Disdukcapil Kabupaten <br> Bandung Barat';
+            $block = 'd-block';
+            break;
+          default:
+            $logo = asset('img/logo.png');
+            $title = 'PN Bale Bandung';
+            break;
+        }
+
+        @endphp
+        <img src="{{ $logo }}" style="max-height: 2rem !important;"> 
+        <span class="text-sm font-weight-bold {{$block}}" style="font-size: 12px !important;">{!!$title!!}</span>
         
       </a>
       <div class="ml-auto">

@@ -51,6 +51,7 @@ class UsulanController extends Controller
             'file_ktp' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_kk' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_penetapan' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_pendukung' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
         ], [
             'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
@@ -67,6 +68,9 @@ class UsulanController extends Controller
             'file_akta.required' => 'File Akta tidak boleh kosong',
             'file_akta.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_akta.max' => 'Ukuran file akta maksimal 2MB',
+            'file_penetapan.required' => 'File Penetapan tidak boleh kosong',
+            'file_penetapan.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_penetapan.max' => 'Ukuran file penetapan maksimal 2MB',
             'file_pendukung.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_pendukung.max' => 'Ukuran file pendukung maksimal 2MB',
         ]);
@@ -97,6 +101,12 @@ class UsulanController extends Controller
                 $data['path_pendukung'] = $file_pendukung_name;
             }
 
+            if ($request->hasFile('file_penetapan')) {
+                $file_penetapan = $request->file('file_penetapan');
+                $file_penetapan_name = md5('ktp' . time()) . time() . '_' . $file_penetapan->getClientOriginalName();
+                $data['path_penetapan'] = $file_penetapan_name;
+            }
+
             // status 0 = ditolak / revisi
             // status 1 = belum di approve
             // status 2 = sudah di approve admin
@@ -109,6 +119,7 @@ class UsulanController extends Controller
                 'path_ktp' => $data['path_ktp'],
                 'path_kk' => $data['path_kk'],
                 'path_akta' => $data['path_akta'],
+                'path_penetapan' => $data['path_penetapan'],
                 'path_pendukung' => $data['path_pendukung'] ?? null,
                 'pemohon_uid' => $data['pemohon_uid'],
                 'delegasi' => $data['delegasi'],
@@ -136,6 +147,11 @@ class UsulanController extends Controller
                 if ($request->hasFile('file_pendukung')) {
                     $file_pendukung = $request->file('file_pendukung');
                     $file_pendukung->move(public_path('upload/file_pendukung'), $data['path_pendukung']);
+                }
+
+                if ($request->hasFile('file_penetapan')) {
+                    $file_penetapan = $request->file('file_penetapan');
+                    $file_penetapan->move(public_path('upload/file_penetapan'), $data['path_penetapan']);
                 }
 
                 return response([
@@ -211,6 +227,7 @@ class UsulanController extends Controller
             'file_kk' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_pendukung' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_penetapan' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
         ], [
             'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
             'no_perkara.unique' => 'Nomor Perkara sudah terdaftar',
@@ -225,6 +242,8 @@ class UsulanController extends Controller
             'file_akta.max' => 'Ukuran file akta maksimal 2MB',
             'file_pendukung.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_pendukung.max' => 'Ukuran file pendukung maksimal 2MB',
+            'file_penetapan.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_penetapan.max' => 'Ukuran file penetapan maksimal 2MB',
         ]);
         $formData = $request->except(["_token", "_method"]);
         try {
@@ -296,6 +315,23 @@ class UsulanController extends Controller
                 // Update the form data with the new file name
                 $formData['path_pendukung'] = $filename;
             }
+            if ($request->hasFile('file_penetapan')) {
+                $file = $request->file('file_penetapan');
+
+                // Determine the new file name
+                $filename = md5('penetapan' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_penetapan && file_exists(public_path('upload/file_penetapan/' . $usulan->path_penetapan))) {
+                    unlink(public_path('upload/file_penetapan/' . $usulan->path_penetapan));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_penetapan'] = $filename;
+            }
 
             $formData['updated_by'] = auth()->user()->uid;
 
@@ -343,6 +379,9 @@ class UsulanController extends Controller
             }
             if ($usulan->path_pendukung && file_exists(public_path('upload/file_pendukung/' . $usulan->path_pendukung))) {
                 unlink(public_path('upload/file_pendukung/' . $usulan->path_pendukung));
+            }
+            if ($usulan->path_penetapan && file_exists(public_path('upload/file_penetapan/' . $usulan->path_penetapan))) {
+                unlink(public_path('upload/file_penetapan/' . $usulan->path_penetapan));
             }
             $delete = $usulan->delete();
             if ($delete) {

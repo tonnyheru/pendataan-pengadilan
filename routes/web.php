@@ -120,6 +120,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
             $data['email'] = $usulan->pemohon->email;
             $data['no_perkara'] = $usulan->no_perkara;
             $data['jenis_perkara'] = $usulan->jenis_perkara;
+            $data['delegasi'] = $usulan->delegasi;
 
             // dd($request->file('attachments'));
 
@@ -133,6 +134,10 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
 
             // dd($data);
             Mail::to($kepada)->send(new SendEmail($data));
+
+            foreach ($data['attach'] as $file) {
+                unlink(public_path('upload/email/' . $file));
+            }
             return response([
                 'status' => true,
                 'message' => 'Berhasil Mengirim Email'

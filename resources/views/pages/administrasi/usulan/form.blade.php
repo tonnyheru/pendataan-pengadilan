@@ -57,6 +57,7 @@
           'kk' => 'Kartu Keluarga',
           'akta' => 'Akta Kelahiran',
           'pendukung' => 'Dokumen Pendukung',
+          'penetapan' => 'Dokumen Penetapan',
         ];
         @endphp
         @foreach($dokumen as $key => $dok)
@@ -93,6 +94,7 @@
       'kk',
       'akta',
       'pendukung',
+      'penetapan',
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {
