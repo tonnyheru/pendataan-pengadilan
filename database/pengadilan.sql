@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 14, 2025 at 10:47 AM
+-- Generation Time: Mar 17, 2025 at 03:20 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -465,6 +465,7 @@ CREATE TABLE `usulan` (
   `path_kk` varchar(255) DEFAULT NULL,
   `path_akta` varchar(255) DEFAULT NULL,
   `path_pendukung` varchar(255) DEFAULT NULL,
+  `path_penetapan` varchar(255) DEFAULT NULL,
   `delegasi` varchar(255) DEFAULT NULL,
   `pemohon_uid` varchar(40) DEFAULT NULL,
   `catatan` text DEFAULT NULL,
@@ -476,13 +477,6 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `usulan`
---
-
-INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `delegasi`, `pemohon_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('d57f9a4a-83c8-4f47-bfbe-fdd1c4d0a5d4', 'PERKARA KE 1', 'ASUSILA', '3f91400903a0a688a00be4a516ea2b3a1741932372_flowchart_perubahan nama (1).png', '2d263a2254002619614690c221f9ba811741932372_picture-1585152466.jpg', '3f91400903a0a688a00be4a516ea2b3a1741932372_terbaru (1).png', '3f91400903a0a688a00be4a516ea2b3a1741932372_WhatsApp Image 2025-03-03 at 12.53.08 PM.jpeg', 'disdukcapil_kabupaten_bandung', 'd825dab2-809b-4361-865a-ca190a62d7ff', '[{\"role\":\"Disdukcapil Kabupaten Bandung\",\"name\":\"Disdukcapil Kabupaten Bandung\",\"status\":\"\",\"catatan\":\"catatan dari disdukcapil kabupaten bandung\",\"timestamp\":\"2025-03-14 13:34:09\"}]', '2', '2025-03-14 06:34:09', 'c17c84ad-dfd5-40b4-8eb4-94fb5a863187', '2025-03-14 06:06:12', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-14 09:45:25', 'a9467865-37c1-4104-bd63-b26a33c915db');
 
 --
 -- Indexes for dumped tables
