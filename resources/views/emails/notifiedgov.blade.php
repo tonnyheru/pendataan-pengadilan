@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Jakarta');
   <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px #016004;">
     <thead>
       <tr>
-        <th style="text-align:left;"><img style="max-width: 150px;" src="{{$data['logo']}}" alt="{{$data['title']}}"></th>
+        <th style="text-align:left;"><img style="max-width: 150px;" src="{{ asset('img/logo.png') }}" alt="Logo Pengadilan Negeri Bale Bandung"></th>
         <th style="text-align:right;font-weight:400;">{{ date('Y-m-d H:i:s') }}</th>
       </tr>
     </thead>
