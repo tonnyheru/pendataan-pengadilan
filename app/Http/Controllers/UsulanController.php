@@ -156,12 +156,12 @@ class UsulanController extends Controller
 
                 return response([
                     'status' => true,
-                    'message' => 'Data Berhasil Diubah'
+                    'message' => 'Data Berhasil Ditambah'
                 ], 200);
             } else {
                 return response([
                     'status' => false,
-                    'message' => 'Data Gagal Diubah'
+                    'message' => 'Data Gagal Ditambah'
                 ], 400);
             }
         } catch (\Throwable $th) {
