@@ -117,9 +117,7 @@
       <div class="row">
         <div class="col-8 mx-auto text-center mt-1">
           <p class="mb-0 text-secondary">
-            Copyright &copy; <script>
-              document.write(new Date().getFullYear())
-            </script> by Tony Heru Susanto.
+            Copyright &copy; {{date('Y')}}, M Tonny Heru Susanto. All rights reserved
           </p>
         </div>
       </div>

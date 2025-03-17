@@ -36,9 +36,9 @@
       <label>Delegasikan Ke <span class="text-danger">*</span></label>
       <select name="delegasi" class="form-control select2-delegasi">
         <option value=""></option>
-        <option value="disdukcapil_kota_cimahi" @if(@$data->delegasi == "disdukcapil_kota_cimahi") selected @endif>Disdukcapil Kota Cimahi</option>
-        <option value="disdukcapil_kabupaten_bandung" @if(@$data->delegasi == "disdukcapil_kabupaten_bandung") selected @endif>Disdukcapil Kabupaten Bandung</option>
-        <option value="disdukcapil_kabupaten_bandung_barat" @if(@$data->delegasi == "disdukcapil_kabupaten_bandung_barat") selected @endif>Disdukcapil Kabupaten Bandung Barat</option>
+        @foreach ($disdukcapil as $item)
+            <option value="{{ $item->uid }}" data-alamat="{{ $item->alamat }}" @if($item->uid == @$data->disdukcapil_uid) selected @endif>{{ $item->nama }}</option>
+        @endforeach
 
       </select>
     </div>
@@ -58,6 +58,8 @@
           'akta' => 'Akta Kelahiran',
           'pendukung' => 'Dokumen Pendukung',
           'penetapan' => 'Dokumen Penetapan',
+          'nikah' => 'Surat Nikah',
+          'pengantar' => 'Surat Pengantar',
         ];
         @endphp
         @foreach($dokumen as $key => $dok)
@@ -95,6 +97,8 @@
       'akta',
       'pendukung',
       'penetapan',
+      'nikah',
+      'pengantar',
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {
@@ -202,7 +206,10 @@
           </div>
         </div>`
       );
+      
+      var alamat = $(res.element).data('alamat');
       $container.find(".select2-result-repository__title").text(res.text || '-');
+      $container.find(".select2-result-repository__description").html(alamat ? `Alamat : ${alamat}` : '-');
       return $container;
     }
 

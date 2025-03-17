@@ -68,6 +68,17 @@
 
       $obj_menu->start_group()
       ->start_accordion()
+      ->sub_item_accordion('Master','master',["disdukcapil.list"],'fas fa-cabinet-filing')
+      ->start_item_accordion('master', (
+      Request::is('app/disdukcapil')
+      ))
+      ->item('Disdukcapil', 'fas fa-poll-people', 'app/disdukcapil', Request::is('app/disdukcapil'), "disdukcapil.list")
+      ->end_item_accordion()
+      ->end_accordion()
+      ->end_group();
+
+      $obj_menu->start_group()
+      ->start_accordion()
       ->sub_item_accordion('Administrasi','administrasi',["mutasi.list", "usulan.list", "mutasi.list"],'fas fa-database')
       ->start_item_accordion('administrasi', (
       Request::is('app/mutasi') ||

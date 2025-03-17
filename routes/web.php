@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DisdukcapilController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\MutasiController;
 use App\Http\Controllers\PemohonController;
@@ -46,6 +47,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::resources(['mutasi' => MutasiController::class]);
     Route::resources(['pemohon' => PemohonController::class]);
     Route::resources(['usulan' => UsulanController::class]);
+    Route::resources(['disdukcapil' => DisdukcapilController::class]);
 
     Route::get('/file/{filename}/{type}', function ($filename, $type) {
         $file_path = public_path("upload/$type/$filename");
@@ -114,13 +116,17 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
         if ($usulan) {
             $attach = [];
             $kepada = $usulan->pemohon->email;
+            $data['logo'] = $usulan->disdukcapil->cdn_picture;
+            $data['title'] = $usulan->disdukcapil->nama;
             $data['nama'] = $usulan->pemohon->name;
             $data['alamat'] = $usulan->pemohon->alamat;
             $data['no_telp'] = $usulan->pemohon->no_telp;
             $data['email'] = $usulan->pemohon->email;
             $data['no_perkara'] = $usulan->no_perkara;
             $data['jenis_perkara'] = $usulan->jenis_perkara;
-            $data['delegasi'] = $usulan->delegasi;
+            $data['nama_disdukcapil'] = $usulan->disdukcapil->nama;
+            $data['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
+            $data['no_telp_disdukcapil'] = $usulan->disdukcapil->no_telp;
 
             // dd($request->file('attachments'));
 

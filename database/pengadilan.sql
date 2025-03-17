@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 17, 2025 at 03:20 AM
+-- Generation Time: Mar 17, 2025 at 08:22 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -44,6 +44,34 @@ CREATE TABLE `cache_locks` (
   `owner` varchar(255) NOT NULL,
   `expiration` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `disdukcapil`
+--
+
+CREATE TABLE `disdukcapil` (
+  `uid` varchar(40) NOT NULL,
+  `nama` varchar(255) DEFAULT NULL,
+  `alamat` text DEFAULT NULL,
+  `no_telp` varchar(20) DEFAULT NULL,
+  `email` varchar(100) DEFAULT NULL,
+  `cdn_picture` text DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` varchar(40) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_by` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `disdukcapil`
+--
+
+INSERT INTO `disdukcapil` (`uid`, `nama`, `alamat`, `no_telp`, `email`, `cdn_picture`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('1c39d652-51f0-4cf8-b833-791eb6372528', 'Disdukcapil Kabupaten Bandung Barat', 'Komplek Pemda KBB Jl. Raya Padalarang Cisarua Km.2 Ngamprah, Jawa Barat, Indonesia', '0811-1902-4159', 'abumilhan78@gmail.com', 'https://drive.google.com/drive-viewer/AKGpihbYeUYwzRmvAJQBojDlzQVDGzP5zdaKZ5bTPs364DLsh_Z55CnCOE3QtBYG7R2tbHI5K4WabV92I6qIMpab9zMtoNh0osezkwI=w1920-h953-rw-v1', '2025-03-17 05:25:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 07:00:43', NULL),
+('8a7fb795-51c5-49c1-a91d-403f43138a4e', 'Disdukcapil Kabupaten Bandung', 'Jl. Raya Soreang, Kabupaten Bandung 40911', '085318202833', 'disdukcasip@bandungkab.go.id', 'https://bandungkab.go.id/asset/logo.png', '2025-03-17 05:24:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 06:35:28', NULL),
+('b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'Disdukcapil Kota Cimahi', 'Mal Pelayanan Publik Kota Cimahi, Jl. Aruman Lt. 3, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40514', '(022) 6631885', 'pengaduan.adminduk@cimahikota.go.id', 'https://ugc.production.linktr.ee/CoBHMEZLSMuV9PCf6v8I_naLADx66XSZyQp9P?io=true&size=avatar-v3_0', '2025-03-17 05:21:13', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 06:35:13', NULL);
 
 -- --------------------------------------------------------
 
@@ -165,6 +193,7 @@ INSERT INTO `modules` (`uid`, `description`, `name`, `created_at`, `created_by`,
 ('3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', 'User', 'User', '2024-10-17 07:29:49', NULL, '2024-10-17 07:29:49', NULL),
 ('42634834-66e0-45bf-8835-99f2004a3b05', 'Dashboard', 'Dashboard', '2024-10-17 03:56:14', NULL, '2024-10-17 03:57:23', NULL),
 ('78eefbc3-b248-4d7c-a355-a83ed0103c4b', 'Module', 'Module', '2024-10-17 07:29:38', NULL, '2024-10-17 07:29:38', NULL),
+('8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', 'Disdukcapil', 'Disdukcapil', '2025-03-17 04:36:33', NULL, '2025-03-17 04:36:33', NULL),
 ('98bb7a50-9edb-4356-90c8-409cf75cd962', 'Pemohon', 'Pemohon', '2025-03-06 05:40:47', NULL, '2025-03-06 06:23:17', NULL),
 ('a9e39221-3834-4e48-88f2-455daae1cf24', 'Profile', 'Profile', '2025-03-06 02:20:40', NULL, '2025-03-06 02:20:40', NULL);
 
@@ -225,7 +254,7 @@ CREATE TABLE `pemohon` (
 --
 
 INSERT INTO `pemohon` (`uid`, `name`, `nik`, `tanggal_lahir`, `tempat_lahir`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `agama`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('96a50cef-981f-40ff-bbc5-543354570163', 'Rifky Pratama', '0987098709870987', '2004-03-31', 'Sleman', 'Dekat UNIBI, kampus tercinta', 'abumilhan78@gmail.com', '081212341234', 'PRIA', 'islam', 'k', '2025-03-11 02:38:28', NULL, '2025-03-13 07:33:50', NULL),
+('96a50cef-981f-40ff-bbc5-543354570163', 'Rifky Pratama', '0987098709870987', '2004-03-31', 'Sleman', 'Dekat UNIBI, kampus tercinta', 'abumilhan78@gmail.com', '081212341234', 'PRIA', 'islam', 'k', '2025-03-11 02:38:28', NULL, '2025-03-17 07:17:06', NULL),
 ('d825dab2-809b-4361-865a-ca190a62d7ff', 'Tonny Heru Susanto', '1234123412341234', '2001-03-01', 'Bandung', 'disini', 'tonnyheru29@gmail.com', '081212341234', 'PRIA', 'kristen', 'ch', '2025-03-10 01:10:45', NULL, '2025-03-13 08:00:08', NULL);
 
 -- --------------------------------------------------------
@@ -253,7 +282,9 @@ CREATE TABLE `permissions` (
 INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 ('1e65f1cc-4a52-4a25-949f-18e436984511', 'Module List View Permit', 'Module List View', 'module.list', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:45', NULL, '2024-10-17 07:30:45', NULL),
 ('2c37e04b-3293-46d9-aee1-6f1ab7c1f40c', 'Mutasi Create Permit', 'Mutasi Create', 'mutasi.create', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:06', NULL, '2025-03-03 03:56:06', NULL),
+('2c6e01c9-e38b-4a67-9c4d-27301c627ac3', 'Disdukcapil List View Permit', 'Disdukcapil List View', 'disdukcapil.list', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:36:57', NULL, '2025-03-17 04:36:57', NULL),
 ('30d81e9f-7196-49c9-adbf-ab69396f2c1b', 'Mutasi Delete Permit', 'Mutasi Delete', 'mutasi.delete', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:21', NULL, '2025-03-03 03:56:21', NULL),
+('34925feb-b789-4a74-8760-f52e103d7074', 'Disdukcapil Update Permit', 'Disdukcapil Update', 'disdukcapil.update', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:38:00', NULL, '2025-03-17 04:38:00', NULL),
 ('3d12e466-c9f3-4a82-ac6f-84bf0c15a16e', 'Pemohon Create Permit', 'Pemohon Create', 'pemohon.create', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:38', NULL, '2025-03-06 06:23:38', NULL),
 ('46d77d3e-690f-4305-bdb5-6f77e4a173c8', 'Usulan Create Permit', 'Usulan Create', 'usulan.create', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:03:18', NULL, '2025-03-10 04:03:18', NULL),
 ('47ba3e64-04be-4844-a58d-b12edce8a10d', 'Usulan Update Permit', 'Usulan Update', 'usulan.update', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:02:34', NULL, '2025-03-10 04:02:34', NULL),
@@ -266,6 +297,7 @@ INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `
 ('6e54c5fe-a64f-4fa4-b1b6-0621fa29005b', 'Pemohon Update Permit', 'Pemohon Update', 'pemohon.update', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:42', NULL, '2025-03-06 06:24:42', NULL),
 ('7776567b-4902-4324-bab0-51959b7a0d76', 'Usulan Approve Panitra Permit', 'Usulan Approve Panitra', 'usulan.approve_panitra', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-12 05:07:31', NULL, '2025-03-12 05:07:31', NULL),
 ('79028af7-0408-4ec0-8e9e-22b1b751ae0a', 'Pemohon Delete Permit', 'Pemohon Delete', 'pemohon.delete', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:58', NULL, '2025-03-06 06:24:58', NULL),
+('7d5b5ed0-38b9-4830-82dd-592f1468e9a6', 'Disdukcapil Create', 'Disdukcapil Create', 'disdukcapil.create', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:38:14', NULL, '2025-03-17 04:38:14', NULL),
 ('7f214497-e3c8-44d0-86b2-b8cc63260740', 'Profile View Permit', 'Profile View', 'profile.view', 'a9e39221-3834-4e48-88f2-455daae1cf24', '2025-03-06 02:21:07', NULL, '2025-03-06 02:21:07', NULL),
 ('7f32c8e5-1b4a-450b-bdcb-394b895c9cc7', 'Usulan Delete Permit', 'Usulan Delete', 'usulan.delete', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:03:01', NULL, '2025-03-10 04:03:01', NULL),
 ('8e977c1b-cea8-4a86-b04b-e63d44db6940', 'Pemohon List View Permit', 'Pemohon List View', 'pemohon.list', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:54', NULL, '2025-03-06 06:24:13', NULL),
@@ -278,6 +310,7 @@ INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `
 ('cd4b4da7-2d45-4729-b717-785e1cb7ffab', 'Usulan List View Permit', 'Usulan List View', 'usulan.list', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:02:14', NULL, '2025-03-10 04:02:14', NULL),
 ('cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96', 'User Update Permit', 'User Update', 'user.update', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:34:36', NULL, '2024-10-17 07:34:36', NULL),
 ('f2238d3b-9cc8-4cba-ae56-1abe592c990e', 'Role List View Permit', 'Role List View', 'role.list', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:32:37', NULL, '2024-10-17 07:32:37', NULL),
+('f4ab031d-e016-455a-b2fc-e40a8c280c6b', 'Disdukcapil Delete Permit', 'Disdukcapil Delete', 'disdukcapil.delete', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:37:38', NULL, '2025-03-17 04:37:38', NULL),
 ('f99117e0-ba23-4a96-8aef-b428916a7001', 'Role Create Permit', 'Role Create', 'role.create', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:32:52', NULL, '2024-10-17 07:32:52', NULL);
 
 -- --------------------------------------------------------
@@ -363,7 +396,9 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '1e65f1cc-4a52-4a25-949f-18e436984511'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c37e04b-3293-46d9-aee1-6f1ab7c1f40c'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c6e01c9-e38b-4a67-9c4d-27301c627ac3'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '30d81e9f-7196-49c9-adbf-ab69396f2c1b'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '34925feb-b789-4a74-8760-f52e103d7074'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '46d77d3e-690f-4305-bdb5-6f77e4a173c8'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '47ba3e64-04be-4844-a58d-b12edce8a10d'),
@@ -374,6 +409,7 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '5851c5a8-325b-434e-a36c-75ba0f2e2bd6'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '6e54c5fe-a64f-4fa4-b1b6-0621fa29005b'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '79028af7-0408-4ec0-8e9e-22b1b751ae0a'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7d5b5ed0-38b9-4830-82dd-592f1468e9a6'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7f32c8e5-1b4a-450b-bdcb-394b895c9cc7'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '8e977c1b-cea8-4a86-b04b-e63d44db6940'),
@@ -386,6 +422,7 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f2238d3b-9cc8-4cba-ae56-1abe592c990e'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f4ab031d-e016-455a-b2fc-e40a8c280c6b'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001');
 
 -- --------------------------------------------------------
@@ -466,8 +503,11 @@ CREATE TABLE `usulan` (
   `path_akta` varchar(255) DEFAULT NULL,
   `path_pendukung` varchar(255) DEFAULT NULL,
   `path_penetapan` varchar(255) DEFAULT NULL,
+  `path_nikah` varchar(255) DEFAULT NULL,
+  `path_pengantar` varchar(255) DEFAULT NULL,
   `delegasi` varchar(255) DEFAULT NULL,
   `pemohon_uid` varchar(40) DEFAULT NULL,
+  `disdukcapil_uid` varchar(40) DEFAULT NULL,
   `catatan` text DEFAULT NULL,
   `is_approve` varchar(1) DEFAULT NULL,
   `approved_at` timestamp NULL DEFAULT NULL,
@@ -477,6 +517,13 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `usulan`
+--
+
+INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `path_penetapan`, `path_nikah`, `path_pengantar`, `delegasi`, `pemohon_uid`, `disdukcapil_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('337f654e-d483-46c3-a36a-229a3e6ebd53', 'PERKARA KE 1', 'ASUSILA', '7bbb79df2f2acca110daab374fc6894d1742194881_pattern-dark.png', 'b2cdbda5b46ff49980f36e55bebc37451742194881_pattern.png', '7bbb79df2f2acca110daab374fc6894d1742194881_kab bandung barat.png', '7bbb79df2f2acca110daab374fc6894d1742194881_kab bandung.png', '7bbb79df2f2acca110daab374fc6894d1742194881_Screenshot 2025-03-13 091851.png', '7bbb79df2f2acca110daab374fc6894d1742194881_terbaru (1).png', '7bbb79df2f2acca110daab374fc6894d1742194881_coret.png', '1c39d652-51f0-4cf8-b833-791eb6372528', '96a50cef-981f-40ff-bbc5-543354570163', '1c39d652-51f0-4cf8-b833-791eb6372528', '[{\"role\":\"Disdukcapil Kabupaten Bandung Barat\",\"name\":\"Disdukcapil Kabupaten Bandung Barat\",\"status\":\"2\",\"catatan\":\"diterima boss\",\"timestamp\":\"2025-03-17 14:16:36\"}]', '2', '2025-03-17 07:16:36', 'b425d1d9-7613-44be-bb87-48fd6d0e2d89', '2025-03-17 07:01:21', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 07:16:36', NULL);
 
 --
 -- Indexes for dumped tables
@@ -493,6 +540,14 @@ ALTER TABLE `cache`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
+
+--
+-- Indexes for table `disdukcapil`
+--
+ALTER TABLE `disdukcapil`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `created_by` (`created_by`),
+  ADD KEY `updated_by` (`updated_by`);
 
 --
 -- Indexes for table `failed_jobs`
@@ -608,7 +663,8 @@ ALTER TABLE `usulan`
   ADD KEY `pemohon_uid` (`pemohon_uid`),
   ADD KEY `approved_by` (`approved_by`),
   ADD KEY `created_by` (`created_by`),
-  ADD KEY `updated_by` (`updated_by`);
+  ADD KEY `updated_by` (`updated_by`),
+  ADD KEY `disdukcapil_uid` (`disdukcapil_uid`) USING BTREE;
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -647,6 +703,13 @@ ALTER TABLE `users`
 --
 -- Constraints for dumped tables
 --
+
+--
+-- Constraints for table `disdukcapil`
+--
+ALTER TABLE `disdukcapil`
+  ADD CONSTRAINT `disdukcapil_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `disdukcapil_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `modules`
@@ -689,6 +752,7 @@ ALTER TABLE `users`
 -- Constraints for table `usulan`
 --
 ALTER TABLE `usulan`
+  ADD CONSTRAINT `fk_usulan_disdukcapil` FOREIGN KEY (`disdukcapil_uid`) REFERENCES `disdukcapil` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `usulan_ibfk_1` FOREIGN KEY (`pemohon_uid`) REFERENCES `pemohon` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `usulan_ibfk_2` FOREIGN KEY (`approved_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `usulan_ibfk_3` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,

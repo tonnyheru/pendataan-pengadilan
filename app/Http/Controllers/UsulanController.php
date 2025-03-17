@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsulanDataTable;
 use App\Helpers\PermissionCommon;
+use App\Mail\NotifEmail;
+use App\Models\Disdukcapil;
 use App\Models\Pemohon;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class UsulanController extends Controller
@@ -27,7 +30,8 @@ class UsulanController extends Controller
     {
         if (!PermissionCommon::check('usulan.create')) abort(403);
         $pemohon = Pemohon::all();
-        $body = view('pages.administrasi.usulan.create', compact('pemohon'))->render();
+        $disdukcapil = Disdukcapil::all();
+        $body = view('pages.administrasi.usulan.create', compact('pemohon', 'disdukcapil'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
         return [
@@ -53,6 +57,8 @@ class UsulanController extends Controller
             'file_akta' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_penetapan' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_pendukung' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_nikah' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_pengantar' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
         ], [
             'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
             'no_perkara.unique' => 'Nomor Perkara sudah terdaftar',
@@ -73,6 +79,12 @@ class UsulanController extends Controller
             'file_penetapan.max' => 'Ukuran file penetapan maksimal 2MB',
             'file_pendukung.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_pendukung.max' => 'Ukuran file pendukung maksimal 2MB',
+            'file_nikah.required' => 'Surat Nikah tidak boleh kosong',
+            'file_nikah.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_nikah.max' => 'Ukuran surat nikah maksimal 2MB',
+            'file_pengantar.required' => 'Surat Pengantar tidak boleh kosong',
+            'file_pengantar.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_pengantar.max' => 'Ukuran surat pengantar maksimal 2MB',
         ]);
         $data = $request->except('_token');
         try {
@@ -107,6 +119,18 @@ class UsulanController extends Controller
                 $data['path_penetapan'] = $file_penetapan_name;
             }
 
+            if ($request->hasFile('file_nikah')) {
+                $file_nikah = $request->file('file_nikah');
+                $file_nikah_name = md5('ktp' . time()) . time() . '_' . $file_nikah->getClientOriginalName();
+                $data['path_nikah'] = $file_nikah_name;
+            }
+
+            if ($request->hasFile('file_pengantar')) {
+                $file_pengantar = $request->file('file_pengantar');
+                $file_pengantar_name = md5('ktp' . time()) . time() . '_' . $file_pengantar->getClientOriginalName();
+                $data['path_pengantar'] = $file_pengantar_name;
+            }
+
             // status 0 = ditolak / revisi
             // status 1 = belum di approve
             // status 2 = sudah di approve admin
@@ -121,7 +145,10 @@ class UsulanController extends Controller
                 'path_akta' => $data['path_akta'],
                 'path_penetapan' => $data['path_penetapan'],
                 'path_pendukung' => $data['path_pendukung'] ?? null,
+                'path_nikah' => $data['path_nikah'],
+                'path_pengantar' => $data['path_pengantar'],
                 'pemohon_uid' => $data['pemohon_uid'],
+                'disdukcapil_uid' => $data['delegasi'],
                 'delegasi' => $data['delegasi'],
                 'is_approve' => '1',
                 'catatan' => json_encode([]),
@@ -153,6 +180,35 @@ class UsulanController extends Controller
                     $file_penetapan = $request->file('file_penetapan');
                     $file_penetapan->move(public_path('upload/file_penetapan'), $data['path_penetapan']);
                 }
+
+                if ($request->hasFile('file_nikah')) {
+                    $file_nikah = $request->file('file_nikah');
+                    $file_nikah->move(public_path('upload/file_nikah'), $data['path_nikah']);
+                }
+
+                if ($request->hasFile('file_pengantar')) {
+                    $file_pengantar = $request->file('file_pengantar');
+                    $file_pengantar->move(public_path('upload/file_pengantar'), $data['path_pengantar']);
+                }
+
+                $disdukcapil = Disdukcapil::find($data['delegasi']);
+                $pemohon = Pemohon::find($data['pemohon_uid']);
+                if ($disdukcapil) {
+                    $notif = [];
+                    $notif['logo'] = $disdukcapil->cdn_picture;
+                    $notif['title'] = 'Notifikasi Usulan Baru';
+                    $notif['nama'] = $pemohon->name;
+                    $notif['no_telp'] = $pemohon->no_telp;
+                    $notif['no_perkara'] = $data['no_perkara'];
+                    $notif['alamat'] = $pemohon->alamat;
+                    $notif['email'] = $pemohon->email;
+                    $notif['jenis_perkara'] = $data['jenis_perkara'];
+                    $notif['nama_disdukcapil'] = $disdukcapil->nama;
+                    $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
+                    $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
+                    Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
+                }
+
 
                 return response([
                     'status' => true,
@@ -196,7 +252,8 @@ class UsulanController extends Controller
             $uid = $usulan->uid;
             $data = $usulan;
             $pemohon = Pemohon::all();
-            $body = view('pages.administrasi.usulan.edit', compact('uid', 'data', 'pemohon'))->render();
+            $disdukcapil = Disdukcapil::all();
+            $body = view('pages.administrasi.usulan.edit', compact('uid', 'data', 'pemohon', 'disdukcapil'))->render();
             $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
             return [
@@ -228,6 +285,8 @@ class UsulanController extends Controller
             'file_akta' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_pendukung' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_penetapan' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_nikah' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
+            'file_pengantar' => 'mimes:jpg,jpeg,png,gif,pdf|max:2048',
         ], [
             'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
             'no_perkara.unique' => 'Nomor Perkara sudah terdaftar',
@@ -244,6 +303,10 @@ class UsulanController extends Controller
             'file_pendukung.max' => 'Ukuran file pendukung maksimal 2MB',
             'file_penetapan.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_penetapan.max' => 'Ukuran file penetapan maksimal 2MB',
+            'file_nikah.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_nikah.mimes' => 'Format file harus JPG, PNG, atau PDF',
+            'file_pengantar.max' => 'Ukuran file penetapan maksimal 2MB',
+            'file_pengantar.max' => 'Ukuran file penetapan maksimal 2MB',
         ]);
         $formData = $request->except(["_token", "_method"]);
         try {
@@ -332,7 +395,41 @@ class UsulanController extends Controller
                 // Update the form data with the new file name
                 $formData['path_penetapan'] = $filename;
             }
+            if ($request->hasFile('file_nikah')) {
+                $file = $request->file('file_nikah');
 
+                // Determine the new file name
+                $filename = md5('nikah' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_nikah && file_exists(public_path('upload/file_nikah/' . $usulan->path_nikah))) {
+                    unlink(public_path('upload/file_nikah/' . $usulan->path_nikah));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_nikah'] = $filename;
+            }
+            if ($request->hasFile('file_pengantar')) {
+                $file = $request->file('file_pengantar');
+
+                // Determine the new file name
+                $filename = md5('pengantar' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_pengantar && file_exists(public_path('upload/file_pengantar/' . $usulan->path_pengantar))) {
+                    unlink(public_path('upload/file_pengantar/' . $usulan->path_pengantar));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_pengantar'] = $filename;
+            }
+            $formData['disdukcapil_uid'] = $formData['delegasi'];
             $formData['updated_by'] = auth()->user()->uid;
 
             $trx = $usulan->update($formData);
@@ -383,6 +480,13 @@ class UsulanController extends Controller
             if ($usulan->path_penetapan && file_exists(public_path('upload/file_penetapan/' . $usulan->path_penetapan))) {
                 unlink(public_path('upload/file_penetapan/' . $usulan->path_penetapan));
             }
+            if ($usulan->path_nikah && file_exists(public_path('upload/file_nikah/' . $usulan->path_nikah))) {
+                unlink(public_path('upload/file_nikah/' . $usulan->path_nikah));
+            }
+            if ($usulan->path_pengantar && file_exists(public_path('upload/file_pengantar/' . $usulan->path_pengantar))) {
+                unlink(public_path('upload/file_pengantar/' . $usulan->path_pengantar));
+            }
+
             $delete = $usulan->delete();
             if ($delete) {
                 return response()->json([

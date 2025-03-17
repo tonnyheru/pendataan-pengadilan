@@ -3,6 +3,8 @@
 namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
+use App\Helpers\Utils;
+use App\Models\Disdukcapil;
 use App\Models\Pemohon;
 use App\Models\Usulan;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -56,7 +58,9 @@ class UsulanDataTable extends DataTable
                 if ($item->path_pendukung) {
                     $html .= '<button onclick="show_doc(\'' . $item->path_pendukung . '\',\'file_pendukung\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat Dokumen Pendukung"><i class="fas fa-file-pdf"></i> Pendukung </button>';
                 }
-                $html .= '<button onclick="show_doc(\'' . $item->path_penetapan . '\',\'file_penetapan\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Penetapan"><i class="fas fa-file-pdf"></i> Penetapan </button>';
+                $html .= '<button onclick="show_doc(\'' . $item->path_penetapan . '\',\'file_penetapan\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Penetapan"><i class="fas fa-file-pdf"></i> Penetapan </button><br>';
+                $html .= '<button onclick="show_doc(\'' . $item->path_nikah . '\',\'file_nikah\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Surat Nikah"><i class="fas fa-file-pdf"></i> Surat Nikah </button>';
+                $html .= '<button onclick="show_doc(\'' . $item->path_pengantar . '\',\'file_pengantar\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Surat Pengantar"><i class="fas fa-file-pdf"></i> Surat Pengantar </button>';
                 // $html = '<div class="btn-group btn-group-sm">';
                 // $html .= '</div>';
                 return $html;
@@ -82,14 +86,26 @@ class UsulanDataTable extends DataTable
                     $direction
                 );
             })
-            ->addColumn('delegasi', function ($data) {
-                return ucwords(str_replace("_", " ", $data->delegasi));
+            ->addColumn('disdukcapil', function ($data) {
+                $disdukcapil = "";
+                if (isset($data->disdukcapil)) {
+                    $disdukcapil = $data->disdukcapil->nama;
+                }
+                return $disdukcapil;
             })
-            ->filterColumn('delegasi', function ($query, $keyword) {
-                $query->where('delegasi', 'like', "%{$keyword}%");
+            ->filterColumn('disdukcapil', function ($query, $keyword) {
+                // Assuming you have a relationship between the user and role (e.g., user->role->name)
+                $query->whereHas('disdukcapil', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
             })
-            ->orderColumn('delegasi', function ($query, $direction) {
-                $query->orderBy('delegasi', $direction);
+            ->orderColumn('disdukcapil', function ($query, $direction) {
+                $query->orderBy(
+                    Disdukcapil::select('name')
+                        ->whereColumn('disdukcapil.uid', 'usulan.disdukcapil_uid')
+                        ->limit(1),
+                    $direction
+                );
             })
             ->addColumn('status', function ($data) {
                 switch ($data->is_approve) {
@@ -121,7 +137,9 @@ class UsulanDataTable extends DataTable
     {
         if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
             $role = auth()->user()->role->slug;
-            return $model->newQuery()->where('delegasi', $role);
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+            return $model->newQuery()->where('disdukcapil_uid', $uid);
         }
         return $model->newQuery();
     }
@@ -182,7 +200,7 @@ class UsulanDataTable extends DataTable
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('jenis_perkara');
         $column[] = Column::make('pemohon');
-        $column[] = Column::make('delegasi')->title('Kantor Disdukcapil');
+        $column[] = Column::make('disdukcapil')->title('Kantor Disdukcapil');
         return $column;
     }
 
