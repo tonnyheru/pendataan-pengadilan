@@ -5,23 +5,28 @@
     <thead>
       @php
       $logo = '';
+      $title = '';
       switch ($data['delegasi']) {
         case 'disdukcapil_kota_cimahi':
           $logo = 'https://ugc.production.linktr.ee/CoBHMEZLSMuV9PCf6v8I_naLADx66XSZyQp9P?io=true&size=avatar-v3_0';
+          $title = 'Disdukcapil Kota Cimahi';
           break;
         case 'disdukcapil_kabupaten_bandung':
           $logo = 'https://bandungkab.go.id/asset/logo.png';
+          $title = 'Disdukcapil Kabupaten Bandung';
           break;
         case 'disdukcapil_kabupaten_bandung_barat':
           $logo = 'https://bandungbaratkab.go.id/storage/department/Dinas%20Kependudukan%20dan%20Pencatatan%20Sipil/1716950406_kab_bandung_barat.svg.png';
+          $title = 'Disdukcapil Kabupaten Bandung Barat';
           break;
         default:
           $logo = '';
+          $title = 'PN Bale Bandung';
           break;
       }
       @endphp
       <tr>
-        <th style="text-align:left;"><img style="max-width: 150px;" src="https://ugc.production.linktr.ee/CoBHMEZLSMuV9PCf6v8I_naLADx66XSZyQp9P?io=true&size=avatar-v3_0" alt="Pengadilan Negeri Bale Bandung"></th>
+        <th style="text-align:left;"><img style="max-width: 150px;" src="{{$logo}}" alt="{{$title}}"></th>
         <th style="text-align:right;font-weight:400;">{{ date('Y-m-d H:i:s') }}</th>
       </tr>
     </thead>

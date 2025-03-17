@@ -52,9 +52,11 @@
       <span class="mask bg-gradient-dark opacity-4"></span>
       <div class="container">
         <div class="row justify-content-center">
-          <div class="col-lg-5 text-center mx-auto">
+          <div class="col-lg-8 text-center mx-auto">
             <img src="{{asset('img/logo.png')}}" width="200">
             <img src="{{asset('img/logo-cimahi.png')}}" width="150">
+            <img src="{{asset('img/logo-bandung.png')}}" width="250">
+            <img src="{{asset('img/logo-barat.png')}}" width="150">
             <h3 class="text-white mb-2 mt-5">Pengadilan Negeri Bale Bandung</h3>
             <p class="text-lead text-white">Pengadilan Negeri Bale Bandung Kelas 1A merupakan sebuah lembaga peradilan di lingkungan Peradilan Umum yang berkedudukan di Kabupaten Bandung.</p>
           </div>
