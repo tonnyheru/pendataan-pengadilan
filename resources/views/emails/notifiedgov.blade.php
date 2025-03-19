@@ -7,7 +7,7 @@ date_default_timezone_set('Asia/Jakarta');
   <table style="max-width:670px;margin:50px auto 10px;background-color:#fff;padding:50px;-webkit-border-radius:3px;-moz-border-radius:3px;border-radius:3px;-webkit-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);-moz-box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24);box-shadow:0 1px 3px rgba(0,0,0,.12),0 1px 2px rgba(0,0,0,.24); border-top: solid 10px #016004;">
     <thead>
       <tr>
-        <th style="text-align:left;"><img style="max-width: 150px;" src="{{ asset('img/logo.png') }}" alt="Logo Pengadilan Negeri Bale Bandung"></th>
+        <th style="text-align:left;"><img style="max-width: 150px;" src="https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo.png" alt="Logo Pengadilan Negeri Bale Bandung"></th>
         <th style="text-align:right;font-weight:400;">{{ date('Y-m-d H:i:s') }}</th>
       </tr>
     </thead>
@@ -39,8 +39,8 @@ date_default_timezone_set('Asia/Jakarta');
     <tfooter>
       <tr>
         <td colspan="2" style="font-size:14px;padding:50px 15px 0 15px;">
-          <strong style="display:block;margin:0 0 10px 0;">Regards</strong> <strong>{{ @$data['nama_disdukcapil'] }}</strong><br> {{ @$data['alamat_disdukcapil'] }}<br><br>
-          <b>Phone:</b> {{ @$data['no_telp_disdukcapil'] }}
+          <strong style="display:block;margin:0 0 10px 0;">Regards</strong> <strong>Pengadilan Negeri Bale Bandung</strong><br> Jl. Jaksa Naranata, Baleendah, Kec. Baleendah, Kabupaten Bandung, Jawa Barat 40375<br><br>
+          <b>Phone:</b> 0896-5900-0010
         </td>
       </tr>
     </tfooter>

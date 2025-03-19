@@ -37,7 +37,7 @@
       <select name="delegasi" class="form-control select2-delegasi">
         <option value=""></option>
         @foreach ($disdukcapil as $item)
-            <option value="{{ $item->uid }}" data-alamat="{{ $item->alamat }}" @if($item->uid == @$data->disdukcapil_uid) selected @endif>{{ $item->nama }}</option>
+            <option value="{{ $item->uid }}" data-alamat="{{ $item->alamat }}" data-logo="{{ $item->cdn_picture }}" @if($item->uid == @$data->disdukcapil_uid) selected @endif>{{ $item->nama }}</option>
         @endforeach
 
       </select>
@@ -208,15 +208,19 @@
       );
       
       var alamat = $(res.element).data('alamat');
+      var logo = $(res.element).data('logo') || `${base_url}img/default-kantor.png`;
       $container.find(".select2-result-repository__title").text(res.text || '-');
       $container.find(".select2-result-repository__description").html(alamat ? `Alamat : ${alamat}` : '-');
+      $container.find('.select2-result-repository__avatar img').attr('src', logo);
       return $container;
     }
 
     function formatSelectionDelegasi(res) {
-      const $container = $(`<span><img width='50' class='img-thumbnail' src='${base_url}img/default-kantor.png'/></div> <span class='selection-text'></span> </span>`);
-      var nik = $(res.element).data('nik') || '';
-      $container.find('.selection-text').text(res.text + (nik ? ' - ' : '') + nik || '-');
+      const $container = $(`<span><img width='50' class='img-thumbnail result-select2' src='${base_url}img/default-kantor.png'/></div> <span class='selection-text'></span> </span>`);
+      
+      var logo = $(res.element).data('logo') || `${base_url}img/default-kantor.png`;
+      $container.find('.selection-text').text(res.text);
+      $container.find('.result-select2').attr('src',logo);
       return $container;
     }
   })
