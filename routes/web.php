@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
+use GuzzleHttp\Client;
 
 /*
 |--------------------------------------------------------------------------
@@ -140,6 +141,30 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
 
             // dd($data);
             Mail::to($kepada)->send(new SendEmail($data));
+            try {
+                $options = [
+                    'multipart' => [
+                        [
+                            'name' => 'device_id',
+                            'contents' => '93ce715666c4811b544060462e10db8f'
+                        ],
+                        [
+                            'name' => 'number',
+                            'contents' => $usulan->pemohon->no_telp,
+                        ],
+                        [
+                            'name' => 'message',
+                            'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Terima kasih telah menggunakan layanan kami, mohon cek email untuk dokumen yang sudah diperbaharui.'
+                        ]
+                    ]
+                ];
+                $client = new Client([
+                    'http_errors' => false
+                ]);
+                $res = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+            } catch (\Throwable $th) {
+                //throw $th;
+            }
 
             foreach ($data['attach'] as $file) {
                 unlink(public_path('upload/email/' . $file));

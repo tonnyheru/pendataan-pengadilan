@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 19 Mar 2025 pada 06.14
--- Versi server: 10.4.32-MariaDB
--- Versi PHP: 8.1.25
+-- Generation Time: Mar 20, 2025 at 03:27 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.1.25
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -24,7 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cache`
+-- Table structure for table `cache`
 --
 
 CREATE TABLE `cache` (
@@ -36,7 +36,7 @@ CREATE TABLE `cache` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `cache_locks`
+-- Table structure for table `cache_locks`
 --
 
 CREATE TABLE `cache_locks` (
@@ -48,7 +48,7 @@ CREATE TABLE `cache_locks` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `disdukcapil`
+-- Table structure for table `disdukcapil`
 --
 
 CREATE TABLE `disdukcapil` (
@@ -65,18 +65,18 @@ CREATE TABLE `disdukcapil` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `disdukcapil`
+-- Dumping data for table `disdukcapil`
 --
 
 INSERT INTO `disdukcapil` (`uid`, `nama`, `alamat`, `no_telp`, `email`, `cdn_picture`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('1c39d652-51f0-4cf8-b833-791eb6372528', 'Disdukcapil Kabupaten Bandung Barat', 'Komplek Pemda KBB Jl. Raya Padalarang Cisarua Km.2 Ngamprah, Jawa Barat, Indonesia', '0811-1902-4159', 'kevinbramasta321@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/bandung_barat.png', '2025-03-17 05:25:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 15:43:22', NULL),
+('1c39d652-51f0-4cf8-b833-791eb6372528', 'Disdukcapil Kabupaten Bandung Barat', 'Komplek Pemda KBB Jl. Raya Padalarang Cisarua Km.2 Ngamprah, Jawa Barat, Indonesia', '08562122827', 'kevinbramasta321@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/bandung_barat.png', '2025-03-17 05:25:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-20 02:21:26', NULL),
 ('8a7fb795-51c5-49c1-a91d-403f43138a4e', 'Disdukcapil Kabupaten Bandung', 'Jl. Raya Soreang, Kabupaten Bandung 40911', '085318202833', 'kevinbramasta321@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-bandung.png', '2025-03-17 05:24:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 15:57:42', NULL),
 ('b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'Disdukcapil Kota Cimahi', 'Mal Pelayanan Publik Kota Cimahi, Jl. Aruman Lt. 3, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40514', '(022) 6631885', 'tonnyheru29@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-cimahi.png', '2025-03-17 05:21:13', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-18 02:48:42', NULL);
 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `failed_jobs`
+-- Table structure for table `failed_jobs`
 --
 
 CREATE TABLE `failed_jobs` (
@@ -92,7 +92,7 @@ CREATE TABLE `failed_jobs` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `jobs`
+-- Table structure for table `jobs`
 --
 
 CREATE TABLE `jobs` (
@@ -106,7 +106,7 @@ CREATE TABLE `jobs` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `jobs`
+-- Dumping data for table `jobs`
 --
 
 INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `available_at`, `created_at`) VALUES
@@ -122,7 +122,7 @@ INSERT INTO `jobs` (`id`, `queue`, `payload`, `attempts`, `reserved_at`, `availa
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `job_batches`
+-- Table structure for table `job_batches`
 --
 
 CREATE TABLE `job_batches` (
@@ -141,7 +141,7 @@ CREATE TABLE `job_batches` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `migrations`
+-- Table structure for table `migrations`
 --
 
 CREATE TABLE `migrations` (
@@ -151,7 +151,7 @@ CREATE TABLE `migrations` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `migrations`
+-- Dumping data for table `migrations`
 --
 
 INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
@@ -169,7 +169,7 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `modules`
+-- Table structure for table `modules`
 --
 
 CREATE TABLE `modules` (
@@ -183,7 +183,7 @@ CREATE TABLE `modules` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `modules`
+-- Dumping data for table `modules`
 --
 
 INSERT INTO `modules` (`uid`, `description`, `name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -200,7 +200,7 @@ INSERT INTO `modules` (`uid`, `description`, `name`, `created_at`, `created_by`,
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `mutasi`
+-- Table structure for table `mutasi`
 --
 
 CREATE TABLE `mutasi` (
@@ -216,7 +216,7 @@ CREATE TABLE `mutasi` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `password_reset_tokens`
+-- Table structure for table `password_reset_tokens`
 --
 
 CREATE TABLE `password_reset_tokens` (
@@ -228,7 +228,7 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `pemohon`
+-- Table structure for table `pemohon`
 --
 
 CREATE TABLE `pemohon` (
@@ -250,7 +250,7 @@ CREATE TABLE `pemohon` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `pemohon`
+-- Dumping data for table `pemohon`
 --
 
 INSERT INTO `pemohon` (`uid`, `name`, `nik`, `tanggal_lahir`, `tempat_lahir`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `agama`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -261,7 +261,7 @@ INSERT INTO `pemohon` (`uid`, `name`, `nik`, `tanggal_lahir`, `tempat_lahir`, `a
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `permissions`
+-- Table structure for table `permissions`
 --
 
 CREATE TABLE `permissions` (
@@ -277,7 +277,7 @@ CREATE TABLE `permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `permissions`
+-- Dumping data for table `permissions`
 --
 
 INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
@@ -317,7 +317,7 @@ INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `personal_access_tokens`
+-- Table structure for table `personal_access_tokens`
 --
 
 CREATE TABLE `personal_access_tokens` (
@@ -336,7 +336,7 @@ CREATE TABLE `personal_access_tokens` (
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `roles`
+-- Table structure for table `roles`
 --
 
 CREATE TABLE `roles` (
@@ -347,7 +347,7 @@ CREATE TABLE `roles` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `roles`
+-- Dumping data for table `roles`
 --
 
 INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
@@ -360,7 +360,7 @@ INSERT INTO `roles` (`uid`, `name`, `slug`, `description`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `role_permissions`
+-- Table structure for table `role_permissions`
 --
 
 CREATE TABLE `role_permissions` (
@@ -369,7 +369,7 @@ CREATE TABLE `role_permissions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `role_permissions`
+-- Dumping data for table `role_permissions`
 --
 
 INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
@@ -429,7 +429,7 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `sessions`
+-- Table structure for table `sessions`
 --
 
 CREATE TABLE `sessions` (
@@ -442,7 +442,7 @@ CREATE TABLE `sessions` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
--- Dumping data untuk tabel `sessions`
+-- Dumping data for table `sessions`
 --
 
 INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, `last_activity`) VALUES
@@ -452,7 +452,7 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `users`
+-- Table structure for table `users`
 --
 
 CREATE TABLE `users` (
@@ -479,7 +479,7 @@ CREATE TABLE `users` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `users`
+-- Dumping data for table `users`
 --
 
 INSERT INTO `users` (`uid`, `id`, `name`, `profile_picture`, `username`, `password`, `nip`, `ekstansi`, `email`, `no_telp`, `active`, `role_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`, `active_status`, `avatar`, `dark_mode`, `messenger_color`) VALUES
@@ -492,7 +492,7 @@ INSERT INTO `users` (`uid`, `id`, `name`, `profile_picture`, `username`, `passwo
 -- --------------------------------------------------------
 
 --
--- Struktur dari tabel `usulan`
+-- Table structure for table `usulan`
 --
 
 CREATE TABLE `usulan` (
@@ -520,30 +520,23 @@ CREATE TABLE `usulan` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data untuk tabel `usulan`
---
-
-INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `path_penetapan`, `path_nikah`, `path_pengantar`, `delegasi`, `pemohon_uid`, `disdukcapil_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('5c7f53f1-5216-45ef-885b-7a905559a62a', 'No.Per0056/III/2025', 'Perubahan Nama', '67b63e93e108478ecf5fb26995d440ca1742267194_ktp.jpg', '0bea6cf55cd81f3d5da952a66cdd19661742267194_kk.jpg', '67b63e93e108478ecf5fb26995d440ca1742267194_akta.jpg', NULL, '67b63e93e108478ecf5fb26995d440ca1742267194_dokumen pendukung.jpg', '67b63e93e108478ecf5fb26995d440ca1742267194_kab bandung.png', '67b63e93e108478ecf5fb26995d440ca1742267194_kab bandung barat.png', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'c7c18c4d-b8bc-4ff5-8215-fb549cd9fa92', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '[{\"role\":\"Disdukcapil Kota Cimahi\",\"name\":\"Disdukcapil Kota Cimahi\",\"status\":\"2\",\"catatan\":\"lengkap\",\"timestamp\":\"2025-03-18 10:07:35\"}]', '2', '2025-03-18 03:07:35', 'a9c33661-69a2-44b6-bf89-28b11ca14994', '2025-03-18 03:06:34', '37035b97-0a5d-498c-b5f5-c75cee6f106e', '2025-03-18 03:07:35', NULL);
-
---
 -- Indexes for dumped tables
 --
 
 --
--- Indeks untuk tabel `cache`
+-- Indexes for table `cache`
 --
 ALTER TABLE `cache`
   ADD PRIMARY KEY (`key`);
 
 --
--- Indeks untuk tabel `cache_locks`
+-- Indexes for table `cache_locks`
 --
 ALTER TABLE `cache_locks`
   ADD PRIMARY KEY (`key`);
 
 --
--- Indeks untuk tabel `disdukcapil`
+-- Indexes for table `disdukcapil`
 --
 ALTER TABLE `disdukcapil`
   ADD PRIMARY KEY (`uid`),
@@ -551,33 +544,33 @@ ALTER TABLE `disdukcapil`
   ADD KEY `updated_by` (`updated_by`);
 
 --
--- Indeks untuk tabel `failed_jobs`
+-- Indexes for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `failed_jobs_uuid_unique` (`uuid`);
 
 --
--- Indeks untuk tabel `jobs`
+-- Indexes for table `jobs`
 --
 ALTER TABLE `jobs`
   ADD PRIMARY KEY (`id`),
   ADD KEY `jobs_queue_index` (`queue`);
 
 --
--- Indeks untuk tabel `job_batches`
+-- Indexes for table `job_batches`
 --
 ALTER TABLE `job_batches`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `migrations`
+-- Indexes for table `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indeks untuk tabel `modules`
+-- Indexes for table `modules`
 --
 ALTER TABLE `modules`
   ADD PRIMARY KEY (`uid`),
@@ -585,7 +578,7 @@ ALTER TABLE `modules`
   ADD KEY `updated_by` (`updated_by`);
 
 --
--- Indeks untuk tabel `mutasi`
+-- Indexes for table `mutasi`
 --
 ALTER TABLE `mutasi`
   ADD PRIMARY KEY (`uid`),
@@ -593,19 +586,19 @@ ALTER TABLE `mutasi`
   ADD KEY `updated_by` (`updated_by`);
 
 --
--- Indeks untuk tabel `password_reset_tokens`
+-- Indexes for table `password_reset_tokens`
 --
 ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
--- Indeks untuk tabel `pemohon`
+-- Indexes for table `pemohon`
 --
 ALTER TABLE `pemohon`
   ADD PRIMARY KEY (`uid`);
 
 --
--- Indeks untuk tabel `permissions`
+-- Indexes for table `permissions`
 --
 ALTER TABLE `permissions`
   ADD PRIMARY KEY (`uid`),
@@ -614,7 +607,7 @@ ALTER TABLE `permissions`
   ADD KEY `updated_by` (`updated_by`);
 
 --
--- Indeks untuk tabel `personal_access_tokens`
+-- Indexes for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   ADD PRIMARY KEY (`id`),
@@ -622,21 +615,21 @@ ALTER TABLE `personal_access_tokens`
   ADD KEY `personal_access_tokens_tokenable_type_tokenable_id_index` (`tokenable_type`,`tokenable_id`);
 
 --
--- Indeks untuk tabel `roles`
+-- Indexes for table `roles`
 --
 ALTER TABLE `roles`
   ADD PRIMARY KEY (`uid`),
   ADD UNIQUE KEY `unique_uid` (`uid`);
 
 --
--- Indeks untuk tabel `role_permissions`
+-- Indexes for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
   ADD PRIMARY KEY (`role_uid`,`permission_uid`),
   ADD KEY `permission_uid` (`permission_uid`);
 
 --
--- Indeks untuk tabel `sessions`
+-- Indexes for table `sessions`
 --
 ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
@@ -644,7 +637,7 @@ ALTER TABLE `sessions`
   ADD KEY `sessions_last_activity_index` (`last_activity`);
 
 --
--- Indeks untuk tabel `users`
+-- Indexes for table `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`uid`),
@@ -656,7 +649,7 @@ ALTER TABLE `users`
   ADD KEY `updated_by` (`updated_by`);
 
 --
--- Indeks untuk tabel `usulan`
+-- Indexes for table `usulan`
 --
 ALTER TABLE `usulan`
   ADD PRIMARY KEY (`uid`),
@@ -668,66 +661,66 @@ ALTER TABLE `usulan`
   ADD KEY `disdukcapil_uid` (`disdukcapil_uid`) USING BTREE;
 
 --
--- AUTO_INCREMENT untuk tabel yang dibuang
+-- AUTO_INCREMENT for dumped tables
 --
 
 --
--- AUTO_INCREMENT untuk tabel `failed_jobs`
+-- AUTO_INCREMENT for table `failed_jobs`
 --
 ALTER TABLE `failed_jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `jobs`
+-- AUTO_INCREMENT for table `jobs`
 --
 ALTER TABLE `jobs`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=23;
 
 --
--- AUTO_INCREMENT untuk tabel `migrations`
+-- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
   MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
--- AUTO_INCREMENT untuk tabel `personal_access_tokens`
+-- AUTO_INCREMENT for table `personal_access_tokens`
 --
 ALTER TABLE `personal_access_tokens`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT untuk tabel `users`
+-- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(50) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
--- Ketidakleluasaan untuk tabel pelimpahan (Dumped Tables)
+-- Constraints for dumped tables
 --
 
 --
--- Ketidakleluasaan untuk tabel `disdukcapil`
+-- Constraints for table `disdukcapil`
 --
 ALTER TABLE `disdukcapil`
   ADD CONSTRAINT `disdukcapil_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `disdukcapil_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `modules`
+-- Constraints for table `modules`
 --
 ALTER TABLE `modules`
   ADD CONSTRAINT `modules_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`),
   ADD CONSTRAINT `modules_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`);
 
 --
--- Ketidakleluasaan untuk tabel `mutasi`
+-- Constraints for table `mutasi`
 --
 ALTER TABLE `mutasi`
   ADD CONSTRAINT `mutasi_ibfk_1` FOREIGN KEY (`created_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE,
   ADD CONSTRAINT `mutasi_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
 
 --
--- Ketidakleluasaan untuk tabel `permissions`
+-- Constraints for table `permissions`
 --
 ALTER TABLE `permissions`
   ADD CONSTRAINT `permissions_ibfk_1` FOREIGN KEY (`module_uid`) REFERENCES `modules` (`uid`) ON DELETE CASCADE,
@@ -735,14 +728,14 @@ ALTER TABLE `permissions`
   ADD CONSTRAINT `permissions_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`);
 
 --
--- Ketidakleluasaan untuk tabel `role_permissions`
+-- Constraints for table `role_permissions`
 --
 ALTER TABLE `role_permissions`
   ADD CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`role_uid`) REFERENCES `roles` (`uid`),
   ADD CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`permission_uid`) REFERENCES `permissions` (`uid`);
 
 --
--- Ketidakleluasaan untuk tabel `users`
+-- Constraints for table `users`
 --
 ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_1` FOREIGN KEY (`role_uid`) REFERENCES `roles` (`uid`),
@@ -750,7 +743,7 @@ ALTER TABLE `users`
   ADD CONSTRAINT `users_ibfk_3` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`);
 
 --
--- Ketidakleluasaan untuk tabel `usulan`
+-- Constraints for table `usulan`
 --
 ALTER TABLE `usulan`
   ADD CONSTRAINT `fk_usulan_disdukcapil` FOREIGN KEY (`disdukcapil_uid`) REFERENCES `disdukcapil` (`uid`) ON DELETE CASCADE,

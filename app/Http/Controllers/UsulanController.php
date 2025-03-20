@@ -11,6 +11,7 @@ use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client as GuzzleClient;
 
 class UsulanController extends Controller
 {
@@ -206,7 +207,31 @@ class UsulanController extends Controller
                     $notif['nama_disdukcapil'] = $disdukcapil->nama;
                     $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
                     $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
-                    Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
+                    // Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
+                    try {
+                        $options = [
+                            'multipart' => [
+                                [
+                                    'name' => 'device_id',
+                                    'contents' => '93ce715666c4811b544060462e10db8f'
+                                ],
+                                [
+                                    'name' => 'number',
+                                    'contents' => $disdukcapil->no_telp,
+                                ],
+                                [
+                                    'name' => 'message',
+                                    'contents' => 'Yang terhormat Bapak/Ibu, ada usulan baru dengan nomor perkara *' . $data['no_perkara'] . '* dari pemohon *' . $pemohon->name . '* yang perlu segera ditindaklanjuti. Terima kasih.'
+                                ]
+                            ]
+                        ];
+                        $client = new GuzzleClient([
+                            'http_errors' => false
+                        ]);
+                        $res = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+                    } catch (\Throwable $th) {
+                        dd($th);
+                    }
                 }
 
 
@@ -634,6 +659,49 @@ class UsulanController extends Controller
 
                 $trx = $usulan->update($formData);
                 if ($trx) {
+                    $createdBy = $usulan->createdBy();
+                    try {
+                        $options = [
+                            'multipart' => [
+                                [
+                                    'name' => 'device_id',
+                                    'contents' => '93ce715666c4811b544060462e10db8f'
+                                ],
+                                [
+                                    'name' => 'number',
+                                    'contents' => $createdBy->no_telp,
+                                ],
+                                [
+                                    'name' => 'message',
+                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
+                                ]
+                            ]
+                        ];
+                        $client = new GuzzleClient([
+                            'http_errors' => false
+                        ]);
+                        $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+
+                        $options2 = [
+                            'multipart' => [
+                                [
+                                    'name' => 'device_id',
+                                    'contents' => '93ce715666c4811b544060462e10db8f'
+                                ],
+                                [
+                                    'name' => 'number',
+                                    'contents' => $usulan->pemohon->no_telp,
+                                ],
+                                [
+                                    'name' => 'message',
+                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
+                                ]
+                            ]
+                        ];
+                        $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'
