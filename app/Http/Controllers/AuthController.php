@@ -68,4 +68,35 @@ class AuthController extends Controller
         AuthCommon::logout();
         return redirect('/login');
     }
+
+    public function loginApi(Request $request)
+    {
+        $credentials = $request->only('username', 'password');
+
+        // Coba login dengan guard 'api'
+        if (!$token = Auth::guard('api')->attempt($credentials)) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Username atau password anda salah'
+            ], 401);
+        }
+
+        return $this->respondWithToken($token);
+    }
+
+    public function logoutApi()
+    {
+        Auth::guard('api')->logout();
+        return response()->json(['message' => 'Successfully logged out']);
+    }
+
+    protected function respondWithToken($token)
+    {
+        return response()->json([
+            'status' => true,
+            'access_token' => $token,
+            'token_type' => 'bearer',
+            'expires_in' => auth('api')->factory()->getTTL() * 60
+        ]);
+    }
 }

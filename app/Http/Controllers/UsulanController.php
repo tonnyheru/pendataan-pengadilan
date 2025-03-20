@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client as GuzzleClient;
+use Yajra\DataTables\Facades\DataTables;
 
 class UsulanController extends Controller
 {
@@ -741,6 +742,60 @@ class UsulanController extends Controller
                 'body' => $body,
                 'footer' => $footer
             ];
+        }
+    }
+
+    public function list(Request $request)
+    {
+        try {
+            $query = Usulan::with(['pemohon', 'disdukcapil'])->select('pemohon_uid', 'disdukcapil_uid', 'no_perkara', 'jenis_perkara', 'is_approve', 'path_ktp', 'path_kk', 'path_akta', 'path_pendukung', 'path_penetapan', 'path_nikah', 'path_pengantar')->get();
+            // Pilih hanya kolom yang diperlukan dan tidak menyertakan disdukcapil_uid
+
+            $ret = DataTables::of($query)
+                ->addColumn('is_approve', function ($data) {
+                    switch ($data->is_approve) {
+                        case '0':
+                            return 'Ditolak';
+                        case '1':
+                            return 'Perlu Disetujui Disdukcapil';
+                        case '2':
+                            return 'Disetujui';
+                        default:
+                            return 'Tidak Diketahui';
+                    }
+                })
+                ->addColumn('path_ktp', function ($data) {
+                    return asset('upload/file_ktp/' . $data->path_ktp);
+                })
+                ->addColumn('path_kk', function ($data) {
+                    return asset('upload/file_kk/' . $data->path_kk);
+                })
+                ->addColumn('path_akta', function ($data) {
+                    return asset('upload/file_akta/' . $data->path_akta);
+                })
+                ->addColumn('path_pendukung', function ($data) {
+                    return asset('upload/file_pendukung/' . $data->path_pendukung);
+                })
+                ->addColumn('path_penetapan', function ($data) {
+                    return asset('upload/file_penetapan/' . $data->path_penetapan);
+                })
+                ->addColumn('path_nikah', function ($data) {
+                    return asset('upload/file_nikah/' . $data->path_nikah);
+                })
+                ->addColumn('path_pengantar', function ($data) {
+                    return asset('upload/file_pengantar/' . $data->path_pengantar);
+                })
+                ->rawColumns(['is_approve'])
+                ->make(true);
+            return json_encode([
+                'status' => true,
+                'data' => $ret,
+            ]);
+        } catch (\Throwable $th) {
+            return json_encode([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ]);
         }
     }
 }

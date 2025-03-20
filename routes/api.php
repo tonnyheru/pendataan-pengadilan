@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\UsulanController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,6 +16,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('login', [AuthController::class, 'loginApi']);
+Route::post('logout', [AuthController::class, 'logoutApi'])->middleware('auth:api');
+
+Route::prefix('/')->middleware('auth:api')->group(function () {
+    Route::post('/usulan', [UsulanController::class, 'list']);
+    Route::prefix('approvement')->group(function () {
+        Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_store']);
+        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_store']);
+    });
 });
