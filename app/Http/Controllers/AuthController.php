@@ -86,8 +86,18 @@ class AuthController extends Controller
 
     public function logoutApi()
     {
-        Auth::guard('api')->logout();
-        return response()->json(['message' => 'Successfully logged out']);
+        try {
+            Auth::guard('api')->logout();
+            return response()->json([
+                'status' => true,
+                'message' => 'Berhasil logout'
+            ]);
+        } catch (\Throwable $th) {
+            return response()->json([
+                'status' => false,
+                'message' => 'Gagal untuk logout'
+            ]);
+        }
     }
 
     protected function respondWithToken($token)

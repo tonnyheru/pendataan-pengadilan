@@ -22,7 +22,7 @@ Route::post('logout', [AuthController::class, 'logoutApi'])->middleware('auth:ap
 Route::prefix('/')->middleware('auth:api')->group(function () {
     Route::post('/usulan', [UsulanController::class, 'list']);
     Route::prefix('approvement')->group(function () {
-        Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_store']);
-        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_store']);
+        Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_disduk']);
+        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_disduk']);
     });
 });

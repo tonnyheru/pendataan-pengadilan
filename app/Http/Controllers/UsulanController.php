@@ -12,6 +12,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use GuzzleHttp\Client as GuzzleClient;
+use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\Facades\DataTables;
 
 class UsulanController extends Controller
@@ -597,7 +598,7 @@ class UsulanController extends Controller
                 }
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
@@ -748,7 +749,13 @@ class UsulanController extends Controller
     public function list(Request $request)
     {
         try {
-            $query = Usulan::with(['pemohon', 'disdukcapil'])->select('pemohon_uid', 'disdukcapil_uid', 'no_perkara', 'jenis_perkara', 'is_approve', 'path_ktp', 'path_kk', 'path_akta', 'path_pendukung', 'path_penetapan', 'path_nikah', 'path_pengantar')->get();
+            $role = auth()->user()->role->slug;
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+            $query = Usulan::with(['pemohon', 'disdukcapil'])
+                ->select('uid', 'pemohon_uid', 'disdukcapil_uid', 'no_perkara', 'jenis_perkara', 'is_approve', 'path_ktp', 'path_kk', 'path_akta', 'path_pendukung', 'path_penetapan', 'path_nikah', 'path_pengantar')
+                ->where('disdukcapil_uid', $uid)
+                ->get();
             // Pilih hanya kolom yang diperlukan dan tidak menyertakan disdukcapil_uid
 
             $ret = DataTables::of($query)
@@ -789,13 +796,195 @@ class UsulanController extends Controller
                 ->make(true);
             return json_encode([
                 'status' => true,
+                'message' => 'Data Berhasil Diambil',
                 'data' => $ret,
             ]);
         } catch (\Throwable $th) {
             return json_encode([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
+                'data' => []
             ]);
+        }
+    }
+
+    public function approvement_disduk(Request $request, $uid)
+    {
+        try {
+            date_default_timezone_set('Asia/Jakarta');
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'catatan' => 'required',
+                ],
+                [
+                    'catatan.required' => 'Catatan tidak boleh kosong',
+                ]
+            );
+            if ($validate->fails()) {
+                return response([
+                    'status' => false,
+                    'message' => $validate->errors()->toJson()
+                ], 400);
+            }
+
+            $usulan = Usulan::find($uid);
+            $formData = $request->except('_token', '_method');
+            if ($usulan) {
+                $name = auth()->user()->name;
+                $role = auth()->user()->role->name;
+                $slug = auth()->user()->role->slug;
+
+                $formData['is_approve'] = '2';
+
+                $catatan = json_decode($usulan->catatan);
+                $catatan[] = [
+                    'role' => $role,
+                    'name' => $name,
+                    'status' => $formData['is_approve'],
+                    'catatan' => $formData['catatan'],
+                    'timestamp' => date('Y-m-d H:i:s')
+                ];
+                $formData['catatan'] = json_encode($catatan);
+                $formData['approved_by'] = auth()->user()->uid;
+                $formData['approved_at'] = date('Y-m-d H:i:s');
+
+
+                $trx = $usulan->update($formData);
+                if ($trx) {
+                    return response([
+                        'status' => true,
+                        'message' => 'Data Berhasil Disetujui'
+                    ], 200);
+                } else {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Gagal Disetujui'
+                    ], 400);
+                }
+            }
+        } catch (\Throwable $th) {
+            throw $th;
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
+    }
+
+    public function rejectment_disduk(Request $request, $uid)
+    {
+        try {
+            date_default_timezone_set('Asia/Jakarta');
+            $validate = Validator::make(
+                $request->all(),
+                [
+                    'catatan' => 'required',
+                ],
+                [
+                    'catatan.required' => 'Catatan tidak boleh kosong',
+                ]
+            );
+            if ($validate->fails()) {
+                return response([
+                    'status' => false,
+                    'message' => $validate->errors()->toJson()
+                ], 400);
+            }
+
+            $usulan = Usulan::find($uid);
+            $formData = $request->except('_token', '_method');
+            if ($usulan) {
+                $role = auth()->user()->role->name;
+                $name = auth()->user()->name;
+                $slug = auth()->user()->role->slug;
+
+                $formData['is_approve'] = '0';
+                $catatan = json_decode($usulan->catatan);
+                $catatan[] = [
+                    'role' => $role,
+                    'name' => $name,
+                    'status' => $formData['is_approve'],
+                    'catatan' => $formData['catatan'],
+                    'timestamp' => date('Y-m-d H:i:s')
+                ];
+                $formData['catatan'] = json_encode($catatan);
+                $formData['approved_by'] = auth()->user()->uid;
+                $formData['approved_at'] = date('Y-m-d H:i:s');
+
+
+                $trx = $usulan->update($formData);
+                if ($trx) {
+                    $createdBy = $usulan->createdBy();
+                    // try {
+                    //     $options = [
+                    //         'multipart' => [
+                    //             [
+                    //                 'name' => 'device_id',
+                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
+                    //             ],
+                    //             [
+                    //                 'name' => 'number',
+                    //                 'contents' => $createdBy->no_telp,
+                    //             ],
+                    //             [
+                    //                 'name' => 'message',
+                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
+                    //             ]
+                    //         ]
+                    //     ];
+                    //     $client = new GuzzleClient([
+                    //         'http_errors' => false
+                    //     ]);
+                    //     $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+
+                    //     $options2 = [
+                    //         'multipart' => [
+                    //             [
+                    //                 'name' => 'device_id',
+                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
+                    //             ],
+                    //             [
+                    //                 'name' => 'number',
+                    //                 'contents' => $usulan->pemohon->no_telp,
+                    //             ],
+                    //             [
+                    //                 'name' => 'message',
+                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
+                    //             ]
+                    //         ]
+                    //     ];
+                    //     $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
+                    // } catch (\Throwable $th) {
+                    //     //throw $th;
+                    // }
+                    return response([
+                        'status' => true,
+                        'message' => 'Data Berhasil Ditolak'
+                    ], 200);
+                } else {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Gagal Ditolak'
+                    ], 400);
+                }
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
         }
     }
 }

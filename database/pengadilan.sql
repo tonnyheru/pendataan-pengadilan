@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 20, 2025 at 10:08 AM
+-- Generation Time: Mar 21, 2025 at 10:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -524,7 +524,7 @@ CREATE TABLE `usulan` (
 --
 
 INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `path_penetapan`, `path_nikah`, `path_pengantar`, `delegasi`, `pemohon_uid`, `disdukcapil_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('5efbda93-4e7d-462b-acfb-1afc69899f71', 'PERKARA KE 1', 'ASUSILA', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_pattern-dark.png', '5a6103b35bd3d2f9b1642c97583171201742449523_pattern.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_Screenshot 2025-03-11 151342.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_picture-1585152466.jpg', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_flowchart_perubahan nama (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_terbaru (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_coret.png', '1c39d652-51f0-4cf8-b833-791eb6372528', '96a50cef-981f-40ff-bbc5-543354570163', '1c39d652-51f0-4cf8-b833-791eb6372528', '[]', '1', NULL, NULL, '2025-03-20 05:45:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-20 05:45:23', NULL);
+('5efbda93-4e7d-462b-acfb-1afc69899f71', 'PERKARA KE 1', 'ASUSILA', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_pattern-dark.png', '5a6103b35bd3d2f9b1642c97583171201742449523_pattern.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_Screenshot 2025-03-11 151342.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_picture-1585152466.jpg', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_flowchart_perubahan nama (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_terbaru (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_coret.png', '1c39d652-51f0-4cf8-b833-791eb6372528', '96a50cef-981f-40ff-bbc5-543354570163', '1c39d652-51f0-4cf8-b833-791eb6372528', '[{\"role\":\"Disdukcapil Kabupaten Bandung Barat\",\"name\":\"Disdukcapil Kabupaten Bandung Barat\",\"status\":\"0\",\"catatan\":\"catatan ditolak\",\"timestamp\":\"2025-03-21 15:37:57\"}]', '0', '2025-03-21 08:37:57', 'b425d1d9-7613-44be-bb87-48fd6d0e2d89', '2025-03-20 05:45:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-21 08:37:57', NULL);
 
 --
 -- Indexes for dumped tables
