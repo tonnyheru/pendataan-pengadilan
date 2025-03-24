@@ -56,6 +56,12 @@ Route::prefix('/')->middleware('auth:api')->group(function () {
         $data = $request->except('_token');
         $usulan = Usulan::find($uid);
         if ($usulan) {
+            if ($usulan->status != '2') {
+                return response([
+                    'status' => false,
+                    'message' => 'Usulan Belum Disetujui'
+                ], 400);
+            }
             $attach = [];
             $kepada = $usulan->pemohon->email;
             $data['logo'] = $usulan->disdukcapil->cdn_picture;
