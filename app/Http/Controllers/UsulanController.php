@@ -831,6 +831,18 @@ class UsulanController extends Controller
             $usulan = Usulan::find($uid);
             $formData = $request->except('_token', '_method');
             if ($usulan) {
+                if ($usulan->is_approve == 2) {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Sudah Disetujui'
+                    ], 400);
+                } else if ($usulan->is_approve == 0) {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Sudah Ditolak'
+                    ], 400);
+                }
+
                 $name = auth()->user()->name;
                 $role = auth()->user()->role->name;
                 $slug = auth()->user()->role->slug;
@@ -862,6 +874,11 @@ class UsulanController extends Controller
                         'message' => 'Data Gagal Disetujui'
                     ], 400);
                 }
+            } else {
+                return response([
+                    'status' => false,
+                    'message' => 'Data Tidak Ditemukan'
+                ], 400);
             }
         } catch (\Throwable $th) {
             throw $th;
@@ -900,6 +917,17 @@ class UsulanController extends Controller
             $usulan = Usulan::find($uid);
             $formData = $request->except('_token', '_method');
             if ($usulan) {
+                if ($usulan->is_approve == 2) {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Sudah Disetujui'
+                    ], 400);
+                } else if ($usulan->is_approve == 0) {
+                    return response([
+                        'status' => false,
+                        'message' => 'Data Sudah Ditolak'
+                    ], 400);
+                }
                 $role = auth()->user()->role->name;
                 $name = auth()->user()->name;
                 $slug = auth()->user()->role->slug;
@@ -921,48 +949,48 @@ class UsulanController extends Controller
                 $trx = $usulan->update($formData);
                 if ($trx) {
                     $createdBy = $usulan->createdBy();
-                    // try {
-                    //     $options = [
-                    //         'multipart' => [
-                    //             [
-                    //                 'name' => 'device_id',
-                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
-                    //             ],
-                    //             [
-                    //                 'name' => 'number',
-                    //                 'contents' => $createdBy->no_telp,
-                    //             ],
-                    //             [
-                    //                 'name' => 'message',
-                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
-                    //             ]
-                    //         ]
-                    //     ];
-                    //     $client = new GuzzleClient([
-                    //         'http_errors' => false
-                    //     ]);
-                    //     $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+                    try {
+                        $options = [
+                            'multipart' => [
+                                [
+                                    'name' => 'device_id',
+                                    'contents' => '93ce715666c4811b544060462e10db8f'
+                                ],
+                                [
+                                    'name' => 'number',
+                                    'contents' => $createdBy->no_telp,
+                                ],
+                                [
+                                    'name' => 'message',
+                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
+                                ]
+                            ]
+                        ];
+                        $client = new GuzzleClient([
+                            'http_errors' => false
+                        ]);
+                        $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
 
-                    //     $options2 = [
-                    //         'multipart' => [
-                    //             [
-                    //                 'name' => 'device_id',
-                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
-                    //             ],
-                    //             [
-                    //                 'name' => 'number',
-                    //                 'contents' => $usulan->pemohon->no_telp,
-                    //             ],
-                    //             [
-                    //                 'name' => 'message',
-                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
-                    //             ]
-                    //         ]
-                    //     ];
-                    //     $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
-                    // } catch (\Throwable $th) {
-                    //     //throw $th;
-                    // }
+                        $options2 = [
+                            'multipart' => [
+                                [
+                                    'name' => 'device_id',
+                                    'contents' => '93ce715666c4811b544060462e10db8f'
+                                ],
+                                [
+                                    'name' => 'number',
+                                    'contents' => $usulan->pemohon->no_telp,
+                                ],
+                                [
+                                    'name' => 'message',
+                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
+                                ]
+                            ]
+                        ];
+                        $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
+                    } catch (\Throwable $th) {
+                        //throw $th;
+                    }
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'
@@ -973,6 +1001,11 @@ class UsulanController extends Controller
                         'message' => 'Data Gagal Ditolak'
                     ], 400);
                 }
+            } else {
+                return response([
+                    'status' => false,
+                    'message' => 'Data Tidak Ditemukan'
+                ], 400);
             }
         } catch (\Throwable $th) {
             //throw $th;
