@@ -56,7 +56,7 @@ Route::prefix('/')->middleware('auth:api')->group(function () {
         $data = $request->except('_token');
         $usulan = Usulan::find($uid);
         if ($usulan) {
-            if ($usulan->status != '2') {
+            if ($usulan->is_approve != '2') {
                 return response([
                     'status' => false,
                     'message' => 'Usulan Belum Disetujui'
