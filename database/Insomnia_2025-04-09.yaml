@@ -1,0 +1,260 @@
+type: collection.insomnia.rest/5.0
+name: PENGADILAN NEGERI BALE BANDUNG
+meta:
+  id: wrk_705b866fc222450bb01853d2ebbc8286
+  created: 1742441196359
+  modified: 1742441196359
+collection:
+  - name: Authentication
+    meta:
+      id: fld_02d6e01a44c6407d9748a2b64f53bb05
+      created: 1742453688703
+      modified: 1742453688703
+      sortKey: -1742453688703
+    children:
+      - url: http://127.0.0.1:8000/api/login
+        name: LOGIN
+        meta:
+          id: req_4ff79b0fffc845d2b5091efb5f254b41
+          created: 1742441201633
+          modified: 1742544268097
+          isPrivate: false
+          sortKey: -1742453694047
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_b2bc1b702f904bbe8229e100f08df229
+              name: username
+              value: disdukcapil2
+              disabled: false
+            - id: pair_e0900ec9bd474d61908ac7079932a11a
+              name: password
+              value: disdukcapil2
+              disabled: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.0.0
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/logout
+        name: LOGOUT
+        meta:
+          id: req_3ecb20efa35149a69dfb9d88802632e9
+          created: 1742526267815
+          modified: 1742542566461
+          isPrivate: false
+          sortKey: -1742400144504.5
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_c4f0424320734f18b3f060559ad3cb78
+              disabled: false
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.0.0
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_4ff79b0fffc845d2b5091efb5f254b41',
+            'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+  - name: Usulan
+    meta:
+      id: fld_b92159eabd3242eaaff8adf8b9649876
+      created: 1742453703649
+      modified: 1742453706282
+      sortKey: -1742453703649
+    children:
+      - url: http://127.0.0.1:8000/api/approvement/approve_usulan/5efbda93-4e7d-462b-acfb-1afc69899f71
+        name: APPROVE USULAN
+        meta:
+          id: req_a5616e58f8974d6e978a4f8f714c7622
+          created: 1742441820402
+          modified: 1742526639929
+          isPrivate: false
+          sortKey: -1742453709764
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"catatan" : "Dokumen sudah dilengkapi, mantapp"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.0
+            id: pair_82cb0496e80240cbb6d499097587169f
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_4ff79b0fffc845d2b5091efb5f254b41',
+            'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/usulan
+        name: LIST USULAN
+        meta:
+          id: req_d5569915876b4927a56ccc9cb6bad2de
+          created: 1742445571610
+          modified: 1742526617817
+          isPrivate: false
+          sortKey: -1742453709864
+        method: POST
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.0
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_4ff79b0fffc845d2b5091efb5f254b41',
+            'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/approvement/reject_usulan/5efbda93-4e7d-462b-acfb-1afc69899f71
+        name: REJECT USULAN
+        meta:
+          id: req_e1c2b17141024aee9e2329e8c76c0755
+          created: 1742526137573
+          modified: 1742526660505
+          isPrivate: false
+          sortKey: -1742453701905.5
+        method: PUT
+        body:
+          mimeType: application/json
+          text: |-
+            {
+            	"catatan" : "Mohon maaf gabisa"
+            }
+        headers:
+          - name: Content-Type
+            value: application/json
+          - name: User-Agent
+            value: insomnia/11.0.0
+            id: pair_82cb0496e80240cbb6d499097587169f
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_4ff79b0fffc845d2b5091efb5f254b41',
+            'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+      - url: http://127.0.0.1:8000/api/send-email/5efbda93-4e7d-462b-acfb-1afc69899f71
+        name: SEND EMAIL
+        meta:
+          id: req_b2482c4cc9f843b2983edfa5e2902cf3
+          created: 1742778570831
+          modified: 1742779001352
+          isPrivate: false
+          sortKey: -1742778570831
+        method: POST
+        body:
+          mimeType: multipart/form-data
+          params:
+            - id: pair_f439ff4cffb944008d00512fbcc270e9
+              name: attachments[]
+              disabled: false
+              type: file
+              fileName: C:\Users\Tiara\Downloads\panduan_kp (1).pdf
+            - id: pair_4fef864bcc0e43b38d29cdfe1f4597cb
+              name: attachments[]
+              disabled: false
+              type: file
+            - id: pair_094d666c5093454db59666ce37fc4991
+              name: attachments[]
+              disabled: false
+              type: file
+        headers:
+          - name: Content-Type
+            value: multipart/form-data
+          - name: User-Agent
+            value: insomnia/11.0.0
+        authentication:
+          type: bearer
+          token: "{% response 'body', 'req_4ff79b0fffc845d2b5091efb5f254b41',
+            'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+        settings:
+          renderRequestBody: true
+          encodeUrl: true
+          followRedirects: global
+          cookies:
+            send: true
+            store: true
+          rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_3030af2776a4724fd3bd280d689bcf7dcfccf9fb
+    created: 1742441196365
+    modified: 1742778766534
+  cookies:
+    - key: XSRF-TOKEN
+      value: eyJpdiI6InptL2s0VVVzdHNNSjZMWUd5V3ZiaVE9PSIsInZhbHVlIjoiaGR0aFRpSlg5ZVF0ZS9WRHFWMkNKUDgvUDBFRzRCcHpRa0tTU01mWCtSR1g1cUFPcUZqQ2s1ZVlBNHd2QkNtbzFhSXNiaktySkx2Qm4yYnNKQU5lQldmWmtOWkZPMElDbEgyL1lDckJ4aVRLTjdocWV0MlR6dUdBalZ3akN0MkciLCJtYWMiOiIyZWVhOTE4YmZjZjBmMWUzZTM0NTEyYTQyMGM5MTkyNjhmNjczMzM0ZTBjMzJlMDE3OTgzMjNiNDQwM2ViZWQ5IiwidGFnIjoiIn0%3D
+      maxAge: 7200
+      domain: 127.0.0.1
+      path: /
+      hostOnly: true
+      creation: 2025-03-24T01:12:46.532Z
+      lastAccessed: 2025-03-24T01:12:46.534Z
+      sameSite: lax
+      id: 44ac76e4-c46f-44ee-846a-6d276acd29d2
+    - key: laravel_session
+      value: eyJpdiI6Im1kRk9NYzEvejlyTGFRRHNUZ0xGRkE9PSIsInZhbHVlIjoiVC9zYzMvN2RPbkROdEJMNmpkS1p6UVRVRTdkVFAxY1BxZzA5R0tSa0c1eTlnTlAwVE9PdnQyWXgzRTk2TC9kUXVxeEJzaEw3UW5IK3V2SldzQ1pFYThFbHZ1RVl5eEJ4KzhDNmxKVGswRDY2N3d5Uk1NSWFmMVhpVnhKSm9QUloiLCJtYWMiOiI4OTE5MWQzYTRjNDYwMzNkNzhlZmI1MzVlOTQ0ZTgwNmEwZTYxNDc1NWY2MjBmYzM0MThhMjI5YTE4YTRjNjZhIiwidGFnIjoiIn0%3D
+      maxAge: 7200
+      domain: 127.0.0.1
+      path: /
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-03-24T01:12:46.533Z
+      lastAccessed: 2025-03-24T01:12:46.534Z
+      sameSite: lax
+      id: d19d8fd6-f10a-4a4c-b53f-6f905c2b2c82
+environments:
+  name: Base Environment
+  meta:
+    id: env_3030af2776a4724fd3bd280d689bcf7dcfccf9fb
+    created: 1742441196362
+    modified: 1742441196362
+    isPrivate: false
