@@ -31,10 +31,14 @@ class UsulanDataTable extends DataTable
                 $html = '';
                 $html = '<div class="btn-group btn-group-sm">';
                 if (PermissionCommon::check('usulan.update')) {
-                    $html .= '<button onclick="edit(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-info" title="Edit"><i class="fas fa-pen"></i></button>';
+                    if ($item->is_approve != 2) {
+                        $html .= '<button onclick="edit(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-info" title="Edit"><i class="fas fa-pen"></i></button>';
+                    }
                 }
                 if (PermissionCommon::check('usulan.delete')) {
-                    $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
+                    if ($item->is_approve != 2 && $item->is_approve != 0) {
+                        $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
+                    }
                 }
                 $html .= '</div>';
 
@@ -168,7 +172,7 @@ class UsulanDataTable extends DataTable
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-6'B><'col-sm-3'f><'col-sm-3'l>> <'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>")
             ->orderBy(3)
-            ->scrollY(350)
+            ->scrollY(650)
             // ->selectStyleSingle()
             ->buttons($button);
     }

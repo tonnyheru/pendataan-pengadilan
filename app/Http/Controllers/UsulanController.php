@@ -136,8 +136,7 @@ class UsulanController extends Controller
 
             // status 0 = ditolak / revisi
             // status 1 = belum di approve
-            // status 2 = sudah di approve admin
-            // status 3 = sudah di approve disdukcapil
+            // status 2 = sudah di approve disdukcapil
 
             $trx = Usulan::create([
                 'uid' => Str::uuid()->toString(),
@@ -248,7 +247,7 @@ class UsulanController extends Controller
                 ], 400);
             }
         } catch (\Throwable $th) {
-            throw $th;
+            // throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
@@ -456,6 +455,18 @@ class UsulanController extends Controller
                 // Update the form data with the new file name
                 $formData['path_pengantar'] = $filename;
             }
+            $name = auth()->user()->name;
+            $role = auth()->user()->role->name;
+            $catatan = json_decode($usulan->catatan);
+            $catatan[] = [
+                'role' => $role,
+                'name' => $name,
+                'status' => '99',
+                'catatan' => '',
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+            $formData['catatan'] = json_encode($catatan);
+            $formData['is_approve'] = '1';
             $formData['disdukcapil_uid'] = $formData['delegasi'];
             $formData['updated_by'] = auth()->user()->uid;
 

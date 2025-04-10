@@ -41,6 +41,11 @@
               $stat = 'Disetujui';
               $badge = 'bg-success';
               break;
+            case '99':
+              $status = 'Telah dirubah datanya';
+              $stat = 'Perubahan Data';
+              $badge = 'bg-yellow';
+              break;
             default:
               $status = '';
               $stat = '';
@@ -48,11 +53,18 @@
               break;
           }
           @endphp
-          <h5 class=" mt-3 mb-0">Usulan dengan nomor perkara {{$usulan->no_perkara}} {{$status}} dengan nama petugas {{$value->name}}</h5>
-          <p class=" text-sm mt-1 mb-0">Catatan : <strong> {{ $value->catatan }} </strong></p>
-          <div class="mt-3">
-            <span class="badge badge-pill {{$badge}} text-white">{{$stat}}</span>
-          </div>
+          @if($value->status != '99')
+            <h5 class=" mt-3 mb-0">Usulan dengan nomor perkara {{$usulan->no_perkara}} {{$status}} dengan nama petugas {{$value->name}}</h5>
+            <p class=" text-sm mt-1 mb-0">Catatan : <strong> {{ $value->catatan }} </strong></p>
+            <div class="mt-3">
+              <span class="badge badge-pill {{$badge}} text-white">{{$stat}}</span>
+            </div>
+          @else
+            <h5 class=" mt-3 mb-0">Usulan dengan nomor perkara {{$usulan->no_perkara}} {{$status}} dengan nama petugas {{$value->name}}</h5>
+            <div class="mt-3">
+              <span class="badge badge-pill {{$badge}} text-white">{{$stat}}</span>
+            </div>
+          @endif
         </div>
       </div>
       @endforeach
