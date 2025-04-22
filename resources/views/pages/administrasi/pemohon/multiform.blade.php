@@ -2,11 +2,14 @@
 	.step-header {
 			padding-bottom: 10px;
 			margin-bottom: 10px;
+      position: relative;
 	}
 	.step-list {
+      position: relative;
 			display: flex;
 			flex-direction: row;
 			justify-content: space-around;
+      z-index: 1;
 	}
 	.step-header-number{
 			display: -ms-inline-flexbox;
@@ -85,24 +88,44 @@
 		box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
 		transform: scale(1);
 	}
+
+  .progress {
+    position: absolute;
+    top: 40%;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: #e0e0e0;
+    z-index: 0;
+    transform: translateY(-50%);
+  }
+
+  .progress-bar {
+    height: 100%;
+    background-color: #016004; /* Bootstrap primary blue */
+    z-index: 0;
+  }
 </style>
 
 <div class="step-box">
 	<div class="step-header">
-			<div class="step-list">
-				<div class="step-button" data-tab="1">
-						<div class="step-header-number active"><span><i class="fas fa-tv"></i></span></div>
-						<div class="step-header-title">Data Awal</div>
-				</div>
-				<div class="step-button" data-tab="2">
-						<div class="step-header-number">2</div>
-						<div class="step-header-title">Data Item</div>
-				</div>
-				<div class="step-button" data-tab="3">
-						<div class="step-header-number">3</div>
-						<div class="step-header-title">Ringkasan</div>
-				</div>
-			</div>
+    <div class="progress">
+      <div class="progress-bar" role="progressbar" style="width: 19%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+    <div class="step-list">
+      <div class="step-button" data-tab="1">
+          <div class="step-header-number active"><span><i class="fas fa-user-edit"></i></span></div>
+          <div class="step-header-title">Data Pemohon</div>
+      </div>
+      <div class="step-button" data-tab="2">
+          <div class="step-header-number"><span><i class="fas fa-th-list"></i></span></div>
+          <div class="step-header-title">Detail Pemohon</div>
+      </div>
+      <div class="step-button" data-tab="3">
+          <div class="step-header-number"><span><i class="fas fa-clipboard-check"></i></span></div>
+          <div class="step-header-title">Ringkasan</div>
+      </div>
+    </div>
 	</div>
 	<div class="step-body" data-tab="1">
 		<div class="row">

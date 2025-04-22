@@ -26,8 +26,9 @@ class PemohonController extends Controller
     {
         if (!PermissionCommon::check('pemohon.create')) abort(403);
         $body = view('pages.administrasi.pemohon.create')->render();
-        $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
+        $footer = '<button type="button" class="btn btn-close btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-prev btn-primary" onclick="prevStep()" style="display: none;">Sebelumnya</button>
+                <button type="button" class="btn btn-next btn-primary" onclick="nextStep()">Lanjut</button>';
 
         return [
             'title' => 'Daftarkan Pemohon',
