@@ -110,7 +110,7 @@
 <div class="step-box">
 	<div class="step-header">
     <div class="progress">
-      <div class="progress-bar" role="progressbar" style="width: 19%;" aria-valuenow="33" aria-valuemin="0" aria-valuemax="100"></div>
+      <div class="progress-bar" role="progressbar" style="width: 20%;" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
     </div>
     <div class="step-list">
       <div class="step-button" data-tab="1">
@@ -168,55 +168,10 @@
 					</div>
 				</div>
 			</div>
-			{{-- Tipe Pelanggan --}}
-			<div class="form-group col-md-12">
-				<label>Pilih Tipe Pelanggan <span class="text-danger">*</span></label>
-				<div class="row justify-content-md-center">
-					<!-- Option 1 -->
-					<div class="col-md-2 card-radio transition">
-						<label>
-							<input type="radio" name="tipe_customer" value="lokal" checked>
-							<div class="card p-3 text-center" style="background: #ececec">
-								<img class="rounded mx-auto d-block img-thumbnail mb-3" width="150" height="150" src="{{ asset('img/default-local.png') }}" alt="">
-								<p><strong>Lokal</strong></p>
-							</div>
-						</label>
-					</div>
-					<!-- Option 2 -->
-					<div class="col-md-2 card-radio transition">
-						<label>
-							<input type="radio" name="tipe_customer" value="ekspor">
-							<div class="card p-3 text-center" style="background: #ececec">
-								<img class="rounded mx-auto d-block img-thumbnail mb-3" width="150" height="150" src="{{ asset('img/default-export.png') }}" alt="">
-								<p><strong>Ekspor</strong></p>
-							</div>
-						</label>
-					</div>
-				</div>
-			</div>
 			{{-- keterangan --}}
 			<div class="form-group col-md-12" id="keterangan-lainnya">
 				<label>Keterangan Item <span class="text-danger">*</span></label>
 				<input type="text" name="keterangan" class="form-control" placeholder="Keterangan Item">
-			</div>
-			{{-- Pelanggan --}}
-			<div class="form-group col-md-12">
-				<label>Pelanggan <span class="text-danger">*</span></label>
-				<select name="customer" class="form-control select2-customer" id="customer">
-					<option></option>
-				</select>
-			</div>
-			{{-- Nomor Surat Jalan --}}
-			<div class="form-group col-md-6">
-				<label>Nomor Surat Jalan <span class="text-danger">*</span></label>
-				<input type="text" name="nomor_sj" class="form-control" placeholder="Nomor Surat Jalan" style="text-transform:uppercase">
-			</div>
-			{{-- Tanggal Surat Jalan --}}
-			<div class="form-group col-md-6 ">
-				<label>Tanggal Surat Jalan <span class="text-danger">*</span></label>
-				<div class='date'>
-						<input type='text' class="form-control" name="tanggal_sj" id='tanggal_sj' style="background-color: white; " placeholder="Pilih Tanggal Surat Jalan" value="" />
-				</div>
 			</div>
 			{{-- PPN --}}
 			<div class="form-group col-md-12" id="lokal-ppn">
@@ -242,118 +197,6 @@
 	</div>
 	<div class="step-body" data-tab="2" style="display: none;">
 		<div class="col-md-10 mx-auto mb-5">
-			<div id="dynamic-form">
-				<!-- Original Form -->
-				<div class="form-item card shadow">
-					<div class="card-header" id="heading1">
-						<div class="d-flex align-items-center">
-								<span class="ml-2 mr-3 item-number">Item 1</span>
-								<hr class="flex-grow-1">
-								<a href="#collapse1" class="btn btn-info btn-sm item-collapse" data-toggle="collapse" aria-expanded="true" aria-controls="collapse1">
-									<i class="fas fa-window-minimize"></i>
-								</a>
-								<a href="javascript:void(0)" class="btn btn-danger btn-sm remove-form" style="display: none"><i class="fas fa-trash"></i></a>
-						</div>
-					</div>
-
-					<div id="collapse1" class="collapse show" aria-labelledby="heading1" data-parent="#dynamic-form">
-						<div class="card-body">
-							<div class="row">
-								
-								<!-- Barang -->
-								<div class="form-group col-md-12 tipe-barang">
-									<label>Barang <span class="text-danger">*</span></label>
-									<select name="barang[0]" class="form-control select2-barang">
-										<option></option>
-									</select>
-									<small id="stok-barang" style="display: none" class="form-text text-muted"></small>
-								</div>
-
-								<!-- Bahan -->
-								<div class="form-group col-md-12 tipe-bahan">
-									<label>Bahan <span class="text-danger">*</span></label>
-									<select name="bahan[0]" class="form-control select2-bahan">
-										<option></option>
-									</select>
-									<small id="stok-bahan" style="display: none" class="form-text text-muted"></small>
-								</div>
-								<!-- Nama Item -->
-								<div class="form-group col-md-12 tipe-lainnya">
-										<label>Nama Item <span class="text-danger">*</span></label>
-										<input type="text" name="nama_item[]" class="form-control" placeholder="Nama Item">
-								</div>
-								<!-- Jumlah -->
-								<div class="form-group col-md-12 ">
-										<label>Jumlah <span class="text-danger">*</span></label>
-										<div class="input-group">
-												<input type="number" name="jumlah[]" class="form-control" placeholder="Jumlah">
-												<div class="input-group-append" style="display: none">
-														<span class="input-group-text append-satuan"></span>
-												</div>
-										</div>
-								</div>
-								<!-- (Netto) -->
-								<div class="form-group col-md-6 " style="">
-										<label>Netto <span class="text-danger">*</span></label>
-										<div class="input-group">
-												<input type="number" name="netto[]" class="form-control" step=".001" placeholder="Netto">
-												<div class="input-group-append">
-														<span class="input-group-text">KG</span>
-												</div>
-										</div>
-								</div>
-								<!-- Bruto -->
-								<div class="form-group col-md-6 " style="">
-										<label>Bruto <span class="text-danger">*</span></label>
-										<div class="input-group">
-												<input type="number" name="bruto[]" class="form-control" step=".001" placeholder="Bruto">
-												<div class="input-group-append">
-														<span class="input-group-text">KG</span>
-												</div>
-										</div>
-								</div>
-
-								
-								<!-- Mata Uang -->
-								<div class="form-group col-md-12 ekspor-mata-uang">
-										<label>Mata Uang </label>
-										<input type="text" name="mata_uang[]" class="form-control" placeholder="Mata Uang" style="text-transform:uppercase">
-								</div>
-								<!-- Nilai -->
-								<div class="form-group col-md-12 " style="">
-										<label>Nilai </label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-													<span class="input-group-text prepend-currency"></span>
-											</div>
-												<input type="number" name="nilai[]" class="form-control" step=".01" placeholder="Nilai">
-										</div>
-								</div>
-								<!-- Nilai PPN -->
-								<div class="form-group col-md-6 lokal-nilai-ppn" style="">
-										<label>Nilai PPN </label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-													<span class="input-group-text">IDR</span>
-											</div>
-												<input type="number" name="nilai_ppn[]" class="form-control" step=".01" placeholder="Nilai PPN" readonly>
-										</div>
-								</div>
-								<!-- Nilai Total -->
-								<div class="form-group col-md-6 lokal-nilai-total" style="">
-										<label>Nilai Total </label>
-										<div class="input-group">
-											<div class="input-group-prepend">
-													<span class="input-group-text">IDR</span>
-											</div>
-												<input type="number" name="nilai_total[]" class="form-control" step=".01" placeholder="Nilai Total" readonly>
-										</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
 			<!-- Button to add new form -->
 			<a href="javascript:void(0)" id="add-form" class="btn btn-success mt-3"><i class="fas fa-plus"></i> Tambah Item</a>
 		</div>
@@ -517,12 +360,20 @@ function nextStep() {
 		case 1:
 			isValid = validateStep1();
 			if (isValid) {
+				const percent = 50;
+				$('.progress-bar')
+					.css('width', percent + '%')
+					.attr('aria-valuenow', percent);
 				$('.btn-prev').show()
 			}
 			break;
 		case 2:
+      const percent = 85;
+      $('.progress-bar')
+        .css('width', percent + '%')
+        .attr('aria-valuenow', percent);
 			isValid = validateStep2();
-			collectAndDisplayData();
+			// collectAndDisplayData();
 			break;
 		case 3:
 			isValid = true;
@@ -564,9 +415,23 @@ function prevStep() {
 	}
 
 	if(stepper.position == 1){
+		const percent = 20;
+		$('.progress-bar')
+			.css('width', percent + '%')
+			.attr('aria-valuenow', percent);
 		$('.btn-prev').hide()
 		// $('.btn-close').show()
-	}
+	} else if(stepper.position == 2){
+    const percent = 50;
+    $('.progress-bar')
+      .css('width', percent + '%')
+      .attr('aria-valuenow', percent);
+  } else if(stepper.position == 3){
+    const percent = 85;
+    $('.progress-bar')
+      .css('width', percent + '%')
+      .attr('aria-valuenow', percent);
+  }
 
 	$('.step-button[data-tab="'+curr_position+'"] > .step-header-number').removeClass('active')
 
@@ -577,121 +442,117 @@ function prevStep() {
 function validateStep1() {
 	let kosong = ''
 
-	var tipe = $('input[name="tipe_jurnal"]:checked').val();
-	if (tipe == "lainnya") {
-		let validateKeterangan = $('[name="keterangan"]').val()
-		if (!validateKeterangan) {
-			kosong += '<li>Kolom Keterangan Wajib Diisi</li>'
-		}
-	}
+	// var tipe = $('input[name="tipe_jurnal"]:checked').val();
+	// if (tipe == "lainnya") {
+	// 	let validateKeterangan = $('[name="keterangan"]').val()
+	// 	if (!validateKeterangan) {
+	// 		kosong += '<li>Kolom Keterangan Wajib Diisi</li>'
+	// 	}
+	// }
 
-	let validateCustomer = $('[name="customer"]').val()
-	if (!validateCustomer) {
-		kosong += '<li>Kolom Pelanggan Wajib Diisi</li>'
-	}
+	// let validateCustomer = $('[name="customer"]').val()
+	// if (!validateCustomer) {
+	// 	kosong += '<li>Kolom Pelanggan Wajib Diisi</li>'
+	// }
 
-	let validateNomorSJ = $('[name="nomor_sj"]').val()
-	if (!validateNomorSJ) {
-		kosong += '<li>Kolom Nomor Surat Jalan Wajib Diisi</li>'
-	}
+	// let validateNomorSJ = $('[name="nomor_sj"]').val()
+	// if (!validateNomorSJ) {
+	// 	kosong += '<li>Kolom Nomor Surat Jalan Wajib Diisi</li>'
+	// }
 
-	let validateTanggalSJ = $('[name="tanggal_sj"]').val()
-	if (!validateTanggalSJ) {
-		kosong += '<li>Kolom Tanggal Surat jalan Wajib Diisi</li>'
-	}
-
-	
-
-	
+	// let validateTanggalSJ = $('[name="tanggal_sj"]').val()
+	// if (!validateTanggalSJ) {
+	// 	kosong += '<li>Kolom Tanggal Surat jalan Wajib Diisi</li>'
+	// }
 
 
-	$('#response_container').empty()
-	if(kosong){
-		let message = `<div class="alert alert-danger alert-dismissible fade show">
-				<ul style="margin: 0; padding: 0">
-					Step 1:
-					<ul>
-							${kosong}
-					</ul>
-				</ul>
-			</div>`
-		$('#response_container').html(message)
-		return false;
-	}
+	// $('#response_container').empty()
+	// if(kosong){
+	// 	let message = `<div class="alert alert-danger alert-dismissible fade show">
+	// 			<ul style="margin: 0; padding: 0">
+	// 				Step 1:
+	// 				<ul>
+	// 						${kosong}
+	// 				</ul>
+	// 			</ul>
+	// 		</div>`
+	// 	$('#response_container').html(message)
+	// 	return false;
+	// }
 	return true;
 }
 
 function validateStep2() {
-	let kosong = ''       
-	var tipeJurnal = $('input[name="tipe_jurnal"]:checked').val();
-	var tipeCustomer = $('input[name="tipe_customer"]:checked').val();
-	$('#dynamic-form .form-item').each(function (index) {
-		switch (tipeJurnal) {
-			case "lainnya":
-				let namaItemValue = $(this).find('.form-group select[name="nama_item[]"]').val()
-				if (!namaItemValue) {  // If the field is empty
-					kosong += `<li>Kolom Nama Item pada data ke - ${index + 1} wajib diisi</li>`;
-				}
-				break;
-			case "bahan_baku":
-				let bahanValue = $(this).find('.form-group select[name="bahan['+index+']"]').val()
-				if (!bahanValue) {  // If the field is empty
-					kosong += `<li>Kolom Bahan pada data ke - ${index + 1} wajib diisi</li>`;
-				}
-				break;
-			case "barang_jadi":
-				let barangValue = $(this).find('.form-group select[name="barang['+index+']"]').val()
-				if (!barangValue) {  // If the field is empty
-					kosong += `<li>Kolom Barang pada data ke - ${index + 1} wajib diisi</li>`;
-				}
-				break;
-			default:
-				break;
-		}
+	// let kosong = ''       
+	// var tipeJurnal = $('input[name="tipe_jurnal"]:checked').val();
+	// var tipeCustomer = $('input[name="tipe_customer"]:checked').val();
+	// $('#dynamic-form .form-item').each(function (index) {
+	// 	switch (tipeJurnal) {
+	// 		case "lainnya":
+	// 			let namaItemValue = $(this).find('.form-group select[name="nama_item[]"]').val()
+	// 			if (!namaItemValue) {  // If the field is empty
+	// 				kosong += `<li>Kolom Nama Item pada data ke - ${index + 1} wajib diisi</li>`;
+	// 			}
+	// 			break;
+	// 		case "bahan_baku":
+	// 			let bahanValue = $(this).find('.form-group select[name="bahan['+index+']"]').val()
+	// 			if (!bahanValue) {  // If the field is empty
+	// 				kosong += `<li>Kolom Bahan pada data ke - ${index + 1} wajib diisi</li>`;
+	// 			}
+	// 			break;
+	// 		case "barang_jadi":
+	// 			let barangValue = $(this).find('.form-group select[name="barang['+index+']"]').val()
+	// 			if (!barangValue) {  // If the field is empty
+	// 				kosong += `<li>Kolom Barang pada data ke - ${index + 1} wajib diisi</li>`;
+	// 			}
+	// 			break;
+	// 		default:
+	// 			break;
+	// 	}
 		
-	});
+	// });
 
-	$('[name="jumlah[]"]').each(function(index) {
-		let jumlahValue = $(this).val(); // Get the value of the current field
+	// $('[name="jumlah[]"]').each(function(index) {
+	// 	let jumlahValue = $(this).val(); // Get the value of the current field
 		
-		if (!jumlahValue) {  // If the field is empty
-			kosong += `<li>Kolom Jumlah pada data ke - ${index + 1} wajib diisi</li>`;
-		}
-	});
+	// 	if (!jumlahValue) {  // If the field is empty
+	// 		kosong += `<li>Kolom Jumlah pada data ke - ${index + 1} wajib diisi</li>`;
+	// 	}
+	// });
 
-	$('[name="bruto[]"]').each(function(index) {
-		if ($(this).is(":visible")) {
-			let jumlahKgValue = $(this).val(); // Get the value of the current field
+	// $('[name="bruto[]"]').each(function(index) {
+	// 	if ($(this).is(":visible")) {
+	// 		let jumlahKgValue = $(this).val(); // Get the value of the current field
 			
-			if (!jumlahKgValue) {  // If the field is empty
-				kosong += `<li>Kolom Bruto pada data ke - ${index + 1} wajib diisi</li>`;
-			}
-		}
-	});
+	// 		if (!jumlahKgValue) {  // If the field is empty
+	// 			kosong += `<li>Kolom Bruto pada data ke - ${index + 1} wajib diisi</li>`;
+	// 		}
+	// 	}
+	// });
 
-	$('[name="netto[]"]').each(function(index) {
-		if ($(this).is(":visible")) {
-			let jumlahKgValue = $(this).val(); // Get the value of the current field
+	// $('[name="netto[]"]').each(function(index) {
+	// 	if ($(this).is(":visible")) {
+	// 		let jumlahKgValue = $(this).val(); // Get the value of the current field
 			
-			if (!jumlahKgValue) {  // If the field is empty
-				kosong += `<li>Kolom Netto pada data ke - ${index + 1} wajib diisi</li>`;
-			}
-		}
-	});
+	// 		if (!jumlahKgValue) {  // If the field is empty
+	// 			kosong += `<li>Kolom Netto pada data ke - ${index + 1} wajib diisi</li>`;
+	// 		}
+	// 	}
+	// });
 
-	$('#response_container').empty()
-	if(kosong){
-		let message = `<div class="alert alert-danger alert-dismissible fade show">
-				<ul style="margin: 0; padding: 0">
-					Step 2
-					<ul>
-						${kosong}
-					</ul>
-				</ul>
-			</div>`
-		$('#response_container').html(message)
-		return false;
-	}
+	// $('#response_container').empty()
+	// if(kosong){
+	// 	let message = `<div class="alert alert-danger alert-dismissible fade show">
+	// 			<ul style="margin: 0; padding: 0">
+	// 				Step 2
+	// 				<ul>
+	// 					${kosong}
+	// 				</ul>
+	// 			</ul>
+	// 		</div>`
+	// 	$('#response_container').html(message)
+	// 	return false;
+	// }
 	return true;
 }
 // End of Stepper
