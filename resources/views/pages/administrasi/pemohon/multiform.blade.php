@@ -15,10 +15,6 @@
           <div class="step-header-title">Detail Pemohon</div>
       </div>
       <div class="step-button" data-tab="3">
-          <div class="step-header-number"><span><i class="fas fa-cabinet-filing"></i></span></div>
-          <div class="step-header-title">Dokumen Pendukung</div>
-      </div>
-      <div class="step-button" data-tab="4">
           <div class="step-header-number"><span><i class="fas fa-clipboard-check"></i></span></div>
           <div class="step-header-title">Ringkasan</div>
       </div>
@@ -27,7 +23,6 @@
 	@include('pages.administrasi.pemohon.create.step1')
 	@include('pages.administrasi.pemohon.create.step2')
 	@include('pages.administrasi.pemohon.create.step3')
-	@include('pages.administrasi.pemohon.create.step4')
 </div>
 
 <script>
@@ -111,7 +106,7 @@ function collectAndDisplayData() {
 
 //====================================================================================================================================
 // Stepper
-var max_step = 4
+var max_step = 3
 var stepper = new Stepper({
 	max_step: max_step
 })
@@ -171,10 +166,6 @@ function prevStep() {
 	if(stepper.position < max_step){
 		$('.btn-next').text('Lanjut')
 
-		$('#data_pemegang_va').hide()
-		// if( (Ryuna.remove_format_rupiah('#mp1 th') >= 100000000 || Ryuna.remove_format_rupiah('#mp2 th') >= 100000000) && $('#disallow_teller').val() == 'false'){
-		//   $('#data_pemegang_va').show()
-		// }
 	}
 
 	if(stepper.position == 1){
@@ -204,44 +195,92 @@ function prevStep() {
 
 function validateStep1() {
 	let kosong = ''
+ 
+  let validateProvince = $('#province').val()
+  if (!validateProvince) {
+    $('#province').addClass('is-invalid')
+    kosong += '<li>Kolom Provinsi Wajib Diisi</li>'
+  } else {
+    $('#province').removeClass('is-invalid')
+  }
 
-	// var tipe = $('input[name="tipe_jurnal"]:checked').val();
-	// if (tipe == "lainnya") {
-	// 	let validateKeterangan = $('[name="keterangan"]').val()
-	// 	if (!validateKeterangan) {
-	// 		kosong += '<li>Kolom Keterangan Wajib Diisi</li>'
-	// 	}
-	// }
+  let validateRegency = $('#regency').val()
+  if (!validateRegency) {
+    $('#regency').addClass('is-invalid')
+    kosong += '<li>Kolom Kabupaten / Kota Wajib Diisi</li>'
+  } else {
+    $('#regency').removeClass('is-invalid')
+  }
+  
+  let validateDistrict = $('#district').val() 
+  if (!validateDistrict) {
+    $('#district').addClass('is-invalid')
+    kosong += '<li>Kolom Kecamatan Wajib Diisi</li>'
+  } else {
+    $('#district').removeClass('is-invalid')
+  }
 
-	// let validateCustomer = $('[name="customer"]').val()
-	// if (!validateCustomer) {
-	// 	kosong += '<li>Kolom Pelanggan Wajib Diisi</li>'
-	// }
+  let validateVillage = $('#village').val()
+  if (!validateVillage) {
+    $('#village').addClass('is-invalid')
+    kosong += '<li>Kolom Desa / Kelurahan Wajib Diisi</li>'
+  } else {
+    $('#village').removeClass('is-invalid')
+  }
 
-	// let validateNomorSJ = $('[name="nomor_sj"]').val()
-	// if (!validateNomorSJ) {
-	// 	kosong += '<li>Kolom Nomor Surat Jalan Wajib Diisi</li>'
-	// }
+  let validateKK = $('input[name="kk"]').val()
+  if (!validateKK) {
+    $('input[name="kk"]').addClass('is-invalid')
+    kosong += '<li>Kolom Nomor Kartu Keluarga Wajib Diisi</li>'
+  } else {
+    $('input[name="kk"]').removeClass('is-invalid')
+  }
+  let validateNIK = $('input[name="nik"]').val()
+  if (!validateNIK) {
+    $('input[name="nik"]').addClass('is-invalid')
+    kosong += '<li>Kolom Nomor Induk Kependudukan Wajib Diisi</li>'
+  } else {
+    $('input[name="nik"]').removeClass('is-invalid')
+  }
+  let validateName = $('input[name="name"]').val()
+  if (!validateName) {
+    $('input[name="name"]').addClass('is-invalid')
+    kosong += '<li>Kolom Nama Lengkap Wajib Diisi</li>'
+  } else {
+    $('input[name="name"]').removeClass('is-invalid')
+  }
+  let validateTempatLahir = $('input[name="tempat_lahir"]').val()
+  if (!validateTempatLahir) {
+    $('input[name="tempat_lahir"]').addClass('is-invalid')
+    kosong += '<li>Kolom Tempat Lahir Wajib Diisi</li>'
+  } else {
+    $('input[name="tempat_lahir"]').removeClass('is-invalid')
+  }
+  let validateTanggalLahir = $('input[name="tanggal_lahir"]').val()
+  if (!validateTanggalLahir) {
+    $('input[name="tanggal_lahir"]').addClass('is-invalid')
+    kosong += '<li>Kolom Tanggal Lahir Wajib Diisi</li>'
+  } else {
+    $('input[name="tanggal_lahir"]').removeClass('is-invalid')
+  }
+  let validateEmail = $('input[name="email"]').val()
+  if (!validateEmail) {
+    $('input[name="email"]').addClass('is-invalid')
+    kosong += '<li>Kolom Email Wajib Diisi</li>'
+  } else {
+    $('input[name="email"]').removeClass('is-invalid')
+  }
+  let validateNoTelp = $('input[name="no_telp"]').val()
+  if (!validateNoTelp) {
+    $('input[name="no_telp"]').addClass('is-invalid')
+    kosong += '<li>Kolom No Telpon Wajib Diisi</li>'
+  } else {
+    $('input[name="no_telp"]').removeClass('is-invalid')
+  }
 
-	// let validateTanggalSJ = $('[name="tanggal_sj"]').val()
-	// if (!validateTanggalSJ) {
-	// 	kosong += '<li>Kolom Tanggal Surat jalan Wajib Diisi</li>'
-	// }
-
-
-	// $('#response_container').empty()
-	// if(kosong){
-	// 	let message = `<div class="alert alert-danger alert-dismissible fade show">
-	// 			<ul style="margin: 0; padding: 0">
-	// 				Step 1:
-	// 				<ul>
-	// 						${kosong}
-	// 				</ul>
-	// 			</ul>
-	// 		</div>`
-	// 	$('#response_container').html(message)
-	// 	return false;
-	// }
+	if(kosong){
+		return false;
+	}
 	return true;
 }
 

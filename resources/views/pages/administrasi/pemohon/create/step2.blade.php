@@ -69,7 +69,7 @@
         <label>Nama Ayah</label>
         <input type="text" name="nama_ayah" class="form-control" placeholder="Nama Ayah" value="{{ @$data->nama_ayah }}">
     </div>
-    <div class="form-group col-md-12">
+    <div class="form-group col-md-6">
         <label>Nomor Paspor</label>
         <input type="text" name="nomor_paspor" class="form-control" placeholder="Nomor Paspor" value="{{ @$data->nomor_paspor }}">
     </div>
