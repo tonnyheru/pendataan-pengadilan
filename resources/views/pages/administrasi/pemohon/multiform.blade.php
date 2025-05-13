@@ -15,6 +15,10 @@
           <div class="step-header-title">Detail Pemohon</div>
       </div>
       <div class="step-button" data-tab="3">
+          <div class="step-header-number"><span><i class="fas fa-cabinet-filing"></i></span></div>
+          <div class="step-header-title">Dokumen Pendukung</div>
+      </div>
+      <div class="step-button" data-tab="4">
           <div class="step-header-number"><span><i class="fas fa-clipboard-check"></i></span></div>
           <div class="step-header-title">Ringkasan</div>
       </div>
@@ -23,6 +27,7 @@
 	@include('pages.administrasi.pemohon.create.step1')
 	@include('pages.administrasi.pemohon.create.step2')
 	@include('pages.administrasi.pemohon.create.step3')
+	@include('pages.administrasi.pemohon.create.step4')
 </div>
 
 <script>
@@ -106,7 +111,7 @@ function collectAndDisplayData() {
 
 //====================================================================================================================================
 // Stepper
-var max_step = 3
+var max_step = 4
 var stepper = new Stepper({
 	max_step: max_step
 })
