@@ -25,7 +25,7 @@ class PemohonController extends Controller
     public function create()
     {
         if (!PermissionCommon::check('pemohon.create')) abort(403);
-        
+
         $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
         $body = view('pages.administrasi.pemohon.create', compact('provinces'))->render();
         $footer = '<button type="button" class="btn btn-close btn-secondary" data-dismiss="modal">Close</button>
@@ -44,44 +44,70 @@ class PemohonController extends Controller
      */
     public function store(Request $request)
     {
+        dd($request->all());
         if (!PermissionCommon::check('pemohon.create')) abort(403);
         $request->validate([
+            'province' => 'required',
+            'regency' => 'required',
+            'district' => 'required',
+            'village' => 'required',
             'name' => 'required',
+            'kk' => 'required',
             'nik' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
             'email' => 'required',
             'no_telp' => 'required',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'status' => 'required',
-            'alamat' => 'required',
         ], [
+            'province.required' => 'Provinsi tidak boleh kosong',
+            'regency.required' => 'Kabupaten tidak boleh kosong',
+            'district.required' => 'Kecamatan tidak boleh kosong',
+            'village.required' => 'Desa tidak boleh kosong',
             'name.required' => 'Nama Lengkap tidak boleh kosong',
+            'kk.required' => 'No KK tidak boleh kosong',
             'nik.required' => 'NIK tidak boleh kosong',
             'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
             'tanggal_lahir.required' => 'Tanggal Lahir tidak boleh kosong',
+            'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'no_telp.required' => 'No Telpon tidak boleh kosong',
-            'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
-            'agama.required' => 'Agama tidak boleh kosong',
-            'status.required' => 'Status tidak boleh kosong',
-            'alamat.required' => 'Alamat tidak boleh kosong',
         ]);
         $data = $request->except('_token');
         try {
             $trx = Pemohon::create([
                 'uid' => Str::uuid()->toString(),
                 'name' => $data['name'],
+                'province' => $data['province'],
+                'regency' => $data['regency'],
+                'district' => $data['district'],
+                'village' => $data['village'],
+                'kk' => $data['kk'],
                 'nik' => $data['nik'],
-                'tempat_lahir' => $data['tempat_lahir'],
                 'tanggal_lahir' => $data['tanggal_lahir'],
+                'tempat_lahir' => $data['tempat_lahir'],
+                'akta_kelahiran' => $data['akta_kelahiran'],
+                // 'alamat' => $data['alamat'],
                 'email' => $data['email'],
                 'no_telp' => $data['no_telp'],
                 'jenis_kelamin' => $data['jenis_kelamin'],
+                'blood_type' => $data['blood_type'],
                 'agama' => $data['agama'],
-                'status' => $data['status'],
-                'alamat' => $data['alamat'],
+                'status_kawin' => $data['status_kawin'],
+                'akta_kawin' => $data['akta_kawin'],
+                'tanggal_kawin' => $data['tanggal_kawin'],
+                'akta_cerai' => $data['akta_cerai'],
+                'tanggal_cerai' => $data['tanggal_cerai'],
+                'family_relationship' => $data['family_relationship'],
+                'education' => $data['education'],
+                'job' => $data['job'],
+                'nama_ibu' => $data['nama_ibu'],
+                'nama_ayah' => $data['nama_ayah'],
+                'nomor_paspor' => $data['nomor_paspor'],
+                'nomor_paspor' => $data['nomor_paspor'],
+                'tanggal_berlaku_paspor' => $data['tanggal_berlaku_paspor'],
+                'keterangan' => $data['keterangan'],
+                'created_by' => auth()->user()->uid,
             ]);
             if ($trx) {
                 return response([
@@ -154,27 +180,31 @@ class PemohonController extends Controller
     {
         if (!PermissionCommon::check('pemohon.update')) abort(403);
         $request->validate([
+            'province' => 'required',
+            'regency' => 'required',
+            'district' => 'required',
+            'village' => 'required',
             'name' => 'required',
+            'kk' => 'required',
             'nik' => 'required',
             'tempat_lahir' => 'required',
             'tanggal_lahir' => 'required',
+            'jenis_kelamin' => 'required',
             'email' => 'required',
             'no_telp' => 'required',
-            'jenis_kelamin' => 'required',
-            'agama' => 'required',
-            'status' => 'required',
-            'alamat' => 'required',
         ], [
+            'province.required' => 'Provinsi tidak boleh kosong',
+            'regency.required' => 'Kabupaten tidak boleh kosong',
+            'district.required' => 'Kecamatan tidak boleh kosong',
+            'village.required' => 'Desa tidak boleh kosong',
             'name.required' => 'Nama Lengkap tidak boleh kosong',
+            'kk.required' => 'No KK tidak boleh kosong',
             'nik.required' => 'NIK tidak boleh kosong',
             'tempat_lahir.required' => 'Tempat Lahir tidak boleh kosong',
             'tanggal_lahir.required' => 'Tanggal Lahir tidak boleh kosong',
+            'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
             'email.required' => 'Email tidak boleh kosong',
             'no_telp.required' => 'No Telpon tidak boleh kosong',
-            'jenis_kelamin.required' => 'Jenis Kelamin tidak boleh kosong',
-            'agama.required' => 'Agama tidak boleh kosong',
-            'status.required' => 'Status tidak boleh kosong',
-            'alamat.required' => 'Alamat tidak boleh kosong',
         ]);
         $formData = $request->except(["_token", "_method"]);
         try {

@@ -6,7 +6,7 @@
         <input type="text" name="akta_kelahiran" class="form-control" placeholder="Akta Kelahiran" value="{{ @$data->akta_kelahiran }}">
     </div>
     <div class="form-group col-md-6">
-      <label>Golongan Darah <span class="text-danger">*</span></label>
+      <label>Golongan Darah</label>
       <select id="blood_type" class="form-control select2-blood-type" name="blood_type">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getGolonganDarah() as $key => $value)
@@ -15,7 +15,7 @@
       </select>
     </div>
     <div class="form-group col-md-6">
-      <label>Agama <span class="text-danger">*</span></label>
+      <label>Agama</label>
       <select id="religion" class="form-control select2-religion" name="religion">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getAgama() as $key => $value)
@@ -24,7 +24,7 @@
       </select>
     </div>
     <div class="form-group col-md-12">
-      <label>Status Kawin <span class="text-danger">*</span></label>
+      <label>Status Kawin</label>
       <select id="marital_status" class="form-control select2-marital-status" name="marital_status">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getStatusPernikahan() as $key => $value)
@@ -37,7 +37,7 @@
         <input type="text" name="akta_kawin" class="form-control" placeholder="Akta Kawin" value="{{ @$data->akta_kawin }}">
     </div>
     <div class="form-group col-md-6">
-      <label>Tanggal Kawin <span class="text-danger">*</span></label>
+      <label>Tanggal Kawin</label>
       <div class='date'>
         <input type='text' class="form-control" name="tanggal_kawin" id='tanggal_kawin' style="background-color: white; " placeholder="Pilih Tanggal Kawin" value="{{ @$data->tanggal_kawin }}" />
       </div>
@@ -47,13 +47,13 @@
         <input type="text" name="akta_cerai" class="form-control" placeholder="Akta Cerai" value="{{ @$data->akta_cerai }}">
     </div>
     <div class="form-group col-md-6">
-      <label>Tanggal Terbit Akta Cerai <span class="text-danger">*</span></label>
+      <label>Tanggal Terbit Akta Cerai</label>
       <div class='date'>
         <input type='text' class="form-control" name="tanggal_cerai" id='tanggal_cerai' style="background-color: white; " placeholder="Pilih Tanggal Cerai" value="{{ @$data->tanggal_cerai }}" />
       </div>
     </div>
     <div class="form-group col-md-12">
-      <label>Status Hubungan Keluarga <span class="text-danger">*</span></label>
+      <label>Status Hubungan Keluarga</label>
       <select id="family_relationship" class="form-control select2-family-relationship" name="family_relationship">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getStatusHubunganKeluarga() as $key => $value)
@@ -62,7 +62,7 @@
       </select>
     </div>
     <div class="form-group col-md-6">
-      <label>Pendidikan <span class="text-danger">*</span></label>
+      <label>Pendidikan</label>
       <select id="education" class="form-control select2-education" name="education">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getPendidikan() as $key => $value)
@@ -71,7 +71,7 @@
       </select>
     </div>
     <div class="form-group col-md-6">
-      <label>Pekerjaan <span class="text-danger">*</span></label>
+      <label>Pekerjaan</label>
       <select id="job" class="form-control select2-job" name="job">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getPekerjaan() as $key => $value)
@@ -92,7 +92,7 @@
         <input type="text" name="nomor_paspor" class="form-control" placeholder="Nomor Paspor" value="{{ @$data->nomor_paspor }}">
     </div>
     <div class="form-group col-md-6">
-      <label>Tanggal Berlaku Paspor <span class="text-danger">*</span></label>
+      <label>Tanggal Berlaku Paspor</label>
       <div class='date'>
         <input type='text' class="form-control" name="tanggal_berlaku_paspor" id='tanggal_berlaku_paspor' style="background-color: white; " placeholder="Pilih Tanggal Berlaku Paspor" value="{{ @$data->tanggal_berlaku_paspor }}" />
       </div>
@@ -104,3 +104,43 @@
 
   </div>
 </div>
+
+<script>
+  $('.select2-blood-type').select2({
+    placeholder: "Pilih Golongan Darah",
+    allowClear: true
+  });
+  $('.select2-religion').select2({
+    placeholder: "Pilih Agama",
+    allowClear: true
+  });
+  $('.select2-marital-status').select2({
+    placeholder: "Pilih Status Kawin",
+    allowClear: true
+  });
+  $('.select2-family-relationship').select2({
+    placeholder: "Pilih Status Hubungan Keluarga",
+    allowClear: true
+  });
+  $('.select2-education').select2({
+    placeholder: "Pilih Pendidikan",
+    allowClear: true
+  });
+  $('.select2-job').select2({
+    placeholder: "Pilih Pekerjaan",
+    allowClear: true
+  });
+
+  $('#tanggal_kawin').flatpickr({
+    static: true,
+    dateFormat: "Y-m-d",
+  })
+  $('#tanggal_kawin').flatpickr({
+    static: true,
+    dateFormat: "Y-m-d",
+  })
+  $('#tanggal_cerai').flatpickr({
+    static: true,
+    dateFormat: "Y-m-d",
+  })
+</script>
