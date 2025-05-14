@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 10, 2025 at 06:11 AM
+-- Generation Time: May 14, 2025 at 12:03 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -234,15 +234,34 @@ CREATE TABLE `password_reset_tokens` (
 CREATE TABLE `pemohon` (
   `uid` varchar(40) NOT NULL,
   `name` varchar(255) DEFAULT NULL,
+  `province` varchar(10) DEFAULT NULL,
+  `regency` varchar(10) DEFAULT NULL,
+  `district` varchar(10) DEFAULT NULL,
+  `village` varchar(10) DEFAULT NULL,
+  `kk` varchar(20) DEFAULT NULL,
   `nik` varchar(20) DEFAULT NULL,
   `tanggal_lahir` date DEFAULT NULL,
   `tempat_lahir` varchar(100) DEFAULT NULL,
+  `akta_kelahiran` varchar(255) DEFAULT NULL,
   `alamat` text DEFAULT NULL,
   `email` varchar(100) DEFAULT NULL,
   `no_telp` varchar(20) DEFAULT NULL,
-  `jenis_kelamin` enum('PRIA','WANITA') DEFAULT NULL,
+  `jenis_kelamin` enum('Laki-laki','Perempuan') DEFAULT NULL,
+  `blood_type` varchar(3) NOT NULL,
   `agama` varchar(20) DEFAULT NULL,
-  `status` varchar(5) DEFAULT NULL,
+  `status_kawin` varchar(5) DEFAULT NULL,
+  `akta_kawin` varchar(255) DEFAULT NULL,
+  `tanggal_kawin` date DEFAULT NULL,
+  `akta_cerai` varchar(255) DEFAULT NULL,
+  `tanggal_cerai` date DEFAULT NULL,
+  `family_relationship` varchar(3) DEFAULT NULL,
+  `education` varchar(3) DEFAULT NULL,
+  `job` varchar(3) DEFAULT NULL,
+  `nama_ibu` varchar(255) DEFAULT NULL,
+  `nama_ayah` varchar(255) DEFAULT NULL,
+  `nomor_paspor` varchar(100) DEFAULT NULL,
+  `tanggal_berlaku_paspor` date DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `created_by` varchar(40) DEFAULT NULL,
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
@@ -253,10 +272,9 @@ CREATE TABLE `pemohon` (
 -- Dumping data for table `pemohon`
 --
 
-INSERT INTO `pemohon` (`uid`, `name`, `nik`, `tanggal_lahir`, `tempat_lahir`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `agama`, `status`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('96a50cef-981f-40ff-bbc5-543354570163', 'Rifky Pratama', '0987098709870987', '2004-03-31', 'Sleman', 'Dekat UNIBI, kampus tercinta', 'abumilhan78@gmail.com', '081212341234', 'PRIA', 'islam', 'k', '2025-03-11 02:38:28', NULL, '2025-03-17 07:17:06', NULL),
-('c7c18c4d-b8bc-4ff5-8215-fb549cd9fa92', 'Indra Pratama', '3273022912990013', '1999-03-18', 'bandung', 'Jl. Logam', 'kevinbramasta321@gmail.com', '08562122827', 'PRIA', 'islam', 'bk', '2025-03-18 03:05:12', NULL, '2025-03-18 03:05:12', NULL),
-('d825dab2-809b-4361-865a-ca190a62d7ff', 'Tonny Heru Susanto', '1234123412341234', '2001-03-01', 'Bandung', 'disini', 'tonnyheru29@gmail.com', '081212341234', 'PRIA', 'kristen', 'ch', '2025-03-10 01:10:45', NULL, '2025-03-13 08:00:08', NULL);
+INSERT INTO `pemohon` (`uid`, `name`, `province`, `regency`, `district`, `village`, `kk`, `nik`, `tanggal_lahir`, `tempat_lahir`, `akta_kelahiran`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `blood_type`, `agama`, `status_kawin`, `akta_kawin`, `tanggal_kawin`, `akta_cerai`, `tanggal_cerai`, `family_relationship`, `education`, `job`, `nama_ibu`, `nama_ayah`, `nomor_paspor`, `tanggal_berlaku_paspor`, `keterangan`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('c7c18c4d-b8bc-4ff5-8215-fb549cd9fa92', 'Indra Pratama', NULL, NULL, NULL, NULL, NULL, '3273022912990013', '1999-03-18', 'bandung', NULL, 'Jl. Logam', 'kevinbramasta321@gmail.com', '08562122827', '', '', 'islam', 'bk', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-03-18 03:05:12', NULL, '2025-03-18 03:05:12', NULL),
+('d825dab2-809b-4361-865a-ca190a62d7ff', 'Tonny Heru Susanto', NULL, NULL, NULL, NULL, NULL, '1234123412341234', '2001-03-01', 'Bandung', NULL, 'disini', 'tonnyheru29@gmail.com', '081212341234', '', '', 'kristen', 'ch', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-03-10 01:10:45', NULL, '2025-03-13 08:00:08', NULL);
 
 -- --------------------------------------------------------
 
@@ -518,15 +536,6 @@ CREATE TABLE `usulan` (
   `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `usulan`
---
-
-INSERT INTO `usulan` (`uid`, `no_perkara`, `jenis_perkara`, `path_ktp`, `path_kk`, `path_akta`, `path_pendukung`, `path_penetapan`, `path_nikah`, `path_pengantar`, `delegasi`, `pemohon_uid`, `disdukcapil_uid`, `catatan`, `is_approve`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('5efbda93-4e7d-462b-acfb-1afc69899f71', 'PERKARA KE 1', 'ASUSILA', 'e84ab887ac97f44a1b00d10afcd988871744257500_heroindex1.jpg', '5a6103b35bd3d2f9b1642c97583171201742449523_pattern.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_Screenshot 2025-03-11 151342.png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_picture-1585152466.jpg', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_flowchart_perubahan nama (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_terbaru (1).png', 'f909c76ed015b1d419b3f5fa9780ecc91742449523_coret.png', '1c39d652-51f0-4cf8-b833-791eb6372528', '96a50cef-981f-40ff-bbc5-543354570163', '1c39d652-51f0-4cf8-b833-791eb6372528', '[]', '1', '2025-03-21 08:37:57', 'b425d1d9-7613-44be-bb87-48fd6d0e2d89', '2025-03-20 05:45:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-04-10 03:59:24', 'a9467865-37c1-4104-bd63-b26a33c915db'),
-('c804aba0-6a29-42d3-9fe7-d2d082edd7eb', 'asd', 'asd', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_anggota.drawio.png', 'a15290fb1546a126394be615d55a4f4e1744253570_Kartu Ujian (1).pdf', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_diagramsequencs.drawio.png', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_tugas2.png', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_tugasjam.png', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_431498974_340460505652252_8369697419032125065_n.jpg', 'a7d7e221174e80349b4e32eacf2f2e2a1744253570_download 1.png', '8a7fb795-51c5-49c1-a91d-403f43138a4e', 'c7c18c4d-b8bc-4ff5-8215-fb549cd9fa92', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '[{\"role\":\"Disdukcapil Kabupaten Bandung\",\"name\":\"Disdukcapil Kabupaten Bandung\",\"status\":\"2\",\"catatan\":\"Dokumen sudah dilengkapi, mantapp\",\"timestamp\":\"2025-04-10 10:38:13\"}]', '2', '2025-04-10 03:38:13', 'c17c84ad-dfd5-40b4-8eb4-94fb5a863187', '2025-04-10 02:52:52', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-04-10 03:38:13', NULL),
-('de3aefa8-d667-4a6f-9ec8-4616c1a58ce2', 'dfdf', 'dfd', 'ead936784888d4b0fad28274e52824bc1744256588_download.jpeg', 'acf0a76a0b1d11c0b807b40ab169c5c91744256588_phone-solid 1.png', 'ead936784888d4b0fad28274e52824bc1744256588_envelope-solid 1 (1).png', 'ead936784888d4b0fad28274e52824bc1744256588_diagramsequencs.drawio.png', 'ead936784888d4b0fad28274e52824bc1744256588_phone-solid 1 (1).png', 'ead936784888d4b0fad28274e52824bc1744256588_Untitled-4-7.png', 'ead936784888d4b0fad28274e52824bc1744256588_meeting 1.png', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'd825dab2-809b-4361-865a-ca190a62d7ff', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '[{\"role\":\"Disdukcapil Kota Cimahi\",\"name\":\"Disdukcapil Kota Cimahi\",\"status\":\"0\",\"catatan\":\"Mohon maaf gabisa\",\"timestamp\":\"2025-04-10 11:00:38\"}]', '0', '2025-04-10 04:00:38', 'a9c33661-69a2-44b6-bf89-28b11ca14994', '2025-04-10 03:43:08', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-04-10 04:00:38', NULL);
 
 --
 -- Indexes for dumped tables
