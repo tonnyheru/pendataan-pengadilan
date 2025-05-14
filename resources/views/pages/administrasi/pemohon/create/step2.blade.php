@@ -9,18 +9,27 @@
       <label>Golongan Darah <span class="text-danger">*</span></label>
       <select id="blood_type" class="form-control select2-blood-type" name="blood_type">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getGolonganDarah() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->blood_type == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-6">
       <label>Agama <span class="text-danger">*</span></label>
       <select id="religion" class="form-control select2-religion" name="religion">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getAgama() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->religion == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-12">
       <label>Status Kawin <span class="text-danger">*</span></label>
       <select id="marital_status" class="form-control select2-marital-status" name="marital_status">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getStatusPernikahan() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->marital_status == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-6">
@@ -47,18 +56,27 @@
       <label>Status Hubungan Keluarga <span class="text-danger">*</span></label>
       <select id="family_relationship" class="form-control select2-family-relationship" name="family_relationship">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getStatusHubunganKeluarga() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->family_relationship == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-6">
       <label>Pendidikan <span class="text-danger">*</span></label>
       <select id="education" class="form-control select2-education" name="education">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getPendidikan() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->education == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-6">
       <label>Pekerjaan <span class="text-danger">*</span></label>
       <select id="job" class="form-control select2-job" name="job">
           <option value=""></option>
+          @foreach(\App\Helpers\DataHelper::getPekerjaan() as $key => $value)
+              <option value="{{ $key }}" {{ @$data->job == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+          @endforeach
       </select>
     </div>
     <div class="form-group col-md-12">
