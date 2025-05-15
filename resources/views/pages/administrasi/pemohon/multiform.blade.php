@@ -30,75 +30,33 @@
 // Collect and display data from Step 1 and Step 2 to Step 3
 function collectAndDisplayData() {
 		// Collect data from Step 1
-		var customer = $("#customer").select2('data')[0].nama;
-		var negara = $("#customer").select2('data')[0].negara;
-		var nomor_bukti = $('input[name="nomor_bukti"]').val().toUpperCase();
-		var tipe = $('input[name="tipe"]:checked').val();
-		var tanggal_bukti = $('input[name="tanggal_bukti"]').val();
-		var ppn = $('input[name="ppn"]').val();
-		var nomor_peb = $('input[name="nomor_peb"]').val();
-		var tanggal_peb = $('input[name="tanggal_peb"]').val();
+		var province = $("#province").select2('data')[0].text;
+		var regency = $("#regency").select2('data')[0].text;
+		var district = $("#district").select2('data')[0].text;
+		var village = $("#village").select2('data')[0].text;
+		var nik = $('input[name="nik"]').val();
+		var kk = $('input[name="kk"]').val();
+		var name = $('input[name="name"]').val();
+		var tempat_lahir = $('input[name="tempat_lahir"]').val();
+		var tanggal_lahir = $('input[name="tanggal_lahir"]').val();
+		var jenis_kelamin = $('input[name="jenis_kelamin"]:checked').val();
+		var email = $('input[name="email"]').val();
+		var no_telp = $('input[name="no_telp"]').val();
 		
 		// Update Step 3 fields
-		$('th.customer').html(`${customer} <span class="badge badge-default">${tipe}</span>`);
-		$('th.negara').text(negara);
-		$('th.nomor-bukti').text(nomor_bukti.toUpperCase());
-		$('th.tanggal-bukti').text(tanggal_bukti);
-		$('th.ppn').text(ppn + " %");
-		$('th.nomor-peb').text(nomor_peb.toUpperCase());
-		$('th.tanggal-peb').text(tanggal_peb);
+		$("#d-provinsi").text(province);
+    $("#d-kabupaten-kota").text(regency);
+    $("#d-kecamatan").text(district);
+    $("#d-desa-kelurahan").text(village);
+    $("#d-nama").text(name);
+    $("#d-nik").text(nik);
+    $("#d-kk").text(kk);
+    $("#d-tempat-tanggal-lahir").text(tempat_lahir + ', ' + tanggal_lahir);
+    $("#d-jenis-kelamin").text(jenis_kelamin);
+    $("#d-email").text(email);
+    $("#d-telpon").text(no_telp);
+    // Collect data from Step 2
 
-		// Collect and display dynamic data from Step 2 (loop through forms)
-		$('#table-barangkeluar-ringkasan tbody').empty(); // Clear table body
-
-		$('#dynamic-form .form-item').each(function(index) {
-				var barang = $(this).find(`select[name="barang[${index}]"]`).select2('data')[0].text;
-				var jumlah = $(this).find('input[name="jumlah[]"]').val();
-				var satuan = $(this).find('.append-satuan').text();
-				var bruto = $(this).find('input[name="bruto[]"]').val();
-				var netto = $(this).find('input[name="netto[]"]').val();
-				var nilai = $(this).find('input[name="nilai[]"]').val();
-				var nilai_ppn = $(this).find('input[name="nilai_ppn[]"]').val();
-				var nilai_total = $(this).find('input[name="nilai_total[]"]').val();
-				let mata_uang = $(this).find('input[name="mata_uang[]"]').val();
-				if (tipe == "lokal") {
-					mata_uang = "IDR";
-				}
-
-				// Append the collected data to the table in Step 3
-				$('#table-barangkeluar-ringkasan tbody').append(`
-						<tr>
-								<td>${index + 1}</td>
-								<td>${barang}</td>
-								<td>${jumlah} ${satuan}</td>
-								<td>${bruto}</td>
-								<td>${netto}</td>
-								<td>${mata_uang.toUpperCase()}  ${nilai}</td>
-								<td>${mata_uang.toUpperCase()} ${nilai_ppn}</td>
-								<td>${mata_uang.toUpperCase()} ${nilai_total}</td>
-						</tr>
-				`);
-		});
-
-		if (tipe == "lokal") {
-			$('th.ppn').parent().show();
-			$('th.nomor-peb').parent().hide();
-			$('th.tanggal-peb').parent().hide();
-
-			$('#table-barangkeluar-ringkasan th:nth-child(7)').show();
-			$('#table-barangkeluar-ringkasan td:nth-child(7)').show();
-			$('#table-barangkeluar-ringkasan th:nth-child(8)').show();
-			$('#table-barangkeluar-ringkasan td:nth-child(8)').show();
-		} else {
-			$('th.ppn').parent().hide();
-			$('th.nomor-peb').parent().show();
-			$('th.tanggal-peb').parent().show();
-
-			$('#table-barangkeluar-ringkasan th:nth-child(7)').hide();
-			$('#table-barangkeluar-ringkasan td:nth-child(7)').hide();
-			$('#table-barangkeluar-ringkasan th:nth-child(8)').hide();
-			$('#table-barangkeluar-ringkasan td:nth-child(8)').hide();
-		}
 		
 }
 // End of Collect and Display Data
@@ -131,7 +89,7 @@ function nextStep() {
         .css('width', percent + '%')
         .attr('aria-valuenow', percent);
 			isValid = validateStep2();
-			// collectAndDisplayData();
+			collectAndDisplayData();
 			break;
 		case 3:
 			isValid = true;
