@@ -44,7 +44,7 @@ class PemohonController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        // dd($request->all());
         if (!PermissionCommon::check('pemohon.create')) abort(403);
         $request->validate([
             'province' => 'required',
@@ -92,8 +92,8 @@ class PemohonController extends Controller
                 'no_telp' => $data['no_telp'],
                 'jenis_kelamin' => $data['jenis_kelamin'],
                 'blood_type' => $data['blood_type'],
-                'agama' => $data['agama'],
-                'status_kawin' => $data['status_kawin'],
+                'agama' => $data['religion'],
+                'status_kawin' => $data['marital_status'],
                 'akta_kawin' => $data['akta_kawin'],
                 'tanggal_kawin' => $data['tanggal_kawin'],
                 'akta_cerai' => $data['akta_cerai'],
@@ -103,7 +103,6 @@ class PemohonController extends Controller
                 'job' => $data['job'],
                 'nama_ibu' => $data['nama_ibu'],
                 'nama_ayah' => $data['nama_ayah'],
-                'nomor_paspor' => $data['nomor_paspor'],
                 'nomor_paspor' => $data['nomor_paspor'],
                 'tanggal_berlaku_paspor' => $data['tanggal_berlaku_paspor'],
                 'keterangan' => $data['keterangan'],
@@ -121,6 +120,7 @@ class PemohonController extends Controller
                 ], 400);
             }
         } catch (\Throwable $th) {
+            // dd($th);
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal'

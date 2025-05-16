@@ -28,6 +28,9 @@
 <script>
 //====================================================================================================================================
 // Collect and display data from Step 1 and Step 2 to Step 3
+function safeText(selector, value) {
+  $(selector).text(value && value.trim() !== '' ? value : '-');
+}
 function collectAndDisplayData() {
 		// Collect data from Step 1
 		var province = $("#province").select2('data')[0].text;
@@ -42,6 +45,24 @@ function collectAndDisplayData() {
 		var jenis_kelamin = $('input[name="jenis_kelamin"]:checked').val();
 		var email = $('input[name="email"]').val();
 		var no_telp = $('input[name="no_telp"]').val();
+    
+		var akta_kelahiran = $('input[name="akta_kelahiran"]').val();
+		var blood_type = $("#blood_type").select2('data')[0].text;
+		var religion = $("#religion").select2('data')[0].text;
+		var marital_status = $("#marital_status").select2('data')[0].text;
+		var akta_kawin = $('input[name="akta_kawin"]').val();
+		var tanggal_kawin = $('input[name="tanggal_kawin"]').val();
+		var akta_cerai = $('input[name="akta_cerai"]').val();
+		var tanggal_cerai = $('input[name="tanggal_cerai"]').val();
+		var family_relationship = $("#family_relationship").select2('data')[0].text;
+		var education = $("#education").select2('data')[0].text;
+		var job = $("#job").select2('data')[0].text;
+		var nama_ibu = $('input[name="nama_ibu"]').val();
+		var nama_ayah = $('input[name="nama_ayah"]').val();
+		var nomor_paspor = $('input[name="nomor_paspor"]').val();
+		var tanggal_berlaku_paspor = $('input[name="tanggal_berlaku_paspor"]').val();
+		var keterangan = $('textarea[name="keterangan"]').val();
+
 		
 		// Update Step 3 fields
 		$("#d-provinsi").text(province);
@@ -57,7 +78,23 @@ function collectAndDisplayData() {
     $("#d-telpon").text(no_telp);
     // Collect data from Step 2
 
-		
+    safeText('#d-akta-kelahiran', akta_kelahiran);
+    safeText('#d-golongan-darah', blood_type);
+    safeText('#d-agama', religion);
+    safeText('#d-status-perkawinan', marital_status);
+    safeText('#d-akta-kawin', akta_kawin);
+    safeText('#d-tanggal-kawin', tanggal_kawin);
+    safeText('#d-akta-cerai', akta_cerai);
+    safeText('#d-tanggal-cerai', tanggal_cerai);
+    safeText('#d-status-hubungan-keluarga', family_relationship);
+    safeText('#d-pendidikan', education);
+    safeText('#d-pekerjaan', job);
+    safeText('#d-nama-ibu', nama_ibu);
+    safeText('#d-nama-ayah', nama_ayah);
+    safeText('#d-nomor-paspor', nomor_paspor);
+    safeText('#d-tanggal-berlaku-paspor', tanggal_berlaku_paspor);
+    safeText('#d-keterangan', keterangan);
+
 }
 // End of Collect and Display Data
 //====================================================================================================================================
