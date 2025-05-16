@@ -87,13 +87,13 @@ class PemohonController extends Controller
                 'tanggal_lahir' => $data['tanggal_lahir'],
                 'tempat_lahir' => $data['tempat_lahir'],
                 'akta_kelahiran' => $data['akta_kelahiran'],
-                // 'alamat' => $data['alamat'],
+                'alamat' => $data['alamat'],
                 'email' => $data['email'],
                 'no_telp' => $data['no_telp'],
                 'jenis_kelamin' => $data['jenis_kelamin'],
                 'blood_type' => $data['blood_type'],
                 'agama' => $data['religion'],
-                'status_kawin' => $data['marital_status'],
+                'status_kawin' => $data['status_kawin'],
                 'akta_kawin' => $data['akta_kawin'],
                 'tanggal_kawin' => $data['tanggal_kawin'],
                 'akta_cerai' => $data['akta_cerai'],
@@ -157,9 +157,12 @@ class PemohonController extends Controller
         if ($pemohon) {
             $uid = $pemohon->uid;
             $data = $pemohon;
-            $body = view('pages.administrasi.pemohon.edit', compact('uid', 'data'))->render();
-            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
+            $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
+            // dd($data);
+            $body = view('pages.administrasi.pemohon.edit', compact('uid', 'data', 'provinces'))->render();
+            $footer = '<button type="button" class="btn btn-close btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-prev btn-info" onclick="prevStep()" style="display: none;">Sebelumnya</button>
+                <button type="button" class="btn btn-next btn-info" onclick="nextStep()">Lanjut</button>';
             return [
                 'title' => 'Edit Data Pemohon',
                 'body' => $body,

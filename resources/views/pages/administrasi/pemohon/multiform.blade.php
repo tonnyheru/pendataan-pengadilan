@@ -258,6 +258,15 @@ function validateStep1() {
   } else {
     $('input[name="tanggal_lahir"]').removeClass('is-invalid')
   }
+
+  let validateAlamat = $('textarea[name="alamat"]').val()
+  if (!validateAlamat) {
+    $('textarea[name="alamat"]').addClass('is-invalid')
+    kosong += '<li>Kolom Alamat Wajib Diisi</li>'
+  } else {
+    $('textarea[name="alamat"]').removeClass('is-invalid')
+  }
+
   let validateEmail = $('input[name="email"]').val()
   if (!validateEmail) {
     $('input[name="email"]').addClass('is-invalid')

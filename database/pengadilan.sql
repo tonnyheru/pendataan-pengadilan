@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 14, 2025 at 12:03 PM
+-- Generation Time: May 16, 2025 at 12:04 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -273,8 +273,7 @@ CREATE TABLE `pemohon` (
 --
 
 INSERT INTO `pemohon` (`uid`, `name`, `province`, `regency`, `district`, `village`, `kk`, `nik`, `tanggal_lahir`, `tempat_lahir`, `akta_kelahiran`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `blood_type`, `agama`, `status_kawin`, `akta_kawin`, `tanggal_kawin`, `akta_cerai`, `tanggal_cerai`, `family_relationship`, `education`, `job`, `nama_ibu`, `nama_ayah`, `nomor_paspor`, `tanggal_berlaku_paspor`, `keterangan`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('c7c18c4d-b8bc-4ff5-8215-fb549cd9fa92', 'Indra Pratama', NULL, NULL, NULL, NULL, NULL, '3273022912990013', '1999-03-18', 'bandung', NULL, 'Jl. Logam', 'kevinbramasta321@gmail.com', '08562122827', '', '', 'islam', 'bk', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-03-18 03:05:12', NULL, '2025-03-18 03:05:12', NULL),
-('d825dab2-809b-4361-865a-ca190a62d7ff', 'Tonny Heru Susanto', NULL, NULL, NULL, NULL, NULL, '1234123412341234', '2001-03-01', 'Bandung', NULL, 'disini', 'tonnyheru29@gmail.com', '081212341234', '', '', 'kristen', 'ch', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2025-03-10 01:10:45', NULL, '2025-03-13 08:00:08', NULL);
+('468239ba-5c5b-4e16-b356-90ae1260084b', 'Mochammad Qaysa Al-Haq', '32', '3204', '3204260', '3204260004', '1234123412341234', '1234123412341234', '2025-05-01', 'Bandung', 'asd akta', 'Margahayu Permai, Blok S10, No 10', 'abumilhan78@gmail.com', '085156283616', 'Laki-laki', '2', '1', '2', NULL, NULL, NULL, NULL, '2', '5', '3', 'asd ibu edit', 'asd ayah edit', NULL, NULL, NULL, '2025-05-16 02:27:59', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-16 07:11:47', NULL);
 
 -- --------------------------------------------------------
 

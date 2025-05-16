@@ -111,6 +111,8 @@
         if($('[name="_method"]').val() == undefined) {
           el_form[0].reset()
         }
+        
+        Ryuna.close_modal()
         window.LaravelDataTables["usulan-table"].draw()
       }
     }).fail((xhr) => {

@@ -114,7 +114,7 @@
             <h3 id="d-kabupaten-kota"></h3>
           </td>
         </tr>
-        <tr style="border-bottom: 1px #016004 solid">
+        <tr>
           <td>
             <h3 class="d-inline"><i class="fas fa-street-view"></i></h3> Kecamatan
             <h3 id="d-kecamatan"></h3>
@@ -122,6 +122,12 @@
           <td>
             <h3 class="d-inline"><i class="fas fa-street-view"></i></h3> Desa / Kelurahan
             <h3 id="d-desa-kelurahan"></h3>
+          </td>
+        </tr>
+        <tr style="border-bottom: 1px #016004 solid">
+          <td>
+            <h3 class="d-inline"><i class="fas fa-street-view"></i></h3> Alamat Lengkap
+            <h3 id="d-alamat"></h3>
           </td>
         </tr>
         

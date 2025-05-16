@@ -23,6 +23,12 @@ class DataHelper
         ];
     }
 
+    public static function getGolonganDarahLabel($id)
+    {
+        $golonganDarah = self::getGolonganDarah();
+        return $golonganDarah[$id] ?? 'Tidak Tahu';
+    }
+
     public static function getAgama()
     {
         return [
@@ -36,6 +42,12 @@ class DataHelper
         ];
     }
 
+    public static function getAgamaLabel($id)
+    {
+        $agama = self::getAgama();
+        return $agama[$id] ?? 'Tidak Tahu';
+    }
+
     public static function getStatusPernikahan()
     {
         return [
@@ -44,6 +56,12 @@ class DataHelper
             3 => 'Cerai Hidup',
             4 => 'Cerai Mati',
         ];
+    }
+
+    public static function getStatusPernikahanLabel($id)
+    {
+        $statusPernikahan = self::getStatusPernikahan();
+        return $statusPernikahan[$id] ?? 'Tidak Tahu';
     }
 
     public static function getStatusHubunganKeluarga()
@@ -62,6 +80,13 @@ class DataHelper
             11 => 'Lainnya',
         ];
     }
+
+    public static function getStatusHubunganKeluargaLabel($id)
+    {
+        $statusHubunganKeluarga = self::getStatusHubunganKeluarga();
+        return $statusHubunganKeluarga[$id] ?? 'Tidak Tahu';
+    }
+
     public static function getPendidikan()
     {
         return [
@@ -78,9 +103,15 @@ class DataHelper
         ];
     }
 
+    public static function getPendidikanLabel($id)
+    {
+        $pendidikan = self::getPendidikan();
+        return $pendidikan[$id] ?? 'Tidak Tahu';
+    }
+
     public static function getPekerjaan()
     {
-        return [ 
+        return [
             1 => "BELUM/TIDAK BEKERJA",
             2 => "MENGURUS RUMAH TANGGA",
             3 => "PELAJAR/MAHASISWA",
@@ -171,5 +202,54 @@ class DataHelper
             88 => "WIRASWASTA",
             89 => "PEKERJAAN LAINNYA",
         ];
+    }
+
+    public static function getPekerjaanLabel($id)
+    {
+        $pekerjaan = self::getPekerjaan();
+        return $pekerjaan[$id] ?? 'Tidak Tahu';
+    }
+
+    public static function getProvinceLabel($province)
+    {
+        $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
+        foreach ($provinces as $prov) {
+            if ($prov->id == $province) {
+                return $prov->name;
+            }
+        }
+        return '-';
+    }
+
+    public static function getRegencyLabel($regency)
+    {
+        $regencies = json_decode(file_get_contents(public_path('data/regencies.json')));
+        foreach ($regencies as $reg) {
+            if ($reg->id == $regency) {
+                return $reg->name;
+            }
+        }
+        return '-';
+    }
+
+    public static function getDistrictLabel($district)
+    {
+        $districts = json_decode(file_get_contents(public_path('data/districts.json')));
+        foreach ($districts as $dist) {
+            if ($dist->id == $district) {
+                return $dist->name;
+            }
+        }
+        return '-';
+    }
+    public static function getVillageLabel($village)
+    {
+        $villages = json_decode(file_get_contents(public_path('data/villages.json')));
+        foreach ($villages as $vil) {
+            if ($vil->id == $village) {
+                return $vil->name;
+            }
+        }
+        return '-';
     }
 }

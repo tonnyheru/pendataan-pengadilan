@@ -108,6 +108,7 @@
         if($('[name="_method"]').val() == undefined) {
           el_form[0].reset()
         }
+        Ryuna.close_modal()
         window.LaravelDataTables["pemohon-table"].draw()
       }
     }).fail((xhr) => {

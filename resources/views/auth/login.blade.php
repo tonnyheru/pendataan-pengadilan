@@ -33,7 +33,6 @@
   <link href="{{asset('argon2/assets/css/css-nucleo-icons.css')}}" rel="stylesheet">
   <link href="{{asset('argon2/assets/css/css-nucleo-svg.css')}}" rel="stylesheet">
   <!-- Font Awesome Icons -->
-  <script src="{{asset('argon2/assets/js/42d5adcbca.js')}}" crossorigin="anonymous"></script>
   <link href="{{asset('argon2/assets/css/css-nucleo-svg.css')}}" rel="stylesheet">
   <!-- CSS Files -->
   <link id="pagestyle" href="{{asset('argon2/assets/css/css-argon-dashboard.min.css')}}" rel="stylesheet">

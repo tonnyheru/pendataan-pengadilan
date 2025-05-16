@@ -19,16 +19,16 @@
       <select id="religion" class="form-control select2-religion" name="religion">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getAgama() as $key => $value)
-              <option value="{{ $key }}" {{ @$data->religion == $key ? 'selected' : '' }}>{{ $value }}</option>
+              <option value="{{ $key }}" {{ @$data->agama == $key ? 'selected' : '' }}>{{ $value }}</option>
           @endforeach
       </select>
     </div>
     <div class="form-group col-md-12">
       <label>Status Kawin</label>
-      <select id="marital_status" class="form-control select2-marital-status" name="marital_status">
+      <select id="marital_status" class="form-control select2-marital-status" name="status_kawin">
           <option value=""></option>
           @foreach(\App\Helpers\DataHelper::getStatusPernikahan() as $key => $value)
-              <option value="{{ $key }}" {{ @$data->marital_status == $key ? 'selected' : '' }}>{{ $value }}</option>
+              <option value="{{ $key }}" {{ @$data->status_kawin == $key ? 'selected' : '' }}>{{ $value }}</option>
           @endforeach
       </select>
     </div>
