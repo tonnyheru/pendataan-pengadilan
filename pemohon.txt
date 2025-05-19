@@ -1,0 +1,8 @@
+ALTER TABLE `pemohon` ADD `province` VARCHAR(10) NULL AFTER `name`, ADD `regency` VARCHAR(10) NULL AFTER `province`, ADD `district` VARCHAR(10) NULL AFTER `regency`, ADD `village` VARCHAR(10) NULL AFTER `district`, ADD `kk` VARCHAR(20) NULL AFTER `village`;
+
+
+ALTER TABLE `pemohon` ADD `akta_kelahiran` VARCHAR(255) NULL AFTER `tempat_lahir`;
+
+ALTER TABLE `pemohon` ADD `blood_type` VARCHAR(3) NOT NULL AFTER `jenis_kelamin`;
+
+ALTER TABLE `pemohon` ADD `akta_kawin` VARCHAR(255) NULL AFTER `status_kawin`, ADD `tanggal_kawin` DATE NULL AFTER `akta_kawin`, ADD `akta_cerai` VARCHAR(255) NULL AFTER `tanggal_kawin`, ADD `tanggal_cerai` DATE NULL AFTER `akta_cerai`, ADD `family_relationship` VARCHAR(3) NULL AFTER `tanggal_cerai`, ADD `education` VARCHAR(3) NULL AFTER `family_relationship`, ADD `job` VARCHAR(3) NULL AFTER `education`, ADD `nama_ibu` VARCHAR(255) NULL AFTER `job`, ADD `nama_ayah` VARCHAR(255) NULL AFTER `nama_ibu`, ADD `nomor_paspor` VARCHAR(100) NULL AFTER `nama_ayah`, ADD `tanggal_berlaku_paspor` DATE NULL AFTER `nomor_paspor`, ADD `keterangan` TEXT NULL AFTER `tanggal_berlaku_paspor`;

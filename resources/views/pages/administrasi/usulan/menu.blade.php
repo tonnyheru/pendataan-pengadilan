@@ -25,53 +25,50 @@
         <div class="row">
           @php
           $usulan = [
-            'perbaikan_akta_kelahiran' => [
-              'title' => 'Perbaikan Akta Kelahiran',
-              'icon' => 'fas fa-file-alt'
+            'perbaikan_akta' => [
+              'title' => 'Perbaikan Akta',
+              'icon' => 'fas fa-file-alt',
+              'description' => 'Perbaikan Akta Kelahiran, Perkawinan, Perceraian, Kematian',
             ],
-            'perubahan_penambahan_pengurangan_nama' => [
-              'title' => 'Perubahan, Penambahan, Pengurangan Nama',
-              'icon' => 'fas fa-user-edit'
+            'penerbitan_akta_kematian' => [
+              'title' => 'Penerbitan Akta Kematian',
+              'icon' => 'fad fa-coffin',
+              'description' => 'Penerbitan Akta Kematian',
             ],
-            'perubahan_tanggal_tahun_lahir' => [
-              'title' => 'Perubahan Tanggal / Tahun Lahir',
-              'icon' => 'fas fa-calendar-alt'
-            ],
-            'pencatatan_perubahan_jenis_kelamin' => [
-              'title' => 'Pencatatan Perubahan Jenis Kelamin',
-              'icon' => 'fas fa-venus-mars'
-            ],
-            'penerbitan_akta_kematian_terlambat' => [
-              'title' => 'Penerbitan Akta Kematian Terlambat',
-              'icon' => 'fas fa-file-invoice'
-            ],
-            'penerbitan_akta_perkawinan_terlambat' => [
-              'title' => 'Penerbitan Akta Perkawinan Terlambat karena Pendaftaran Perkawinan Terlambat',
-              'icon' => 'fas fa-file-invoice'
+            'penerbitan_akta_perkawinan' => [
+              'title' => 'Penerbitan Akta Perkawinan',
+              'icon' => 'fas fa-rings-wedding',
+              'description' => 'Penerbitan Akta Perkawinan',
             ],
             'penerbitan_akta_perceraian' => [
               'title' => 'Penerbitan Akta Perceraian',
-              'icon' => 'fas fa-file-invoice'
+              'icon' => 'fas fa-heart-broken',
+              'description' => 'Penerbitan Akta Perceraian',
             ],
             'pengangkatan_anak' => [
               'title' => 'Pengangkatan Anak',
-              'icon' => 'fas fa-child'
+              'icon' => 'fas fa-child',
+              'description' => 'Pengangkatan Anak',
             ],
             'pengesahan_dan_pengakuan_anak' => [
               'title' => 'Pengesahan dan Pengakuan Anak',
-              'icon' => 'fas fa-child'
+              'icon' => 'fas fa-child',
+              'description' => 'Pengesahan dan Pengakuan Anak',
             ],
             'pembatalan_akta_kelahiran' => [
               'title' => 'Pembatalan Akta Kelahiran',
-              'icon' => 'fas fa-file-invoice'
+              'icon' => 'fas fa-file-invoice',
+              'description' => 'Pembatalan Akta Kelahiran',
             ],
             'pembatalan_perceraian' => [
               'title' => 'Pembatalan Perceraian',
-              'icon' => 'fas fa-file-invoice'
+              'icon' => 'fas fa-file-invoice',
+              'description' => 'Pembatalan Perceraian',
             ],
             'pembatalan_perkawinan' => [
               'title' => 'Pembatalan Perkawinan',
-              'icon' => 'fas fa-file-invoice'
+              'icon' => 'fas fa-file-invoice',
+              'description' => 'Pembatalan Perkawinan',
             ],
           ];
           @endphp
@@ -88,7 +85,7 @@
                     <!-- Text Content -->
                     <div class="flex-grow-1 p-3 d-flex flex-column justify-content-center">
                       <h5 class="mb-1 font-weight-bold">{{ $value['title'] }}</h5>
-                      <p class="mb-0 text-muted small">Usulan administratif perihal {{ strtolower($value['title']) }}</p>
+                      <p class="mb-0 text-muted small">Usulan administratif perihal {{ strtolower($value['description']) }}</p>
                     </div>
                   </div>
                 </div>

@@ -117,7 +117,7 @@ class UsulanDataTable extends DataTable
                         return '<span class="badge bg-danger text-white">Ditolak</span>';
                         break;
                     case '1':
-                        return '<span class="badge bg-info text-white">Perlu Disetujui Disdukcapil</span>';
+                        return '<span class="badge bg-info text-white">Draft - Perlu Disetujui Disdukcapil</span>';
                         break;
                     case '2':
                         return '<span class="badge bg-success text-white">Disetujui</span>';
