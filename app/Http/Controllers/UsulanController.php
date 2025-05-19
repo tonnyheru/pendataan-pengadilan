@@ -23,7 +23,8 @@ class UsulanController extends Controller
     public function index(UsulanDataTable $dataTable)
     {
         if (!PermissionCommon::check('usulan.list')) abort(403);
-        return $dataTable->render('pages.administrasi.usulan.list');
+        // return $dataTable->render('pages.administrasi.usulan.list');
+        return view('pages.administrasi.usulan.menu');
     }
 
     /**
@@ -34,7 +35,7 @@ class UsulanController extends Controller
         if (!PermissionCommon::check('usulan.create')) abort(403);
         $pemohon = Pemohon::all();
         $disdukcapil = Disdukcapil::all();
-        $body = view('pages.administrasi.usulan.create', compact('pemohon', 'disdukcapil', 'provinsi'))->render();
+        $body = view('pages.administrasi.usulan.create', compact('pemohon', 'disdukcapil'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
         return [
