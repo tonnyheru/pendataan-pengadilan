@@ -29,52 +29,61 @@
               'title' => 'Perbaikan Akta',
               'icon' => 'fas fa-file-alt',
               'description' => 'Perbaikan Akta Kelahiran, Perkawinan, Perceraian, Kematian',
+              'route' => route('perbaikan_akta.index')
             ],
             'penerbitan_akta_kematian' => [
               'title' => 'Penerbitan Akta Kematian',
               'icon' => 'fad fa-coffin',
               'description' => 'Penerbitan Akta Kematian',
+              'route' => route('akta_kematian.index')
             ],
             'penerbitan_akta_perkawinan' => [
               'title' => 'Penerbitan Akta Perkawinan',
               'icon' => 'fas fa-rings-wedding',
               'description' => 'Penerbitan Akta Perkawinan',
+              'route' => route('akta_perkawinan.index')
             ],
             'penerbitan_akta_perceraian' => [
               'title' => 'Penerbitan Akta Perceraian',
               'icon' => 'fas fa-heart-broken',
               'description' => 'Penerbitan Akta Perceraian',
+              'route' => route('akta_perceraian.index')
             ],
             'pengangkatan_anak' => [
               'title' => 'Pengangkatan Anak',
               'icon' => 'fas fa-child',
               'description' => 'Pengangkatan Anak',
+              'route' => route('pengangkatan_anak.index')
             ],
             'pengesahan_dan_pengakuan_anak' => [
               'title' => 'Pengesahan dan Pengakuan Anak',
               'icon' => 'fas fa-child',
               'description' => 'Pengesahan dan Pengakuan Anak',
+              'route' => route('pengakuan_anak.index')
             ],
             'pembatalan_akta_kelahiran' => [
               'title' => 'Pembatalan Akta Kelahiran',
               'icon' => 'fas fa-file-invoice',
               'description' => 'Pembatalan Akta Kelahiran',
+              'route' => route('pembatalan_akta_kelahiran.index')
             ],
             'pembatalan_perceraian' => [
               'title' => 'Pembatalan Perceraian',
               'icon' => 'fas fa-file-invoice',
               'description' => 'Pembatalan Perceraian',
+              'route' => route('pembatalan_perceraian.index')
             ],
             'pembatalan_perkawinan' => [
               'title' => 'Pembatalan Perkawinan',
               'icon' => 'fas fa-file-invoice',
               'description' => 'Pembatalan Perkawinan',
+              'route' => route('pembatalan_perkawinan.index')
             ],
           ];
           @endphp
           @foreach($usulan as $key => $value)
             <div class="col-md-6 col-lg-4 col-xl-3 mb-4">
-              <a href="" class="text-decoration-none text-reset">
+              <a href="{{ $value['route'] }}" class="text-decoration-none text-reset">
                 <div class="card shadow-lg border-0 h-120">
                   <div class="d-flex" style="min-height: 120px;">
                     <!-- Icon Box -->

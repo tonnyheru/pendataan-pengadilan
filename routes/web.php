@@ -1,14 +1,25 @@
 <?php
 
+use App\Http\Controllers\AktaKematianDetailController;
+use App\Http\Controllers\AktaPerceraianDetailController;
+use App\Http\Controllers\AktaPerkawinanDetailController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DisdukcapilController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\MutasiController;
+use App\Http\Controllers\PembatalanAktaKelahiranDetailController;
+use App\Http\Controllers\PembatalanPerceraianDetailController;
+use App\Http\Controllers\PembatalanPerkawinanDetailController;
 use App\Http\Controllers\PemohonController;
+use App\Http\Controllers\PengakuanAnakDetailController;
+use App\Http\Controllers\PengangkatanAnakDetailController;
+use App\Http\Controllers\PerbaikanAktaDetailController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\StudentsController;
+use App\Http\Controllers\SubmissionController;
+use App\Http\Controllers\SubmissionDocumentController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UsulanController;
 use App\Http\Middleware\PengadilanAuth;
@@ -40,6 +51,20 @@ Route::get('/logout', [AuthController::class, 'logout'])->name('auth.logout');
 Route::post('/login_process', [AuthController::class, 'login_process'])->name('auth.login_process');
 
 Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
+    Route::prefix('usulan')->group(function () {
+        Route::resources(['submission' => SubmissionController::class]);
+        Route::resources(['submission_documents' => SubmissionDocumentController::class]);
+        Route::resources(['perbaikan_akta' => PerbaikanAktaDetailController::class]);
+        Route::resources(['akta_kematian' => AktaKematianDetailController::class]);
+        Route::resources(['akta_perkawinan' => AktaPerkawinanDetailController::class]);
+        Route::resources(['akta_perceraian' => AktaPerceraianDetailController::class]);
+        Route::resources(['pengangkatan_anak' => PengangkatanAnakDetailController::class]);
+        Route::resources(['pengakuan_anak' => PengakuanAnakDetailController::class]);
+        Route::resources(['pembatalan_akta_kelahiran' => PembatalanAktaKelahiranDetailController::class]);
+        Route::resources(['pembatalan_perceraian' => PembatalanPerceraianDetailController::class]);
+        Route::resources(['pembatalan_perkawinan' => PembatalanPerkawinanDetailController::class]);
+    });
+
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.inventory');
     Route::resources(['user' => UserController::class]);
     Route::resources(['role' => RoleController::class]);
@@ -49,6 +74,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::resources(['pemohon' => PemohonController::class]);
     Route::resources(['usulan' => UsulanController::class]);
     Route::resources(['disdukcapil' => DisdukcapilController::class]);
+
 
     Route::get('/file/{filename}/{type}', function ($filename, $type) {
         $file_path = public_path("upload/$type/$filename");
@@ -97,9 +123,8 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     })->name('catatan.preview');
 
 
-
-    Route::get('/send-email/{uid}', [UsulanController::class, 'send_mail'])->name('usulan.sendmail');
-    Route::post('/send-email/{uid}', function (Request $request, $uid) {
+    Route::get('/send_email/{uid}', [UsulanController::class, 'send_mail'])->name('usulan.sendmail');
+    Route::post('/send_email/{uid}', function (Request $request, $uid) {
         $request->validate([
             'attachments'   => 'required|array|min:1|max:3', // Minimal 1 file, maksimal 3 file
             'attachments.*' => 'file|mimes:jpeg,png,gif,pdf|max:2048', // Format: JPG, PNG, GIF, PDF (maks 2MB)

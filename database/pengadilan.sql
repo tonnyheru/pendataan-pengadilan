@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 16, 2025 at 12:04 PM
+-- Generation Time: May 20, 2025 at 10:43 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -20,6 +20,121 @@ SET time_zone = "+00:00";
 --
 -- Database: `pengadilan`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `akta_kematian_details`
+--
+
+CREATE TABLE `akta_kematian_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nik_jenazah` varchar(16) DEFAULT NULL,
+  `nama_jenazah` varchar(255) DEFAULT NULL,
+  `wilayah_kelahiran` enum('dalam_negeri','luar_negeri') DEFAULT NULL,
+  `provinsi_kelahiran` varchar(100) DEFAULT NULL,
+  `tanggal_kematian` date DEFAULT NULL,
+  `waktu_kematian` time DEFAULT NULL,
+  `tempat_kematian` varchar(255) DEFAULT NULL,
+  `sebab_kematian` varchar(255) DEFAULT NULL,
+  `yang_menerangkan` varchar(100) DEFAULT NULL,
+  `keterangan` text DEFAULT NULL,
+  `nik_ayah` varchar(16) DEFAULT NULL,
+  `nama_ayah` varchar(255) DEFAULT NULL,
+  `nik_ibu` varchar(16) DEFAULT NULL,
+  `nama_ibu` varchar(255) DEFAULT NULL,
+  `nik_saksi1` varchar(16) DEFAULT NULL,
+  `nama_saksi1` varchar(255) DEFAULT NULL,
+  `nik_saksi2` varchar(16) DEFAULT NULL,
+  `nama_saksi2` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `akta_perceraian_details`
+--
+
+CREATE TABLE `akta_perceraian_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nik_suami` varchar(16) DEFAULT NULL,
+  `kk_suami` varchar(16) DEFAULT NULL,
+  `paspor_suami` varchar(50) DEFAULT NULL,
+  `nama_suami` varchar(255) DEFAULT NULL,
+  `tempat_lahir_suami` varchar(100) DEFAULT NULL,
+  `tanggal_lahir_suami` date DEFAULT NULL,
+  `alamat_suami` text DEFAULT NULL,
+  `perceraian_ke` varchar(10) DEFAULT NULL,
+  `kewarganegaraan_suami` varchar(50) DEFAULT NULL,
+  `nik_istri` varchar(16) DEFAULT NULL,
+  `kk_istri` varchar(16) DEFAULT NULL,
+  `paspor_istri` varchar(50) DEFAULT NULL,
+  `nama_istri` varchar(255) DEFAULT NULL,
+  `tempat_lahir_istri` varchar(100) DEFAULT NULL,
+  `tanggal_lahir_istri` date DEFAULT NULL,
+  `alamat_istri` text DEFAULT NULL,
+  `kewarganegaraan_istri` varchar(50) DEFAULT NULL,
+  `yang_mengajukan` varchar(10) DEFAULT NULL,
+  `no_akta_kawin` varchar(100) DEFAULT NULL,
+  `tanggal_akta_kawin` date DEFAULT NULL,
+  `tempat_perkawinan` varchar(255) DEFAULT NULL,
+  `no_putusan` varchar(100) DEFAULT NULL,
+  `tanggal_putusan` date DEFAULT NULL,
+  `sebab_perceraian` text DEFAULT NULL,
+  `tanggal_lapor` date DEFAULT NULL,
+  `waktu_lapor` time DEFAULT NULL,
+  `keterangan` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `akta_perkawinan_details`
+--
+
+CREATE TABLE `akta_perkawinan_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nik_suami` varchar(16) DEFAULT NULL,
+  `kk_suami` varchar(16) DEFAULT NULL,
+  `nama_suami` varchar(255) DEFAULT NULL,
+  `kewarganegaraan_suami` varchar(50) DEFAULT NULL,
+  `alamat_suami` text DEFAULT NULL,
+  `anak_ke_suami` varchar(10) DEFAULT NULL,
+  `perkawinan_ke_suami` varchar(10) DEFAULT NULL,
+  `nama_istri_terakhir` varchar(255) DEFAULT NULL,
+  `istri_ke` varchar(10) DEFAULT NULL,
+  `nik_ayah_suami` varchar(16) DEFAULT NULL,
+  `nama_ayah_suami` varchar(255) DEFAULT NULL,
+  `nik_ibu_suami` varchar(16) DEFAULT NULL,
+  `nama_ibu_suami` varchar(255) DEFAULT NULL,
+  `nik_istri` varchar(16) DEFAULT NULL,
+  `kk_istri` varchar(16) DEFAULT NULL,
+  `nama_istri` varchar(255) DEFAULT NULL,
+  `kewarganegaraan_istri` varchar(50) DEFAULT NULL,
+  `alamat_istri` text DEFAULT NULL,
+  `anak_ke_istri` varchar(10) DEFAULT NULL,
+  `perkawinan_ke_istri` varchar(10) DEFAULT NULL,
+  `nama_suami_terakhir` varchar(255) DEFAULT NULL,
+  `nik_ayah_istri` varchar(16) DEFAULT NULL,
+  `nama_ayah_istri` varchar(255) DEFAULT NULL,
+  `nik_ibu_istri` varchar(16) DEFAULT NULL,
+  `nama_ibu_istri` varchar(255) DEFAULT NULL,
+  `nik_saksi1` varchar(16) DEFAULT NULL,
+  `nama_saksi1` varchar(255) DEFAULT NULL,
+  `nik_saksi2` varchar(16) DEFAULT NULL,
+  `nama_saksi2` varchar(255) DEFAULT NULL,
+  `tanggal_pemberkatan` date DEFAULT NULL,
+  `tempat_pemberkatan` varchar(255) DEFAULT NULL,
+  `tanggal_lapor` date DEFAULT NULL,
+  `waktu_lapor` time DEFAULT NULL,
+  `agama` varchar(100) DEFAULT NULL,
+  `nama_pemuka_agama` varchar(255) DEFAULT NULL,
+  `no_putusan` varchar(100) DEFAULT NULL,
+  `tanggal_putusan` date DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -228,6 +343,44 @@ CREATE TABLE `password_reset_tokens` (
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `pembatalan_akta_kelahiran_details`
+--
+
+CREATE TABLE `pembatalan_akta_kelahiran_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nama_pemilik_akta` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembatalan_perceraian_details`
+--
+
+CREATE TABLE `pembatalan_perceraian_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nama_suami` varchar(255) DEFAULT NULL,
+  `nama_istri` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pembatalan_perkawinan_details`
+--
+
+CREATE TABLE `pembatalan_perkawinan_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nama_suami` varchar(255) DEFAULT NULL,
+  `nama_istri` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `pemohon`
 --
 
@@ -274,6 +427,46 @@ CREATE TABLE `pemohon` (
 
 INSERT INTO `pemohon` (`uid`, `name`, `province`, `regency`, `district`, `village`, `kk`, `nik`, `tanggal_lahir`, `tempat_lahir`, `akta_kelahiran`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `blood_type`, `agama`, `status_kawin`, `akta_kawin`, `tanggal_kawin`, `akta_cerai`, `tanggal_cerai`, `family_relationship`, `education`, `job`, `nama_ibu`, `nama_ayah`, `nomor_paspor`, `tanggal_berlaku_paspor`, `keterangan`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 ('468239ba-5c5b-4e16-b356-90ae1260084b', 'Mochammad Qaysa Al-Haq', '32', '3204', '3204260', '3204260004', '1234123412341234', '1234123412341234', '2025-05-01', 'Bandung', 'asd akta', 'Margahayu Permai, Blok S10, No 10', 'abumilhan78@gmail.com', '085156283616', 'Laki-laki', '2', '1', '2', NULL, NULL, NULL, NULL, '2', '5', '3', 'asd ibu edit', 'asd ayah edit', NULL, NULL, NULL, '2025-05-16 02:27:59', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-16 07:11:47', NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengakuan_anak_details`
+--
+
+CREATE TABLE `pengakuan_anak_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nama_anak` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `pengangkatan_anak_details`
+--
+
+CREATE TABLE `pengangkatan_anak_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `nama_anak` varchar(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `perbaikan_akta_details`
+--
+
+CREATE TABLE `perbaikan_akta_details` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `jenis_akta` varchar(50) DEFAULT NULL,
+  `nomor_akta` varchar(100) DEFAULT NULL,
+  `jenis_elemen_perbaikan` varchar(100) DEFAULT NULL,
+  `data_sebelum` text DEFAULT NULL,
+  `data_sesudah` text DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
 
@@ -469,6 +662,43 @@ INSERT INTO `sessions` (`id`, `user_id`, `ip_address`, `user_agent`, `payload`, 
 -- --------------------------------------------------------
 
 --
+-- Table structure for table `submissions`
+--
+
+CREATE TABLE `submissions` (
+  `uid` varchar(40) NOT NULL,
+  `no_perkara` varchar(40) DEFAULT NULL,
+  `submission_type` enum('perbaikan_akta','akta_kematian','akta_perkawinan','akta_perceraian','pengangkatan_anak','pengesahan_anak','pengakuan_anak','pembatalan_akta_kelahiran','pembatalan_perceraian','pembatalan_perkawinan') DEFAULT NULL,
+  `pemohon_uid` varchar(40) DEFAULT NULL,
+  `disdukcapil_uid` varchar(40) DEFAULT NULL,
+  `status` varchar(1) DEFAULT NULL,
+  `catatan` text DEFAULT NULL,
+  `approved_at` timestamp NULL DEFAULT NULL,
+  `approved_by` varchar(40) DEFAULT NULL,
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `created_by` varchar(40) DEFAULT NULL,
+  `updated_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_by` varchar(40) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `submission_documents`
+--
+
+CREATE TABLE `submission_documents` (
+  `uid` varchar(40) NOT NULL,
+  `submission_uid` varchar(40) DEFAULT NULL,
+  `document_name` varchar(255) DEFAULT NULL,
+  `document_type` varchar(100) DEFAULT NULL,
+  `file_path` varchar(255) DEFAULT NULL,
+  `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+-- --------------------------------------------------------
+
+--
 -- Table structure for table `users`
 --
 
@@ -541,6 +771,27 @@ CREATE TABLE `usulan` (
 --
 
 --
+-- Indexes for table `akta_kematian_details`
+--
+ALTER TABLE `akta_kematian_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `akta_perceraian_details`
+--
+ALTER TABLE `akta_perceraian_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `akta_perkawinan_details`
+--
+ALTER TABLE `akta_perkawinan_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
 -- Indexes for table `cache`
 --
 ALTER TABLE `cache`
@@ -609,10 +860,52 @@ ALTER TABLE `password_reset_tokens`
   ADD PRIMARY KEY (`email`);
 
 --
+-- Indexes for table `pembatalan_akta_kelahiran_details`
+--
+ALTER TABLE `pembatalan_akta_kelahiran_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `pembatalan_perceraian_details`
+--
+ALTER TABLE `pembatalan_perceraian_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `pembatalan_perkawinan_details`
+--
+ALTER TABLE `pembatalan_perkawinan_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
 -- Indexes for table `pemohon`
 --
 ALTER TABLE `pemohon`
   ADD PRIMARY KEY (`uid`);
+
+--
+-- Indexes for table `pengakuan_anak_details`
+--
+ALTER TABLE `pengakuan_anak_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `pengangkatan_anak_details`
+--
+ALTER TABLE `pengangkatan_anak_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
+
+--
+-- Indexes for table `perbaikan_akta_details`
+--
+ALTER TABLE `perbaikan_akta_details`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
 
 --
 -- Indexes for table `permissions`
@@ -652,6 +945,22 @@ ALTER TABLE `sessions`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sessions_user_id_index` (`user_id`),
   ADD KEY `sessions_last_activity_index` (`last_activity`);
+
+--
+-- Indexes for table `submissions`
+--
+ALTER TABLE `submissions`
+  ADD PRIMARY KEY (`uid`),
+  ADD UNIQUE KEY `no_perkara` (`no_perkara`),
+  ADD KEY `pemohon_uid` (`pemohon_uid`),
+  ADD KEY `disdukcapil_uid` (`disdukcapil_uid`);
+
+--
+-- Indexes for table `submission_documents`
+--
+ALTER TABLE `submission_documents`
+  ADD PRIMARY KEY (`uid`),
+  ADD KEY `submission_uid` (`submission_uid`);
 
 --
 -- Indexes for table `users`
@@ -716,6 +1025,24 @@ ALTER TABLE `users`
 --
 
 --
+-- Constraints for table `akta_kematian_details`
+--
+ALTER TABLE `akta_kematian_details`
+  ADD CONSTRAINT `akta_kematian_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `akta_perceraian_details`
+--
+ALTER TABLE `akta_perceraian_details`
+  ADD CONSTRAINT `akta_perceraian_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `akta_perkawinan_details`
+--
+ALTER TABLE `akta_perkawinan_details`
+  ADD CONSTRAINT `akta_perkawinan_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `disdukcapil`
 --
 ALTER TABLE `disdukcapil`
@@ -737,6 +1064,42 @@ ALTER TABLE `mutasi`
   ADD CONSTRAINT `mutasi_ibfk_2` FOREIGN KEY (`updated_by`) REFERENCES `users` (`uid`) ON DELETE CASCADE;
 
 --
+-- Constraints for table `pembatalan_akta_kelahiran_details`
+--
+ALTER TABLE `pembatalan_akta_kelahiran_details`
+  ADD CONSTRAINT `pembatalan_akta_kelahiran_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pembatalan_perceraian_details`
+--
+ALTER TABLE `pembatalan_perceraian_details`
+  ADD CONSTRAINT `pembatalan_perceraian_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pembatalan_perkawinan_details`
+--
+ALTER TABLE `pembatalan_perkawinan_details`
+  ADD CONSTRAINT `pembatalan_perkawinan_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pengakuan_anak_details`
+--
+ALTER TABLE `pengakuan_anak_details`
+  ADD CONSTRAINT `pengakuan_anak_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `pengangkatan_anak_details`
+--
+ALTER TABLE `pengangkatan_anak_details`
+  ADD CONSTRAINT `pengangkatan_anak_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `perbaikan_akta_details`
+--
+ALTER TABLE `perbaikan_akta_details`
+  ADD CONSTRAINT `perbaikan_akta_details_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
+
+--
 -- Constraints for table `permissions`
 --
 ALTER TABLE `permissions`
@@ -750,6 +1113,19 @@ ALTER TABLE `permissions`
 ALTER TABLE `role_permissions`
   ADD CONSTRAINT `role_permissions_ibfk_1` FOREIGN KEY (`role_uid`) REFERENCES `roles` (`uid`),
   ADD CONSTRAINT `role_permissions_ibfk_2` FOREIGN KEY (`permission_uid`) REFERENCES `permissions` (`uid`);
+
+--
+-- Constraints for table `submissions`
+--
+ALTER TABLE `submissions`
+  ADD CONSTRAINT `submissions_ibfk_1` FOREIGN KEY (`pemohon_uid`) REFERENCES `pemohon` (`uid`) ON DELETE CASCADE,
+  ADD CONSTRAINT `submissions_ibfk_2` FOREIGN KEY (`disdukcapil_uid`) REFERENCES `disdukcapil` (`uid`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `submission_documents`
+--
+ALTER TABLE `submission_documents`
+  ADD CONSTRAINT `submission_documents_ibfk_1` FOREIGN KEY (`submission_uid`) REFERENCES `submissions` (`uid`) ON DELETE CASCADE;
 
 --
 -- Constraints for table `users`
