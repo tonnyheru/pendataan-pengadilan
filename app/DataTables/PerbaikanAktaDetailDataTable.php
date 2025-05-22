@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
 use App\Models\PerbaikanAktaDetail;
+use App\Models\Submission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
 use Yajra\DataTables\Html\Builder as HtmlBuilder;
@@ -27,17 +28,145 @@ class PerbaikanAktaDetailDataTable extends DataTable
             ->addColumn('action', function ($item) {
                 $html = '';
                 $html = '<div class="btn-group btn-group-sm">';
-                if (PermissionCommon::check('usulan.update')) {
+                if (PermissionCommon::check('perbaikan_akta.update')) {
                     $html .= '<button onclick="edit(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-info" title="Edit"><i class="fas fa-pen"></i></button>';
                 }
-                if (PermissionCommon::check('usulan.delete')) {
+                if (PermissionCommon::check('perbaikan_akta.delete')) {
                     $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
                 }
-                $html .= '<a href="' . route('usulan.permission', $item->uid) . '" class="btn btn-sm bg-diy text-white"><i class="fas fa-cog"></i></a>';
+                // $html .= '<a href="' . route('usulan.permission', $item->uid) . '" class="btn btn-sm bg-diy text-white"><i class="fas fa-cog"></i></a>';
                 $html .= '</div>';
                 return $html;
             })
-            ->rawColumns(['action']);
+            ->addColumn('no_perkara', function ($data) {
+                $no_perkara = "";
+                if (isset($data->submission)) {
+                    $no_perkara = $data->submission->no_perkara;
+                }
+                return $no_perkara;
+            })
+            ->filterColumn('no_perkara', function ($query, $keyword) {
+                $query->whereHas('submission', function ($q) use ($keyword) {
+                    $q->where('no_perkara', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('no_perkara', function ($query, $direction) {
+                $query->orderBy(
+                    Submission::select('no_perkara')
+                        ->whereColumn('submissions.uid', 'perbaikan_akta_details.submission_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
+
+            ->addColumn('pemohon', function ($data) {
+                $pemohon = "";
+                if (isset($data->submission)) {
+                    $pemohon = $data->submission->pemohon->name;
+                }
+                return $pemohon;
+            })
+            ->filterColumn('pemohon', function ($query, $keyword) {
+                $query->whereHas('submission.pemohon', function ($q) use ($keyword) {
+                    $q->where('name', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('pemohon', function ($query, $direction) {
+                $query->orderBy(
+                    Submission::select('pemohons.name')
+                        ->whereColumn('submissions.uid', 'perbaikan_akta_details.submission_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
+
+            ->addColumn('disdukcapil', function ($data) {
+                $disdukcapil = "?";
+                if (isset($data->submission)) {
+                    $disdukcapil = $data->submission->disdukcapil->nama;
+                }
+                return $disdukcapil;
+            })
+            ->filterColumn('disdukcapil', function ($query, $keyword) {
+                $query->whereHas('submission.disdukcapil', function ($q) use ($keyword) {
+                    $q->where('nama', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('disdukcapil', function ($query, $direction) {
+                $query->orderBy(
+                    Submission::select('disdukcapil.nama')
+                        ->whereColumn('submissions.uid', 'perbaikan_akta_details.submission_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
+
+            ->addColumn('status', function ($data) {
+                $status = "?";
+                if (isset($data->submission)) {
+                    $status = $data->submission->status;
+                    switch ($status) {
+                        case '0':
+                            $status = '<span class="badge bg-danger text-white">Ditolak</span>';
+                            break;
+                        case '1':
+                            $status = '<span class="badge bg-warning text-white">Perlu Persetujuan :<br> ' . $data->submission->disdukcapil->nama . '</span>';
+                            break;
+                        case '2':
+                            $status = '<span class="badge bg-success text-white">Diterima</span>';
+                            break;
+                        default:
+                            $status = '<span class="badge bg-danger text-white">Ditolak</span>';
+                            break;
+                    }
+                }
+                return $status;
+            })
+            ->filterColumn('status', function ($query, $keyword) {
+                $query->whereHas('submission', function ($q) use ($keyword) {
+                    $q->where('status', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('status', function ($query, $direction) {
+                $query->orderBy(
+                    Submission::select('status')
+                        ->whereColumn('submissions.uid', 'perbaikan_akta_details.submission_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
+
+            ->addColumn('jenis_akta', function ($data) {
+                return strtoupper(str_replace('_', ' ', $data->jenis_akta));
+            })
+            ->filterColumn('jenis_akta', function ($query, $keyword) {
+                $query->where('jenis_akta', 'like', "%{$keyword}%");
+            })
+            ->orderColumn('jenis_akta', function ($query, $direction) {
+                $query->orderBy('jenis_akta', $direction);
+            })
+
+            ->addColumn('data_sebelum', function ($data) {
+                return ucwords($data->jenis_elemen_perbaikan) . ' : ' . $data->data_sebelum;
+            })
+            ->filterColumn('data_sebelum', function ($query, $keyword) {
+                $query->where('data_sebelum', 'like', "%{$keyword}%");
+            })
+            ->orderColumn('data_sebelum', function ($query, $direction) {
+                $query->orderBy('data_sebelum', $direction);
+            })
+            ->addColumn('data_sesudah', function ($data) {
+                return ucwords($data->jenis_elemen_perbaikan) . ' : ' . $data->data_sesudah;
+            })
+            ->filterColumn('data_sesudah', function ($query, $keyword) {
+                $query->where('data_sesudah', 'like', "%{$keyword}%");
+            })
+            ->orderColumn('data_sesudah', function ($query, $direction) {
+                $query->orderBy('data_sesudah', $direction);
+            })
+
+
+            ->rawColumns(['action', 'status']);
     }
 
     /**
@@ -61,7 +190,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
         $button = [];
         $button[] = Button::make('excel')->text('<span title="Export Excel"><i class="fa fa-file-excel"></i></span>');
         if (PermissionCommon::check('usulan.create')) {
-            $button[] = Button::raw('<i class="fa fa-plus"></i> Create Usulan')->action('function() { create() }');
+            $button[] = Button::raw('<i class="fa fa-plus"></i> Tambah Usulan Perbaikan Akta')->action('function() { create() }');
         }
         return $this->builder()
             ->parameters([
@@ -95,8 +224,13 @@ class PerbaikanAktaDetailDataTable extends DataTable
                 ->width(60)
                 ->addClass('text-center');
         }
+        $column[] = Column::make('no_perkara');
+        $column[] = Column::make('status');
+        $column[] = Column::make('pemohon');
         $column[] = Column::make('jenis_akta');
         $column[] = Column::make('nomor_akta');
+        $column[] = Column::make('data_sebelum');
+        $column[] = Column::make('data_sesudah');
         return $column;
     }
 

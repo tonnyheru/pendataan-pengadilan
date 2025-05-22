@@ -50,7 +50,7 @@ class UsulanController extends Controller
      */
     public function store(Request $request)
     {
-        if (!PermissionCommon::check('usulan.update')) abort(403);
+        if (!PermissionCommon::check('usulan.create')) abort(403);
         $request->validate([
             'no_perkara' => 'required|unique:usulan,no_perkara',
             'jenis_perkara' => 'required',

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 20, 2025 at 10:43 AM
+-- Generation Time: May 22, 2025 at 12:01 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -304,13 +304,22 @@ CREATE TABLE `modules` (
 INSERT INTO `modules` (`uid`, `description`, `name`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
 ('100085fd-e69b-4db4-9f12-a2a33e118214', 'Mutasi', 'Mutasi', '2025-03-03 03:54:19', NULL, '2025-03-03 03:54:19', NULL),
 ('10aa1d11-270c-47ab-8c03-d20bc20225e8', 'Role', 'Role', '2024-10-17 07:29:42', NULL, '2024-10-17 07:29:42', NULL),
+('2bdd61da-92ef-4208-af2d-0ea0425efe41', 'Menu Pembatalan Akta Kelahiran', 'Pembatalan Akta Kelahiran', '2025-05-21 01:35:24', NULL, '2025-05-21 01:35:24', NULL),
 ('34274232-b71a-4fd6-b871-da859a2cffe8', 'Menu Usulan', 'Usulan', '2025-03-10 04:01:35', NULL, '2025-03-10 04:01:35', NULL),
+('34aafef3-453f-40ad-a9a0-851459faccee', 'Menu Penerbitan Akta Perkawinan', 'Penerbitan Akta Perkawinan', '2025-05-21 01:34:24', NULL, '2025-05-21 01:34:24', NULL),
 ('3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', 'User', 'User', '2024-10-17 07:29:49', NULL, '2024-10-17 07:29:49', NULL),
 ('42634834-66e0-45bf-8835-99f2004a3b05', 'Dashboard', 'Dashboard', '2024-10-17 03:56:14', NULL, '2024-10-17 03:57:23', NULL),
+('5820277c-ee1e-444c-b24b-ef781f54a727', 'Menu Pembatalan Perceraian', 'Pembatalan Perceraian', '2025-05-21 01:35:44', NULL, '2025-05-22 01:30:32', NULL),
+('768899c4-1011-4149-b9ef-a7864b3516d7', 'Menu Penerbitan Akta Kematian', 'Penerbitan Akta Kematian', '2025-05-21 01:34:10', NULL, '2025-05-21 01:34:10', NULL),
 ('78eefbc3-b248-4d7c-a355-a83ed0103c4b', 'Module', 'Module', '2024-10-17 07:29:38', NULL, '2024-10-17 07:29:38', NULL),
 ('8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', 'Disdukcapil', 'Disdukcapil', '2025-03-17 04:36:33', NULL, '2025-03-17 04:36:33', NULL),
+('8f791e07-3c28-4745-a517-9fc7316f24b0', 'Menu Pengangkatan Anak', 'Pengangkatan Anak', '2025-05-21 01:34:54', NULL, '2025-05-21 01:34:54', NULL),
 ('98bb7a50-9edb-4356-90c8-409cf75cd962', 'Pemohon', 'Pemohon', '2025-03-06 05:40:47', NULL, '2025-03-06 06:23:17', NULL),
-('a9e39221-3834-4e48-88f2-455daae1cf24', 'Profile', 'Profile', '2025-03-06 02:20:40', NULL, '2025-03-06 02:20:40', NULL);
+('a81dcc89-90ca-4bcb-a87b-5c512b573118', 'Menu Perbaikan Akta', 'Perbaikan Akta', '2025-05-21 01:33:50', NULL, '2025-05-21 01:33:50', NULL),
+('a9e39221-3834-4e48-88f2-455daae1cf24', 'Profile', 'Profile', '2025-03-06 02:20:40', NULL, '2025-03-06 02:20:40', NULL),
+('c9a260f1-235d-4d2a-94b9-72557d42ddd0', 'Menu Penerbitan Akta Perceraian', 'Penerbitan Akta Perceraian', '2025-05-21 01:34:38', NULL, '2025-05-21 01:34:38', NULL),
+('c9a7887e-180e-41b5-a51d-1217e1863017', 'Menu Pengakuan Anak', 'Pengakuan Anak', '2025-05-21 01:35:08', NULL, '2025-05-21 01:35:08', NULL),
+('d91f05b6-d2e4-4dc4-ba23-dd0b9aa25335', 'Menu Pembatalan Perkawinan', 'Pembatalan Perkawinan', '2025-05-21 01:36:05', NULL, '2025-05-21 01:36:05', NULL);
 
 -- --------------------------------------------------------
 
@@ -468,6 +477,13 @@ CREATE TABLE `perbaikan_akta_details` (
   `data_sesudah` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `perbaikan_akta_details`
+--
+
+INSERT INTO `perbaikan_akta_details` (`uid`, `submission_uid`, `jenis_akta`, `nomor_akta`, `jenis_elemen_perbaikan`, `data_sebelum`, `data_sesudah`) VALUES
+('1908f89b-dc71-4e82-abf7-b17d80cd70a2', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'akta_kelahiran', 'asd', 'nama', 'Mochammad Qaysa Al-Haq', 'Mochammad Robert Santoso');
+
 -- --------------------------------------------------------
 
 --
@@ -491,38 +507,74 @@ CREATE TABLE `permissions` (
 --
 
 INSERT INTO `permissions` (`uid`, `description`, `name`, `slug`, `module_uid`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('0078d88f-1885-4299-a532-353d22239f2b', 'Pembatalan Perkawinan Delete Permit', 'Pembatalan Perkawinan Delete', 'pembatalan_perkawinan.delete', 'd91f05b6-d2e4-4dc4-ba23-dd0b9aa25335', '2025-05-22 01:29:52', NULL, '2025-05-22 01:29:52', NULL),
+('00bd6f1b-fe53-424c-9ea6-c5cc870006da', 'Perbaikan Akta List View Permit', 'Perbaikan Akta List View', 'perbaikan_akta.list', 'a81dcc89-90ca-4bcb-a87b-5c512b573118', '2025-05-21 01:43:40', NULL, '2025-05-21 01:43:40', NULL),
+('0843e35a-ed58-4eb1-8eac-4b34e7f52f09', 'Akta Perceraian Create Permit', 'Akta Perceraian Create', 'akta_perceraian.create', 'c9a260f1-235d-4d2a-94b9-72557d42ddd0', '2025-05-22 01:14:52', NULL, '2025-05-22 01:14:52', NULL),
+('0d02c8c1-720b-41d5-983f-6f5f91b57d02', 'Pengakuan Anak Delete Permit', 'Pengakuan Anak Delete', 'pengakuan_anak.delete', 'c9a7887e-180e-41b5-a51d-1217e1863017', '2025-05-22 01:24:38', NULL, '2025-05-22 01:24:38', NULL),
+('1ac41272-ca54-4ade-9a6c-50875c3498fd', 'Pengakuan Anak Update Permit', 'Pengakuan Anak Update', 'pengakuan_anak.update', 'c9a7887e-180e-41b5-a51d-1217e1863017', '2025-05-22 01:24:13', NULL, '2025-05-22 01:24:13', NULL),
 ('1e65f1cc-4a52-4a25-949f-18e436984511', 'Module List View Permit', 'Module List View', 'module.list', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:45', NULL, '2024-10-17 07:30:45', NULL),
+('20a6b097-5227-49c7-813a-1a87556da2fe', 'Perbaikan Akta Create Permit', 'Perbaikan Akta Create', 'perbaikan_akta.create', 'a81dcc89-90ca-4bcb-a87b-5c512b573118', '2025-05-22 01:07:13', NULL, '2025-05-22 01:07:13', NULL),
+('27d41c86-3e10-4c7d-92d1-eb31af7f4709', 'Pembatalan Akta Kelahiran Update Permit', 'Pembatalan Akta Kelahiran Update', 'pembatalan_akta_kelahiran.update', '2bdd61da-92ef-4208-af2d-0ea0425efe41', '2025-05-22 01:25:53', NULL, '2025-05-22 01:25:53', NULL),
 ('2c37e04b-3293-46d9-aee1-6f1ab7c1f40c', 'Mutasi Create Permit', 'Mutasi Create', 'mutasi.create', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:06', NULL, '2025-03-03 03:56:06', NULL),
 ('2c6e01c9-e38b-4a67-9c4d-27301c627ac3', 'Disdukcapil List View Permit', 'Disdukcapil List View', 'disdukcapil.list', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:36:57', NULL, '2025-03-17 04:36:57', NULL),
 ('30d81e9f-7196-49c9-adbf-ab69396f2c1b', 'Mutasi Delete Permit', 'Mutasi Delete', 'mutasi.delete', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:56:21', NULL, '2025-03-03 03:56:21', NULL),
 ('34925feb-b789-4a74-8760-f52e103d7074', 'Disdukcapil Update Permit', 'Disdukcapil Update', 'disdukcapil.update', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:38:00', NULL, '2025-03-17 04:38:00', NULL),
 ('3d12e466-c9f3-4a82-ac6f-84bf0c15a16e', 'Pemohon Create Permit', 'Pemohon Create', 'pemohon.create', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:38', NULL, '2025-03-06 06:23:38', NULL),
+('3d3a4bda-5b82-4184-8b52-f4858ef39aba', 'Akta Perceraian Delete Permit', 'Akta Perceraian Delete', 'akta_perceraian.delete', 'c9a260f1-235d-4d2a-94b9-72557d42ddd0', '2025-05-22 01:15:10', NULL, '2025-05-22 01:15:10', NULL),
 ('46d77d3e-690f-4305-bdb5-6f77e4a173c8', 'Usulan Create Permit', 'Usulan Create', 'usulan.create', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:03:18', NULL, '2025-03-10 04:03:18', NULL),
 ('47ba3e64-04be-4844-a58d-b12edce8a10d', 'Usulan Update Permit', 'Usulan Update', 'usulan.update', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:02:34', NULL, '2025-03-10 04:02:34', NULL),
+('47fd87da-5f6b-4caf-8a5f-cdf8dfc28faf', 'Pengakuan Anak List View Permit', 'Pengakuan Anak List View', 'pengakuan_anak.list', 'c9a7887e-180e-41b5-a51d-1217e1863017', '2025-05-22 01:23:39', NULL, '2025-05-22 01:23:39', NULL),
 ('48c95475-d35a-44c6-8047-9e2ab901ae44', 'Mutasi Update Permit', 'Mutasi Update', 'mutasi.update', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:55:13', NULL, '2025-03-03 03:55:13', NULL),
+('498d24cf-602a-4814-9b3f-a59fa12016e7', 'Akta Kematian Delete Permit', 'Akta Kematian Delete', 'akta_kematian.delete', '768899c4-1011-4149-b9ef-a7864b3516d7', '2025-05-22 01:09:41', NULL, '2025-05-22 01:09:41', NULL),
+('4aab5536-0cae-4a5c-9b19-d8543fb0a109', 'Akta Perceraian List View Permit', 'Akta Perceraian List View', 'akta_perceraian.list', 'c9a260f1-235d-4d2a-94b9-72557d42ddd0', '2025-05-22 01:14:32', NULL, '2025-05-22 01:14:32', NULL),
 ('4b4a3ae2-ce54-47a5-b682-0ef8e86ae0f6', 'User Create Permit', 'User Create', 'user.create', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:34:20', NULL, '2024-10-17 07:34:20', NULL),
 ('54932999-cc85-4131-a857-107714f4edc5', 'Role Update Permit', 'Role Update', 'role.update', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:33:04', NULL, '2024-10-17 07:33:04', NULL),
 ('55c3c286-5727-44cc-8693-ab369406fd1d', 'User List View Permit', 'User List View', 'user.list', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:33:47', NULL, '2024-10-17 07:33:47', NULL),
+('57e808cf-797f-4237-9182-b0ff29cdce7d', 'Akta Perkawinan Create Permit', 'Akta Perkawinan Create', 'akta_perkawinan.create', '34aafef3-453f-40ad-a9a0-851459faccee', '2025-05-22 01:10:39', NULL, '2025-05-22 01:10:39', NULL),
 ('5851c5a8-325b-434e-a36c-75ba0f2e2bd6', 'Module Create Permit', 'Module Create', 'module.create', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:30:57', NULL, '2024-10-17 07:30:57', NULL),
 ('64cc6edf-0f5d-422a-9583-325bdca9f369', 'Usulan Approve Disdukcapil', 'Usulan Approve Disdukcapil', 'usulan.approve_disdukcapil', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-12 05:07:51', NULL, '2025-03-12 05:07:51', NULL),
+('677e33b8-3229-427a-85dc-ec7862d2de9e', 'Akta Perceraian Update Permit', 'Akta Perceraian Update', 'akta_perceraian.update', 'c9a260f1-235d-4d2a-94b9-72557d42ddd0', '2025-05-22 01:15:23', NULL, '2025-05-22 01:15:23', NULL),
 ('6e54c5fe-a64f-4fa4-b1b6-0621fa29005b', 'Pemohon Update Permit', 'Pemohon Update', 'pemohon.update', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:42', NULL, '2025-03-06 06:24:42', NULL),
+('70b30490-2541-404f-a701-acbd75761a35', 'Pembatalan Perkawinan Update Permit', 'Pembatalan Perkawinan Update', 'pembatalan_perkawinan.update', 'd91f05b6-d2e4-4dc4-ba23-dd0b9aa25335', '2025-05-22 01:30:10', NULL, '2025-05-22 01:30:10', NULL),
 ('7776567b-4902-4324-bab0-51959b7a0d76', 'Usulan Approve Panitra Permit', 'Usulan Approve Panitra', 'usulan.approve_panitra', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-12 05:07:31', NULL, '2025-03-12 05:07:31', NULL),
 ('79028af7-0408-4ec0-8e9e-22b1b751ae0a', 'Pemohon Delete Permit', 'Pemohon Delete', 'pemohon.delete', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:24:58', NULL, '2025-03-06 06:24:58', NULL),
 ('7d5b5ed0-38b9-4830-82dd-592f1468e9a6', 'Disdukcapil Create', 'Disdukcapil Create', 'disdukcapil.create', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:38:14', NULL, '2025-03-17 04:38:14', NULL),
 ('7f214497-e3c8-44d0-86b2-b8cc63260740', 'Profile View Permit', 'Profile View', 'profile.view', 'a9e39221-3834-4e48-88f2-455daae1cf24', '2025-03-06 02:21:07', NULL, '2025-03-06 02:21:07', NULL),
 ('7f32c8e5-1b4a-450b-bdcb-394b895c9cc7', 'Usulan Delete Permit', 'Usulan Delete', 'usulan.delete', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:03:01', NULL, '2025-03-10 04:03:01', NULL),
+('80071e9d-4ec2-4c90-847f-fd404f903abd', 'Perbaikan Akta Delete Permit', 'Perbaikan Akta Delete', 'perbaikan_akta.delete', 'a81dcc89-90ca-4bcb-a87b-5c512b573118', '2025-05-22 01:06:53', NULL, '2025-05-22 01:06:53', NULL),
+('883d1b85-9356-4811-a8f4-96a21c67ad2d', 'Pembatalan Perkawinan List View Permit', 'Pembatalan Perkawinan List View', 'pembatalan_perkawinan.list', 'd91f05b6-d2e4-4dc4-ba23-dd0b9aa25335', '2025-05-22 01:29:17', NULL, '2025-05-22 01:29:17', NULL),
+('89811ebd-cbf1-4e31-90d3-c2ab5cdfc605', 'Perbaikan Akta Update Permit', 'Perbaikan Akta Update', 'perbaikan_akta.update', 'a81dcc89-90ca-4bcb-a87b-5c512b573118', '2025-05-22 01:06:36', NULL, '2025-05-22 01:06:36', NULL),
+('8c5f1f2c-c38a-48e5-9e86-d6c73c753763', 'Pembatalan Perceraian Create Permit', 'Pembatalan Perceraian Create', 'pembatalan_perceraian.create', '5820277c-ee1e-444c-b24b-ef781f54a727', '2025-05-22 01:27:22', NULL, '2025-05-22 01:27:22', NULL),
+('8d1a79f2-2c22-4ed2-b193-5cf296ee533e', 'Pengakuan Anak Create Permit', 'Pengakuan Anak Create', 'pengakuan_anak.create', 'c9a7887e-180e-41b5-a51d-1217e1863017', '2025-05-22 01:23:54', NULL, '2025-05-22 01:23:54', NULL),
 ('8e977c1b-cea8-4a86-b04b-e63d44db6940', 'Pemohon List View Permit', 'Pemohon List View', 'pemohon.list', '98bb7a50-9edb-4356-90c8-409cf75cd962', '2025-03-06 06:23:54', NULL, '2025-03-06 06:24:13', NULL),
+('906bfcbd-b722-481b-b237-2a9056983481', 'Pembatalan Perceraian Update Permit', 'Pembatalan Perceraian Update', 'pembatalan_perceraian.update', '5820277c-ee1e-444c-b24b-ef781f54a727', '2025-05-22 01:27:39', NULL, '2025-05-22 01:27:39', NULL),
+('92a2947d-5e7d-4be5-8a28-66cb9501b8dd', 'Akta Kematian List View Permit', 'Akta Kematian List View', 'akta_kematian.list', '768899c4-1011-4149-b9ef-a7864b3516d7', '2025-05-22 01:07:58', NULL, '2025-05-22 01:07:58', NULL),
 ('96803e1a-f019-4518-a8fb-12334d079922', 'Module Update Permit', 'Module Update', 'module.update', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:31:15', NULL, '2024-10-17 07:31:15', NULL),
+('9befd6a1-14f7-4b1a-b559-5745321138e6', 'Pembatalan Perceraian Delete Permit', 'Pembatalan Perceraian Delete', 'pembatalan_perceraian.delete', '5820277c-ee1e-444c-b24b-ef781f54a727', '2025-05-22 01:28:03', NULL, '2025-05-22 01:28:03', NULL),
+('9f72d445-d180-46ad-bb4d-fef86e893850', 'Pengangkatan Anak List View Permit', 'Pengangkatan Anak List View', 'pengangkatan_anak.list', '8f791e07-3c28-4745-a517-9fc7316f24b0', '2025-05-22 01:15:53', NULL, '2025-05-22 01:15:53', NULL),
 ('aa1f7900-4741-4f75-8854-9506cc4bacc9', 'Role Delete Permit', 'Role Delete', 'role.delete', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:33:15', NULL, '2024-10-17 07:33:15', NULL),
+('ac83c03e-c664-4f44-9b6e-9cc6a33188c0', 'Pembatalan Akta Kelahiran Create Permit', 'Pembatalan Akta Kelahiran Create', 'pembatalan_akta_kelahiran.create', '2bdd61da-92ef-4208-af2d-0ea0425efe41', '2025-05-22 01:25:32', NULL, '2025-05-22 01:25:32', NULL),
+('b35f6f6f-c042-4224-9be9-4e814968f4d6', 'Pengangkatan Anak Update Permit', 'Pengangkatan Anak Update', 'pengangkatan_anak.update', '8f791e07-3c28-4745-a517-9fc7316f24b0', '2025-05-22 01:16:50', NULL, '2025-05-22 01:16:50', NULL),
+('bc812bd0-4aee-48e1-8220-a6c9762a2873', 'Pembatalan Perceraian List View Permit', 'Pembatalan Perceraian List View', 'pembatalan_perceraian.list', '5820277c-ee1e-444c-b24b-ef781f54a727', '2025-05-22 01:27:04', NULL, '2025-05-22 01:27:04', NULL),
 ('be784f9b-9c10-409d-ae84-21f270d680de', 'Module Delete Permit', 'Module Delete', 'module.delete', '78eefbc3-b248-4d7c-a355-a83ed0103c4b', '2024-10-17 07:31:53', NULL, '2024-10-17 07:31:53', NULL),
 ('c4114751-4829-45a2-88f9-96b07f8c3ff8', 'Dashboard View Permit', 'Dashboard View', 'dashboard.view', '42634834-66e0-45bf-8835-99f2004a3b05', '2024-10-17 04:28:31', NULL, '2024-10-17 04:32:15', NULL),
 ('ca64c1af-3bd1-4804-9181-7f4b325d2368', 'User Delete Permit', 'User Delete', 'user.delete', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:34:46', NULL, '2024-10-17 07:34:46', NULL),
+('cab0f9e9-c179-4971-b7bb-44ac99ace796', 'Akta Perkawinan Delete Permit', 'Akta Perkawinan Delete', 'akta_perkawinan.delete', '34aafef3-453f-40ad-a9a0-851459faccee', '2025-05-22 01:11:41', NULL, '2025-05-22 01:11:41', NULL),
 ('cd0961fd-245d-4016-be6b-8aa556b51cd0', 'Mutasi List View Permit', 'Mutasi List View', 'mutasi.list', '100085fd-e69b-4db4-9f12-a2a33e118214', '2025-03-03 03:54:52', NULL, '2025-03-03 03:54:52', NULL),
 ('cd4b4da7-2d45-4729-b717-785e1cb7ffab', 'Usulan List View Permit', 'Usulan List View', 'usulan.list', '34274232-b71a-4fd6-b871-da859a2cffe8', '2025-03-10 04:02:14', NULL, '2025-03-10 04:02:14', NULL),
 ('cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96', 'User Update Permit', 'User Update', 'user.update', '3cf3d831-0a27-4c1d-8cce-cd7a6649ecd7', '2024-10-17 07:34:36', NULL, '2024-10-17 07:34:36', NULL),
+('cec51eea-cfc6-47c4-8c00-b73c11f937cf', 'Akta Kematian Update Permit', 'Akta Kematian Update', 'akta_kematian.update', '768899c4-1011-4149-b9ef-a7864b3516d7', '2025-05-22 01:09:27', NULL, '2025-05-22 01:09:27', NULL),
+('d55eefa2-0b1f-4149-a3b9-8f627fb92b38', 'Akta Perkawinan List View Permit', 'Akta Perkawinan List View', 'akta_perkawinan.list', '34aafef3-453f-40ad-a9a0-851459faccee', '2025-05-22 01:10:17', NULL, '2025-05-22 01:10:17', NULL),
+('d738a5fe-3249-43a6-aa31-8164153cf708', 'Pembatalan Akta Kelahiran Delete Permit', 'Pembatalan Akta Kelahiran Delete', 'pembatalan_akta_kelahiran.delete', '2bdd61da-92ef-4208-af2d-0ea0425efe41', '2025-05-22 01:26:08', NULL, '2025-05-22 01:26:08', NULL),
+('d765dd81-dc3f-4e2b-b147-41cf5632850a', 'Pembatalan Perkawinan Create Permit', 'Pembatalan Perkawinan Create', 'pembatalan_perkawinan.create', 'd91f05b6-d2e4-4dc4-ba23-dd0b9aa25335', '2025-05-22 01:29:35', NULL, '2025-05-22 01:29:35', NULL),
+('dae149a1-6d0d-43f9-842e-23ed2c8f6950', 'Akta Perkawinan Update Permit', 'Akta Perkawinan Update', 'akta_perkawinan.update', '34aafef3-453f-40ad-a9a0-851459faccee', '2025-05-22 01:11:08', NULL, '2025-05-22 01:11:08', NULL),
+('dc1057fb-e68e-4128-8f2e-2f6a5d756557', 'Pengangkatan Anak Create Permit', 'Pengangkatan Anak Create', 'pengangkatan_anak.create', '8f791e07-3c28-4745-a517-9fc7316f24b0', '2025-05-22 01:16:14', NULL, '2025-05-22 01:16:14', NULL),
+('e405f552-9417-449e-8905-6db9e73c75b5', 'Pengangkatan Anak Delete Permit', 'Pengangkatan Anak Delete', 'pengangkatan_anak.delete', '8f791e07-3c28-4745-a517-9fc7316f24b0', '2025-05-22 01:16:30', NULL, '2025-05-22 01:16:30', NULL),
 ('f2238d3b-9cc8-4cba-ae56-1abe592c990e', 'Role List View Permit', 'Role List View', 'role.list', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:32:37', NULL, '2024-10-17 07:32:37', NULL),
+('f2e353ad-d987-42e8-95d9-b084cbaf6acd', 'Akta Kematian Create Permit', 'Akta Kematian Create', 'akta_kematian.create', '768899c4-1011-4149-b9ef-a7864b3516d7', '2025-05-22 01:09:01', NULL, '2025-05-22 01:09:01', NULL),
 ('f4ab031d-e016-455a-b2fc-e40a8c280c6b', 'Disdukcapil Delete Permit', 'Disdukcapil Delete', 'disdukcapil.delete', '8bf009a8-6326-4f93-8bdb-fb3cc475e7ba', '2025-03-17 04:37:38', NULL, '2025-03-17 04:37:38', NULL),
-('f99117e0-ba23-4a96-8aef-b428916a7001', 'Role Create Permit', 'Role Create', 'role.create', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:32:52', NULL, '2024-10-17 07:32:52', NULL);
+('f99117e0-ba23-4a96-8aef-b428916a7001', 'Role Create Permit', 'Role Create', 'role.create', '10aa1d11-270c-47ab-8c03-d20bc20225e8', '2024-10-17 07:32:52', NULL, '2024-10-17 07:32:52', NULL),
+('fa54349a-60d3-44bf-9784-8cc249f628aa', 'Pembatalan Akta Kelahiran List View Permit', 'Pembatalan Akta Kelahiran List View', 'pembatalan_akta_kelahiran.list', '2bdd61da-92ef-4208-af2d-0ea0425efe41', '2025-05-22 01:25:06', NULL, '2025-05-22 01:25:06', NULL);
 
 -- --------------------------------------------------------
 
@@ -605,36 +657,74 @@ INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '8e977c1b-cea8-4a86-b04b-e63d44db6940'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '0078d88f-1885-4299-a532-353d22239f2b'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '00bd6f1b-fe53-424c-9ea6-c5cc870006da'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '0843e35a-ed58-4eb1-8eac-4b34e7f52f09'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '0d02c8c1-720b-41d5-983f-6f5f91b57d02'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '1ac41272-ca54-4ade-9a6c-50875c3498fd'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '1e65f1cc-4a52-4a25-949f-18e436984511'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '20a6b097-5227-49c7-813a-1a87556da2fe'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '27d41c86-3e10-4c7d-92d1-eb31af7f4709'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c37e04b-3293-46d9-aee1-6f1ab7c1f40c'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '2c6e01c9-e38b-4a67-9c4d-27301c627ac3'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '30d81e9f-7196-49c9-adbf-ab69396f2c1b'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '34925feb-b789-4a74-8760-f52e103d7074'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '3d3a4bda-5b82-4184-8b52-f4858ef39aba'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '46d77d3e-690f-4305-bdb5-6f77e4a173c8'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '47ba3e64-04be-4844-a58d-b12edce8a10d'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '47fd87da-5f6b-4caf-8a5f-cdf8dfc28faf'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '48c95475-d35a-44c6-8047-9e2ab901ae44'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '498d24cf-602a-4814-9b3f-a59fa12016e7'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '4aab5536-0cae-4a5c-9b19-d8543fb0a109'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '4b4a3ae2-ce54-47a5-b682-0ef8e86ae0f6'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '54932999-cc85-4131-a857-107714f4edc5'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '55c3c286-5727-44cc-8693-ab369406fd1d'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '57e808cf-797f-4237-9182-b0ff29cdce7d'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '5851c5a8-325b-434e-a36c-75ba0f2e2bd6'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '677e33b8-3229-427a-85dc-ec7862d2de9e'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '6e54c5fe-a64f-4fa4-b1b6-0621fa29005b'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '70b30490-2541-404f-a701-acbd75761a35'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7776567b-4902-4324-bab0-51959b7a0d76'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '79028af7-0408-4ec0-8e9e-22b1b751ae0a'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7d5b5ed0-38b9-4830-82dd-592f1468e9a6'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '7f32c8e5-1b4a-450b-bdcb-394b895c9cc7'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '80071e9d-4ec2-4c90-847f-fd404f903abd'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '883d1b85-9356-4811-a8f4-96a21c67ad2d'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '89811ebd-cbf1-4e31-90d3-c2ab5cdfc605'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '8c5f1f2c-c38a-48e5-9e86-d6c73c753763'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '8d1a79f2-2c22-4ed2-b193-5cf296ee533e'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '8e977c1b-cea8-4a86-b04b-e63d44db6940'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '906bfcbd-b722-481b-b237-2a9056983481'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '92a2947d-5e7d-4be5-8a28-66cb9501b8dd'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '96803e1a-f019-4518-a8fb-12334d079922'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '9befd6a1-14f7-4b1a-b559-5745321138e6'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', '9f72d445-d180-46ad-bb4d-fef86e893850'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'aa1f7900-4741-4f75-8854-9506cc4bacc9'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'ac83c03e-c664-4f44-9b6e-9cc6a33188c0'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'b35f6f6f-c042-4224-9be9-4e814968f4d6'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'bc812bd0-4aee-48e1-8220-a6c9762a2873'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'be784f9b-9c10-409d-ae84-21f270d680de'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'ca64c1af-3bd1-4804-9181-7f4b325d2368'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cab0f9e9-c179-4971-b7bb-44ac99ace796'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd0961fd-245d-4016-be6b-8aa556b51cd0'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cd7e7337-b2f6-4ad2-bd0f-c27d2de0cc96'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'cec51eea-cfc6-47c4-8c00-b73c11f937cf'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'd55eefa2-0b1f-4149-a3b9-8f627fb92b38'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'd738a5fe-3249-43a6-aa31-8164153cf708'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'd765dd81-dc3f-4e2b-b147-41cf5632850a'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'dae149a1-6d0d-43f9-842e-23ed2c8f6950'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'dc1057fb-e68e-4128-8f2e-2f6a5d756557'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'e405f552-9417-449e-8905-6db9e73c75b5'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f2238d3b-9cc8-4cba-ae56-1abe592c990e'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f2e353ad-d987-42e8-95d9-b084cbaf6acd'),
 ('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f4ab031d-e016-455a-b2fc-e40a8c280c6b'),
-('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001');
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'f99117e0-ba23-4a96-8aef-b428916a7001'),
+('731f53cb-5c48-4b5f-add6-bb5e6abc9698', 'fa54349a-60d3-44bf-9784-8cc249f628aa');
 
 -- --------------------------------------------------------
 
@@ -681,6 +771,13 @@ CREATE TABLE `submissions` (
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `submissions`
+--
+
+INSERT INTO `submissions` (`uid`, `no_perkara`, `submission_type`, `pemohon_uid`, `disdukcapil_uid`, `status`, `catatan`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('3c3c0843-4a61-45b4-9742-1893b33919fc', 'NOPER/123/V/ASD', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"catatan\":\"ini catatan saya\",\"timestamp\":\"2025-05-22 08:52:27\"}]', NULL, NULL, '2025-05-22 07:08:25', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-22 08:52:42', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -695,6 +792,17 @@ CREATE TABLE `submission_documents` (
   `file_path` varchar(255) DEFAULT NULL,
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `submission_documents`
+--
+
+INSERT INTO `submission_documents` (`uid`, `submission_uid`, `document_name`, `document_type`, `file_path`, `uploaded_at`) VALUES
+('25ab7e7e-c2bf-40ae-94e3-9933306c138e', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'WhatsApp Image 2025-04-25 at 1.52.12 PM.jpeg', 'kk_pemohon', '7725a89c92a369cf2f920cb4f8336dc71747897705_WhatsApp Image 2025-04-25 at 1.52.12 PM.jpeg', '2025-05-22 00:08:25'),
+('2e8155a1-250b-4701-a8b1-ae5ce91e6775', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'WhatsApp Image 2025-04-25 at 10.25.43 AM.jpeg', 'ktp_pemohon', 'b6e9b84dea0c4302382f799fe437dbfd1747897705_WhatsApp Image 2025-04-25 at 10.25.43 AM.jpeg', '2025-05-22 00:08:25'),
+('36a7d090-dd4e-4758-bf87-d09d97474062', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'WhatsApp Image 2025-04-25 at 10.25.47 AM.jpeg', 'keabsahan', '5f1499402d2ceaf842b9b1dadc258b8b1747897705_WhatsApp Image 2025-04-25 at 10.25.47 AM.jpeg', '2025-05-22 00:08:25'),
+('5a48a90c-7e9c-479c-97aa-41703db0d549', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'diagrams-Class Diagram.drawio.png', 'akta_kelahiran', 'd9098413bcbdfe52f9e6404f95eb13d61747897705_diagrams-Class Diagram.drawio.png', '2025-05-22 00:08:25'),
+('67c7b1a1-59c9-4965-a8b3-99d9ae452891', '3c3c0843-4a61-45b4-9742-1893b33919fc', 'activity-show-history-komputer.drawio.png', 'penetapan_pengadilan', '96ba5c3882781615fc4caced6c6c045d1747897705_activity-show-history-komputer.drawio.png', '2025-05-22 00:08:25');
 
 -- --------------------------------------------------------
 
