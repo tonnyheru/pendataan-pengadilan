@@ -355,9 +355,166 @@ class PerbaikanAktaDetailController extends Controller
             'file_keabsahan.mimes' => 'Format file harus JPG, PNG, atau PDF',
             'file_keabsahan.max' => 'Ukuran file keabsahan maksimal 2MB',
         ]);
+        $formData = $request->except(["_token", "_method"]);
+        try {
+            if ($request->hasFile('file_ktp')) {
+                $file = $request->file('file_ktp');
 
+                // Determine the new file name
+                $filename = md5('ktp' . time()) . time() . '_' . $file->getClientOriginalName();
 
-        dd($request->all());
+                // Delete the old profile image if it exists
+                if ($usulan->path_ktp && file_exists(public_path('upload/file_ktp/' . $usulan->path_ktp))) {
+                    unlink(public_path('upload/file_ktp/' . $usulan->path_ktp));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_ktp'] = $filename;
+            }
+            if ($request->hasFile('file_kk')) {
+                $file = $request->file('file_kk');
+
+                // Determine the new file name
+                $filename = md5('kk' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_kk && file_exists(public_path('upload/file_kk/' . $usulan->path_kk))) {
+                    unlink(public_path('upload/file_kk/' . $usulan->path_kk));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_kk'] = $filename;
+            }
+            if ($request->hasFile('file_akta')) {
+                $file = $request->file('file_akta');
+
+                // Determine the new file name
+                $filename = md5('akta' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_akta && file_exists(public_path('upload/file_akta/' . $usulan->path_akta))) {
+                    unlink(public_path('upload/file_akta/' . $usulan->path_akta));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_akta'] = $filename;
+            }
+            if ($request->hasFile('file_pendukung')) {
+                $file = $request->file('file_pendukung');
+
+                // Determine the new file name
+                $filename = md5('pendukung' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_pendukung && file_exists(public_path('upload/file_pendukung/' . $usulan->path_pendukung))) {
+                    unlink(public_path('upload/file_pendukung/' . $usulan->path_pendukung));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_pendukung'] = $filename;
+            }
+            if ($request->hasFile('file_penetapan')) {
+                $file = $request->file('file_penetapan');
+
+                // Determine the new file name
+                $filename = md5('penetapan' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_penetapan && file_exists(public_path('upload/file_penetapan/' . $usulan->path_penetapan))) {
+                    unlink(public_path('upload/file_penetapan/' . $usulan->path_penetapan));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_penetapan'] = $filename;
+            }
+            if ($request->hasFile('file_nikah')) {
+                $file = $request->file('file_nikah');
+
+                // Determine the new file name
+                $filename = md5('nikah' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_nikah && file_exists(public_path('upload/file_nikah/' . $usulan->path_nikah))) {
+                    unlink(public_path('upload/file_nikah/' . $usulan->path_nikah));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_nikah'] = $filename;
+            }
+            if ($request->hasFile('file_pengantar')) {
+                $file = $request->file('file_pengantar');
+
+                // Determine the new file name
+                $filename = md5('pengantar' . time()) . time() . '_' . $file->getClientOriginalName();
+
+                // Delete the old profile image if it exists
+                if ($usulan->path_pengantar && file_exists(public_path('upload/file_pengantar/' . $usulan->path_pengantar))) {
+                    unlink(public_path('upload/file_pengantar/' . $usulan->path_pengantar));
+                }
+
+                // Save the new file
+                $path = $file->move(public_path('upload'), $filename);
+
+                // Update the form data with the new file name
+                $formData['path_pengantar'] = $filename;
+            }
+            $name = auth()->user()->name;
+            $role = auth()->user()->role->name;
+            $catatan = json_decode($usulan->catatan);
+            $catatan[] = [
+                'role' => $role,
+                'name' => $name,
+                'status' => '99',
+                'catatan' => '',
+                'timestamp' => date('Y-m-d H:i:s')
+            ];
+            $formData['catatan'] = json_encode($catatan);
+            $formData['is_approve'] = '1';
+            $formData['disdukcapil_uid'] = $formData['delegasi'];
+            $formData['updated_by'] = auth()->user()->uid;
+
+            $trx = $usulan->update($formData);
+            if ($trx) {
+                return response([
+                    'status' => true,
+                    'message' => 'Data Berhasil Diubah'
+                ], 200);
+            } else {
+                return response([
+                    'status' => false,
+                    'message' => 'Data Gagal Diubah'
+                ], 400);
+            }
+        } catch (\Throwable $th) {
+            //throw $th;
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
     }
 
     /**
