@@ -38,6 +38,22 @@ class PerbaikanAktaDetailDataTable extends DataTable
                 $html .= '</div>';
                 return $html;
             })
+            ->addColumn('dokumen', function ($item) {
+                $html = '';
+                $documents = $item->submission->documents;
+                if ($documents->count() > 0) {
+                    foreach ($documents as $i => $document) {
+                        $html .= '<button onclick="show_doc(\'' . $document->file_path . '\',\'file_' . $document->document_type . '\')" type="button" class="btn btn-sm bg-diy text-white mb-1" title="Lihat ' . ucwords(str_replace('_', ' ', $document->document_type)) . '"><i class="fas fa-file-pdf"></i> Lihat ' . ucwords(str_replace('_', ' ', $document->document_type)) . ' </button>';
+                        if ($i % 2 == 1) {
+                            $html .= '<br>';
+                        }
+                    }
+                }
+                // $html = '<div class="btn-group btn-group-sm">';
+                // $html .= '</div>';
+                return $html;
+            })
+
             ->addColumn('no_perkara', function ($data) {
                 $no_perkara = "";
                 if (isset($data->submission)) {
@@ -166,7 +182,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
             })
 
 
-            ->rawColumns(['action', 'status']);
+            ->rawColumns(['action', 'status', 'dokumen']);
     }
 
     /**
@@ -204,7 +220,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-6'B><'col-sm-3'f><'col-sm-3'l>> <'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>")
             ->orderBy(1)
-            ->scrollY(350)
+            ->scrollY(550)
             // ->selectStyleSingle()
             ->buttons($button);
     }
@@ -224,6 +240,13 @@ class PerbaikanAktaDetailDataTable extends DataTable
                 ->width(60)
                 ->addClass('text-center');
         }
+
+        $column[] = Column::computed('dokumen')
+            ->exportable(false)
+            ->printable(false)
+            ->width(60)
+            ->title("Dokumen - Dokumen")
+            ->addClass('text-center');
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('status');
         $column[] = Column::make('pemohon');

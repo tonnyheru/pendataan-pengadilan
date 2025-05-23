@@ -117,7 +117,7 @@ class PerbaikanAktaDetailController extends Controller
             $documents = [];
             if ($request->hasFile('file_penetapan_pengadilan')) {
                 $file_penetapan = $request->file('file_penetapan_pengadilan');
-                $file_penetapan_name = md5('penetapan' . time()) . time() . '_' . $file_penetapan->getClientOriginalName();
+                $file_penetapan_name = md5('penetapan' . time()) . time() . '.' . $file_penetapan->getClientOriginalExtension();
                 $data['path_penetapan'] = $file_penetapan_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -131,7 +131,7 @@ class PerbaikanAktaDetailController extends Controller
 
             if ($request->hasFile('file_akta_kelahiran')) {
                 $file_akta_kelahiran = $request->file('file_akta_kelahiran');
-                $file_akta_kelahiran_name = md5('akta_kelahiran' . time()) . time() . '_' . $file_akta_kelahiran->getClientOriginalName();
+                $file_akta_kelahiran_name = md5('akta_kelahiran' . time()) . time() . '.' . $file_akta_kelahiran->getClientOriginalExtension();
                 $data['path_akta_kelahiran'] = $file_akta_kelahiran_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -145,7 +145,7 @@ class PerbaikanAktaDetailController extends Controller
 
             if ($request->hasFile('file_kk_pemohon')) {
                 $file_kk_pemohon = $request->file('file_kk_pemohon');
-                $file_kk_pemohon_name = md5('kk_pemohon' . time()) . time() . '_' . $file_kk_pemohon->getClientOriginalName();
+                $file_kk_pemohon_name = md5('kk_pemohon' . time()) . time() . '.' . $file_kk_pemohon->getClientOriginalExtension();
                 $data['path_kk_pemohon'] = $file_kk_pemohon_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -159,7 +159,7 @@ class PerbaikanAktaDetailController extends Controller
 
             if ($request->hasFile('file_ktp_pemohon')) {
                 $file_ktp_pemohon = $request->file('file_ktp_pemohon');
-                $file_ktp_pemohon_name = md5('ktp_pemohon' . time()) . time() . '_' . $file_ktp_pemohon->getClientOriginalName();
+                $file_ktp_pemohon_name = md5('ktp_pemohon' . time()) . time() . '.' . $file_ktp_pemohon->getClientOriginalExtension();
                 $data['path_ktp_pemohon'] = $file_ktp_pemohon_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -173,7 +173,7 @@ class PerbaikanAktaDetailController extends Controller
 
             if ($request->hasFile('file_keabsahan')) {
                 $file_keabsahan = $request->file('file_keabsahan');
-                $file_keabsahan_name = md5('keabsahan' . time()) . time() . '_' . $file_keabsahan->getClientOriginalName();
+                $file_keabsahan_name = md5('keabsahan' . time()) . time() . '.' . $file_keabsahan->getClientOriginalExtension();
                 $data['path_keabsahan'] = $file_keabsahan_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -361,8 +361,7 @@ class PerbaikanAktaDetailController extends Controller
             foreach ($documents as $document) {
                 if ($request->hasFile("file_" . $document->document_type)) {
                     $file = $request->file("file_" . $document->document_type);
-
-                    $filename = md5($document->document_type . time()) . time() . '_' . $file->getClientOriginalName();
+                    $filename = md5($document->document_type . time()) . time() . '.' . $file->getClientOriginalExtension();
 
                     // Delete the old profile image if it exists
                     if ($document && file_exists(public_path("upload/file_$document->document_type/" . $document->file_path))) {
@@ -374,9 +373,14 @@ class PerbaikanAktaDetailController extends Controller
 
                     // Update the form data with the new file name
                     $formData["path_$document->document_type"] = $filename;
+
+                    $document->file_path = $filename;
+                    $document->document_name = $file->getClientOriginalName();
+                    $document->uploaded_at = date('Y-m-d H:i:s');
+                    $document->save();
                 }
             }
-            
+
             $name = auth()->user()->name;
             $role = auth()->user()->role->name;
             $catatan = json_decode($perbaikanAktaDetail->submission->catatan);
@@ -394,14 +398,14 @@ class PerbaikanAktaDetailController extends Controller
             $perbaikanAktaDetail->submission->updated_by = auth()->user()->uid;
             $perbaikanAktaDetail->submission->save();
 
-            
-            
-            $formData['catatan'] = json_encode($catatan);
-            $formData['is_approve'] = '1';
-            $formData['disdukcapil_uid'] = $formData['delegasi'];
-            $formData['updated_by'] = auth()->user()->uid;
+            $perbaikanAktaDetail->jenis_akta = $formData['jenis_akta'];
+            $perbaikanAktaDetail->nomor_akta = $formData['no_akta'];
+            $perbaikanAktaDetail->jenis_elemen_perbaikan = $formData['jenis_elemen_perbaikan'];
+            $perbaikanAktaDetail->data_sebelum = $formData['data_sebelum'];
+            $perbaikanAktaDetail->data_sesudah = $formData['data_sesudah'];
 
-            $trx = $usulan->update($formData);
+            $trx = $perbaikanAktaDetail->save();
+
             if ($trx) {
                 return response([
                     'status' => true,
@@ -430,8 +434,46 @@ class PerbaikanAktaDetailController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(PerbaikanAktaDetail $perbaikanAktaDetail)
+    public function destroy($uid)
     {
-        //
+        if (!PermissionCommon::check('perbaikan_akta.delete')) abort(403);
+        $perbaikanAktaDetail = PerbaikanAktaDetail::find($uid);
+        if (!$perbaikanAktaDetail) {
+            return response([
+                'status' => false,
+                'message' => 'Data tidak ditemukan'
+            ], 404);
+        }
+        try {
+            $documents = $perbaikanAktaDetail->submission->documents;
+            foreach ($documents as $document) {
+                // Delete the old profile image if it exists
+                if ($document && file_exists(public_path("upload/file_$document->document_type/" . $document->file_path))) {
+                    unlink(public_path("upload/file_$document->document_type/" . $document->file_path));
+                }
+            }
+            $perbaikanAktaDetail->delete();
+            $perbaikanAktaDetail->submission->documents()->delete();
+            $perbaikanAktaDetail->submission->delete();
+            return response([
+                'status' => true,
+                'message' => 'Data Berhasil Dihapus'
+            ], 200);
+        } catch (\Throwable $th) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Illuminate\Database\QueryException $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        } catch (\Exception $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
     }
 }

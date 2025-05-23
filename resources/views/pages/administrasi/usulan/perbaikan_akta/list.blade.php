@@ -1,6 +1,6 @@
 @extends('layouts.root')
 
-@section('title', 'Usulan')
+@section('title', 'Perbaikan Akta')
 
 @section('breadcrum')
 <div class="col-lg-6 col-7">
@@ -112,7 +112,7 @@
         }
         
         Ryuna.close_modal()
-        window.LaravelDataTables["usulan-table"].draw()
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){
@@ -163,7 +163,7 @@
             type: 'success',
             confirmButtonColor: '#007bff'
           })
-        window.LaravelDataTables["usulan-table"].draw()
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
         }).fail((xhr) => {
           Swal.fire({
             title: xhr.responseJSON.message,

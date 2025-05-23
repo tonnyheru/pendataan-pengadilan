@@ -40,4 +40,9 @@ class Submission extends Model
     {
         return $this->belongsTo(Disdukcapil::class, 'disdukcapil_uid', 'uid');
     }
+
+    public function documents()
+    {
+        return $this->hasMany(SubmissionDocument::class, 'submission_uid', 'uid');
+    }
 }
