@@ -117,7 +117,7 @@ class PerbaikanAktaDetailController extends Controller
             $documents = [];
             if ($request->hasFile('file_penetapan_pengadilan')) {
                 $file_penetapan = $request->file('file_penetapan_pengadilan');
-                $file_penetapan_name = md5('penetapan' . time()) . time() . '.' . $file_penetapan->getClientOriginalExtension();
+                $file_penetapan_name = md5('penetapan_pengadilan' . time()) . time() . '.' . $file_penetapan->getClientOriginalExtension();
                 $data['path_penetapan'] = $file_penetapan_name;
                 $documents[] = [
                     'uid' => Str::uuid()->toString(),
@@ -205,7 +205,7 @@ class PerbaikanAktaDetailController extends Controller
             if ($trx) {
                 if ($request->hasFile('file_penetapan_pengadilan')) {
                     $file_penetapan = $request->file('file_penetapan_pengadilan');
-                    $file_penetapan->move(public_path('upload/file_penetapan'), $data['path_penetapan']);
+                    $file_penetapan->move(public_path('upload/file_penetapan_pengadilan'), $data['path_penetapan']);
                 }
 
                 if ($request->hasFile('file_akta_kelahiran')) {
@@ -470,6 +470,29 @@ class PerbaikanAktaDetailController extends Controller
                 'message' => 'Terjadi Kesalahan Internal',
             ], 400);
         } catch (\Exception $e) {
+            return response([
+                'status' => false,
+                'message' => 'Terjadi Kesalahan Internal',
+            ], 400);
+        }
+    }
+
+    public function showCatatan($uid)
+    {
+        try {
+            $perbaikanAktaDetail = PerbaikanAktaDetail::find($uid);
+            if ($perbaikanAktaDetail) {
+                $catatan = json_decode($perbaikanAktaDetail->submission->catatan);
+                $body = view('pages.administrasi.usulan.perbaikan_akta.catatan', compact('perbaikanAktaDetail', 'catatan'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>';
+                return [
+                    'title' => 'Lihat Catatan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+            }
+        } catch (\Throwable $th) {
+            throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',

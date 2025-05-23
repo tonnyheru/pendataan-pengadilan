@@ -45,4 +45,14 @@ class Submission extends Model
     {
         return $this->hasMany(SubmissionDocument::class, 'submission_uid', 'uid');
     }
+
+    public function createdBy()
+    {
+        return $this->belongsTo(User::class, 'created_by', 'uid');
+    }
+
+    public function perbaikanAktaDetail()
+    {
+        return $this->hasOne(PerbaikanAktaDetail::class, 'submission_uid', 'uid');
+    }
 }

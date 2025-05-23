@@ -1,4 +1,4 @@
-<form action="{{ route('usulan.approvement_store', $uid) }}" method="PUT" id="myForm" enctype="multipart/form-data">
+<form action="{{ route('submission.approvement_store', $uid) }}" method="PUT" id="myForm" enctype="multipart/form-data">
   @csrf
   @method('PUT')
   <div class="row">

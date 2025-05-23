@@ -52,6 +52,17 @@ Route::post('/login_process', [AuthController::class, 'login_process'])->name('a
 
 Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     Route::prefix('usulan')->group(function () {
+        Route::prefix('perbaikan_akta')->group(function () {
+            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('perbaikan_akta.show_catatan');
+        });
+
+        Route::prefix('approvement')->group(function () {
+            Route::get('/approve_usulan/{uid}', [SubmissionController::class, 'approvement'])->name('submission.approvement');
+            Route::put('/approve_submission/{uid}', [SubmissionController::class, 'approvement_store'])->name('submission.approvement_store');
+
+            Route::get('/reject_submission/{uid}', [SubmissionController::class, 'rejectment'])->name('submission.rejectment');
+            Route::put('/reject_submission/{uid}', [SubmissionController::class, 'rejectment_store'])->name('submission.rejectment_store');
+        });
         Route::resources(['submission' => SubmissionController::class]);
         Route::resources(['submission_documents' => SubmissionDocumentController::class]);
         Route::resources(['perbaikan_akta' => PerbaikanAktaDetailController::class]);
@@ -216,13 +227,6 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
 
 
 
-    Route::prefix('approvement')->group(function () {
-        Route::get('/approve_usulan/{uid}', [UsulanController::class, 'approvement'])->name('usulan.approvement');
-        Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_store'])->name('usulan.approvement_store');
-
-        Route::get('/reject_usulan/{uid}', [UsulanController::class, 'rejectment'])->name('usulan.rejectment');
-        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_store'])->name('usulan.rejectment_store');
-    });
     Route::prefix('role')->group(function () {
         Route::get('/permission/{uid}', [RoleController::class, 'permission'])->name('role.permission');
         Route::put('/permission/{uid}', [RoleController::class, 'permission_store'])->name('role.update_permission');

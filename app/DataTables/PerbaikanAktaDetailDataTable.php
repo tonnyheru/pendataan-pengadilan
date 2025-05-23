@@ -32,10 +32,21 @@ class PerbaikanAktaDetailDataTable extends DataTable
                     $html .= '<button onclick="edit(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-info" title="Edit"><i class="fas fa-pen"></i></button>';
                 }
                 if (PermissionCommon::check('perbaikan_akta.delete')) {
-                    $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
+                    if ($item->submission->status != 0 && $item->submission->status != 2) {
+                        $html .= '<button onclick="destroy(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-danger" title="Hapus"><i class="fas fa-trash"></i></button>';
+                    }
                 }
-                // $html .= '<a href="' . route('usulan.permission', $item->uid) . '" class="btn btn-sm bg-diy text-white"><i class="fas fa-cog"></i></a>';
                 $html .= '</div>';
+                $html .= '<br><button onclick="show_catatan(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Lihat Catatan"><i class="fas fa-eye"></i> Lihat Catatan </button>';
+                if (PermissionCommon::check('usulan.approve_disdukcapil')) {
+                    if ($item->submission->status == 1) {
+                        $html .= '<br><button onclick="approve(\'' . $item->submission->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
+                        $html .= '<button onclick="reject(\'' . $item->submission->uid . '\',\'disdukcapil\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
+                    }
+                    if ($item->submission->status == 2) {
+                        $html .= '<br><button onclick="sendMail(\'' . $item->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Kirim Email"><i class="fas fa-paper-plane"></i> Kirim Email </button>';
+                    }
+                }
                 return $html;
             })
             ->addColumn('dokumen', function ($item) {
@@ -219,8 +230,9 @@ class PerbaikanAktaDetailDataTable extends DataTable
             ->columns($this->getColumns())
             ->minifiedAjax()
             ->dom("<'row'<'col-sm-6'B><'col-sm-3'f><'col-sm-3'l>> <'row'<'col-sm-12'tr>><'row'<'col-sm-5'i><'col-sm-7'p>>")
-            ->orderBy(1)
+            ->orderBy(2)
             ->scrollY(550)
+            ->scrollX(true)
             // ->selectStyleSingle()
             ->buttons($button);
     }
