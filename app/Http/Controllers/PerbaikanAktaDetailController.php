@@ -357,135 +357,45 @@ class PerbaikanAktaDetailController extends Controller
         ]);
         $formData = $request->except(["_token", "_method"]);
         try {
-            if ($request->hasFile('file_ktp')) {
-                $file = $request->file('file_ktp');
+            $documents = SubmissionDocument::where('submission_uid', $perbaikanAktaDetail->submission->uid)->get();
+            foreach ($documents as $document) {
+                if ($request->hasFile("file_" . $document->document_type)) {
+                    $file = $request->file("file_" . $document->document_type);
 
-                // Determine the new file name
-                $filename = md5('ktp' . time()) . time() . '_' . $file->getClientOriginalName();
+                    $filename = md5($document->document_type . time()) . time() . '_' . $file->getClientOriginalName();
 
-                // Delete the old profile image if it exists
-                if ($usulan->path_ktp && file_exists(public_path('upload/file_ktp/' . $usulan->path_ktp))) {
-                    unlink(public_path('upload/file_ktp/' . $usulan->path_ktp));
+                    // Delete the old profile image if it exists
+                    if ($document && file_exists(public_path("upload/file_$document->document_type/" . $document->file_path))) {
+                        unlink(public_path("upload/file_$document->document_type/" . $document->file_path));
+                    }
+
+                    // Save the new file
+                    $path = $file->move(public_path("upload/file_$document->document_type"), $filename);
+
+                    // Update the form data with the new file name
+                    $formData["path_$document->document_type"] = $filename;
                 }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_ktp'] = $filename;
             }
-            if ($request->hasFile('file_kk')) {
-                $file = $request->file('file_kk');
-
-                // Determine the new file name
-                $filename = md5('kk' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_kk && file_exists(public_path('upload/file_kk/' . $usulan->path_kk))) {
-                    unlink(public_path('upload/file_kk/' . $usulan->path_kk));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_kk'] = $filename;
-            }
-            if ($request->hasFile('file_akta')) {
-                $file = $request->file('file_akta');
-
-                // Determine the new file name
-                $filename = md5('akta' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_akta && file_exists(public_path('upload/file_akta/' . $usulan->path_akta))) {
-                    unlink(public_path('upload/file_akta/' . $usulan->path_akta));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_akta'] = $filename;
-            }
-            if ($request->hasFile('file_pendukung')) {
-                $file = $request->file('file_pendukung');
-
-                // Determine the new file name
-                $filename = md5('pendukung' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_pendukung && file_exists(public_path('upload/file_pendukung/' . $usulan->path_pendukung))) {
-                    unlink(public_path('upload/file_pendukung/' . $usulan->path_pendukung));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_pendukung'] = $filename;
-            }
-            if ($request->hasFile('file_penetapan')) {
-                $file = $request->file('file_penetapan');
-
-                // Determine the new file name
-                $filename = md5('penetapan' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_penetapan && file_exists(public_path('upload/file_penetapan/' . $usulan->path_penetapan))) {
-                    unlink(public_path('upload/file_penetapan/' . $usulan->path_penetapan));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_penetapan'] = $filename;
-            }
-            if ($request->hasFile('file_nikah')) {
-                $file = $request->file('file_nikah');
-
-                // Determine the new file name
-                $filename = md5('nikah' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_nikah && file_exists(public_path('upload/file_nikah/' . $usulan->path_nikah))) {
-                    unlink(public_path('upload/file_nikah/' . $usulan->path_nikah));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_nikah'] = $filename;
-            }
-            if ($request->hasFile('file_pengantar')) {
-                $file = $request->file('file_pengantar');
-
-                // Determine the new file name
-                $filename = md5('pengantar' . time()) . time() . '_' . $file->getClientOriginalName();
-
-                // Delete the old profile image if it exists
-                if ($usulan->path_pengantar && file_exists(public_path('upload/file_pengantar/' . $usulan->path_pengantar))) {
-                    unlink(public_path('upload/file_pengantar/' . $usulan->path_pengantar));
-                }
-
-                // Save the new file
-                $path = $file->move(public_path('upload'), $filename);
-
-                // Update the form data with the new file name
-                $formData['path_pengantar'] = $filename;
-            }
+            
             $name = auth()->user()->name;
             $role = auth()->user()->role->name;
-            $catatan = json_decode($usulan->catatan);
+            $catatan = json_decode($perbaikanAktaDetail->submission->catatan);
             $catatan[] = [
                 'role' => $role,
                 'name' => $name,
-                'status' => '99',
-                'catatan' => '',
+                'catatan' => $formData['catatan'],
                 'timestamp' => date('Y-m-d H:i:s')
             ];
+            $perbaikanAktaDetail->submission->no_perkara = $formData['no_perkara'];
+            $perbaikanAktaDetail->submission->pemohon_uid = $formData['pemohon_uid'];
+            $perbaikanAktaDetail->submission->disdukcapil_uid = $formData['disdukcapil'];
+            $perbaikanAktaDetail->submission->status = '1';
+            $perbaikanAktaDetail->submission->catatan = json_encode($catatan);
+            $perbaikanAktaDetail->submission->updated_by = auth()->user()->uid;
+            $perbaikanAktaDetail->submission->save();
+
+            
+            
             $formData['catatan'] = json_encode($catatan);
             $formData['is_approve'] = '1';
             $formData['disdukcapil_uid'] = $formData['delegasi'];
