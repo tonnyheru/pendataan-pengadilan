@@ -1,6 +1,6 @@
 @extends('layouts.root')
 
-@section('title', 'Usulan')
+@section('title', 'Penerbitan Akta Kematian')
 
 @section('breadcrum')
 <div class="col-lg-6 col-7">
@@ -9,7 +9,7 @@
     <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
       <li class="breadcrumb-item"><a href="#"><i class="fas fa-user-md-chat"></i></a></li>
       <li class="breadcrumb-item" aria-current="page"><a href="{{ route('usulan.index') }}">Usulan</a></li>
-      <li class="breadcrumb-item active" aria-current="page">Perbaikan Akta</li>
+      <li class="breadcrumb-item active" aria-current="page">Penerbitan Akta Kematian</li>
     </ol>
   </nav>
 </div>
@@ -36,10 +36,11 @@
 {!! $dataTable->scripts() !!}
 <script>
   let _url = {
-    create: `{{ route('perbaikan_data.create') }}`,
-    edit: `{{ route('perbaikan_data.edit', ':id') }}`,
-    show: `{{ route('perbaikan_data.show', ':id') }}`,
-    destroy: `{{ route('perbaikan_data.destroy', ':id') }}`,
+    create: `{{ route('akta_kematian.create') }}`,
+    edit: `{{ route('akta_kematian.edit', ':id') }}`,
+    show: `{{ route('akta_kematian.show', ':id') }}`,
+    destroy: `{{ route('akta_kematian.destroy', ':id') }}`,
+    show_catatan: `{{ route('akta_kematian.show_catatan', ':id') }}`,
     show_doc: `{{ route('file.preview', ['filename' => ':filename', 'type' => ':type']) }}`,
   }
 
@@ -112,7 +113,7 @@
         }
         
         Ryuna.close_modal()
-        window.LaravelDataTables["usulan-table"].draw()
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){
@@ -163,7 +164,7 @@
             type: 'success',
             confirmButtonColor: '#007bff'
           })
-        window.LaravelDataTables["usulan-table"].draw()
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
         }).fail((xhr) => {
           Swal.fire({
             title: xhr.responseJSON.message,
@@ -219,6 +220,198 @@
     })
   }
 
+  function show_catatan(id) {
+    Ryuna.blockUI()
+    $.get(_url.show_catatan.replace(':id', id)).done((res) => {
+      console.log(res)
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  @php 
+    use App\Helpers\PermissionCommon;
+  @endphp
+  @if(PermissionCommon::check('usulan.approve_disdukcapil'))
+  _url.approve = `{{ route('submission.approvement', [':id', ':detail']) }}`
+  _url.reject = `{{ route('submission.rejectment', [':id', ':detail']) }}`
+  _url.sendmail = `{{ route('submission.sendmail', ':id') }}`
+  function approve(id, dimension) {
+    Ryuna.blockUI()
+    $.get(_url.approve.replace(':id',id).replace(':detail', dimension)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  function reject(id) {
+    Ryuna.blockUI()
+    $.get(_url.reject.replace(':id',id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+
+  function approve_reject_store(type) {
+    $('#response_container').empty();
+    Ryuna.blockElement('.modal-content');
+    let el_form = $('#myForm')
+    let target = el_form.attr('action')
+    let formData = new FormData(el_form[0])
+  
+    $.ajax({
+      url: target,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+    }).done((res) => {
+      if(res?.status == true){
+        let html = '<div class="alert alert-success alert-dismissible fade show">'
+        html += `${res?.message}`
+        html += '</div>'
+        Ryuna.noty('success', '', res?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+  
+        Ryuna.close_modal()
+        if($('[name="_method"]').val() == undefined) {
+          el_form[0].reset()
+        }
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
+      }
+    }).fail((xhr) => {
+      if(xhr?.status == 422){
+        let errors = xhr.responseJSON.errors
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += '<ul>';
+        for(let key in errors){
+          html += `<li>${errors[key]}</li>`;
+        }
+        html += '</ul>'
+        html += '</div>'
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }else{
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += `${xhr?.responseJSON?.message}`
+        html += '</div>'
+        Ryuna.noty('error', '', xhr?.responseJSON?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }
+    })
+  }
+
+  function sendMail(id) {
+    Ryuna.blockUI()
+    $.get(_url.sendmail.replace(':id',id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+  function processMail() {
+    $('#response_container').empty();
+    Ryuna.blockElement('.modal-content');
+    let el_form = $('#myForm')
+    let target = el_form.attr('action')
+    let formData = new FormData(el_form[0])
+  
+    $.ajax({
+      url: target,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+    }).done((res) => {
+      if(res?.status == true){
+        let html = '<div class="alert alert-success alert-dismissible fade show">'
+        html += `${res?.message}`
+        html += '</div>'
+        Ryuna.noty('success', '', res?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+  
+        if($('[name="_method"]').val() == undefined) {
+          el_form[0].reset()
+        }
+        window.LaravelDataTables["usulan-table"].draw()
+        Ryuna.close_modal()
+      }
+    }).fail((xhr) => {
+      if(xhr?.status == 422){
+        let errors = xhr.responseJSON.errors
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += '<ul>';
+        for(let key in errors){
+          html += `<li>${errors[key]}</li>`;
+        }
+        html += '</ul>'
+        html += '</div>'
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }else{
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += `${xhr?.responseJSON?.message}`
+        html += '</div>'
+        Ryuna.noty('error', '', xhr?.responseJSON?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }
+    })
+  }
 
   @endif
 </script>

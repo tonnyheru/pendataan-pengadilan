@@ -8,21 +8,32 @@ use Illuminate\Http\Request;
 
 class SubmissionController extends Controller
 {
-    public function approvement($uid)
+    public function approvement($uid, $detail)
     {
         if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
-
-        $usulan = Submission::find($uid);
-        if ($usulan) {
-            $body = view('pages.administrasi.usulan.form_approve', compact('usulan', 'uid'))->render();
-            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        $submission = Submission::find($uid);
+        switch ($detail) {
+            case 'perbaikan_akta':
+                $detail = $submission->perbaikanAktaDetail;
+                $body = view('pages.administrasi.usulan.perbaikan_akta.form_approve', compact('submission', 'uid','detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
-            return [
-                'title' => 'Approve Usulan',
-                'body' => $body,
-                'footer' => $footer
-            ];
+                return [
+                    'title' => 'Approve Usulan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pindah_wilayah':
+                $submission = Submission::with('pindahWilayah')->find($uid);
+                break;
+            case 'pindah_datang':
+                $submission = Submission::with('pindahDatang')->find($uid);
+                break;
+            default:
+                return [];
         }
+
     }
 
     public function approvement_store(Request $request, $uid)
@@ -35,24 +46,25 @@ class SubmissionController extends Controller
                 'catatan.required' => 'Catatan tidak boleh kosong',
             ]);
 
-            $usulan = Usulan::find($uid);
+            $usulan = Submission::find($uid);
             $formData = $request->except('_token', '_method');
             if ($usulan) {
                 $name = auth()->user()->name;
                 $role = auth()->user()->role->name;
                 $slug = auth()->user()->role->slug;
 
-                if (str_contains($slug, 'disdukcapil')) {
-                    $formData['is_approve'] = '2';
-                } else {
-                    $formData['is_approve'] = '1';
-                }
+                $formData['status'] = '2';
+                // if (str_contains($slug, 'disdukcapil')) {
+                //     $formData['is_approve'] = '2';
+                // } else {
+                //     $formData['is_approve'] = '1';
+                // }
 
                 $catatan = json_decode($usulan->catatan);
                 $catatan[] = [
                     'role' => $role,
                     'name' => $name,
-                    'status' => $formData['is_approve'],
+                    'status' => $formData['status'],
                     'catatan' => $formData['catatan'],
                     'timestamp' => date('Y-m-d H:i:s')
                 ];
@@ -203,6 +215,23 @@ class SubmissionController extends Controller
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
             ], 400);
+        }
+    }
+
+    public function send_mail($uid)
+    {
+        if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
+
+        $submission = Submission::find($uid);
+        if ($submission) {
+            $body = view('pages.administrasi.usulan.form_email', compact('submission', 'uid'))->render();
+            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="processMail()">Kirim Email <i class="fas fa-paper-plane"></i></button>';
+            return [
+                'title' => 'Kirim Email',
+                'body' => $body,
+                'footer' => $footer
+            ];
         }
     }
     /**

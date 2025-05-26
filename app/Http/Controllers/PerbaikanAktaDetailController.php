@@ -107,6 +107,7 @@ class PerbaikanAktaDetailController extends Controller
                     [
                         'role' => auth()->user()->role->name,
                         'name' => auth()->user()->name,
+                        'status' => '1',
                         'catatan' => $data['catatan'],
                         'timestamp' => date('Y-m-d H:i:s')
                     ]
@@ -387,6 +388,7 @@ class PerbaikanAktaDetailController extends Controller
             $catatan[] = [
                 'role' => $role,
                 'name' => $name,
+                'status' => '4',
                 'catatan' => $formData['catatan'],
                 'timestamp' => date('Y-m-d H:i:s')
             ];

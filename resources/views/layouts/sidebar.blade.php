@@ -84,10 +84,15 @@
       Request::is('app/mutasi') ||
       Request::is('app/pemohon') ||
       Request::is('app/usulan') ||
-      Request::is('app/usulan/perbaikan_akta')
+      Request::is('app/usulan/perbaikan_akta') ||
+      Request::is('app/usulan/akta_kematian')
       ))
       ->item('Pemohon', 'fas fa-clipboard-user', 'app/pemohon', Request::is('app/pemohon'), "pemohon.list")
-      ->item('Usulan', 'fas fa-user-md-chat', 'app/usulan', (Request::is('app/usulan') || Request::is('app/usulan/perbaikan_akta')), "usulan.list")
+      ->item('Usulan', 'fas fa-user-md-chat', 'app/usulan', (
+        Request::is('app/usulan') ||
+        Request::is('app/usulan/perbaikan_akta') ||
+        Request::is('app/usulan/akta_kematian')
+      ), "usulan.list")
       // ->item('Mutasi Data', 'fas fa-file-exclamation', 'app/mutasi', Request::is('app/mutasi'), "mutasi.list")
       ->end_item_accordion()
       ->end_accordion()

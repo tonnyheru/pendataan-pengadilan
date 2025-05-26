@@ -318,11 +318,11 @@
     use App\Helpers\PermissionCommon;
   @endphp
   @if(PermissionCommon::check('usulan.approve_disdukcapil'))
-  _url.approve = `{{ route('usulan.approvement', ':id') }}`
-  _url.reject = `{{ route('usulan.rejectment', ':id') }}`
+  _url.approve = `{{ route('usulan.approvement', ':id', ':detail') }}`
+  _url.reject = `{{ route('usulan.rejectment', ':id', ':detail') }}`
   function approve(id, dimension) {
     Ryuna.blockUI()
-    $.get(_url.approve.replace(':id',id)).done((res) => {
+    $.get(_url.approve.replace(':id',id).replace(':detail', dimension)).done((res) => {
       Ryuna.large_modal()
       Ryuna.modal({
         title: res?.title,

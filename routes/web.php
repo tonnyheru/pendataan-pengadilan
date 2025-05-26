@@ -55,12 +55,36 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
         Route::prefix('perbaikan_akta')->group(function () {
             Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('perbaikan_akta.show_catatan');
         });
+        Route::prefix('akta_kematian')->group(function () {
+            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_kematian.show_catatan');
+        });
+        Route::prefix('akta_perkawinan')->group(function () {
+            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_perkawinan.show_catatan');
+        });
+        Route::prefix('akta_perceraian')->group(function () {
+            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_perceraian.show_catatan');
+        });
+        Route::prefix('pengangkatan_anak')->group(function () {
+            Route::get('catatan/{uid}', [PengangkatanAnakDetailController::class, 'showCatatan'])->name('pengangkatan_anak.show_catatan');
+        });
+        Route::prefix('pengakuan_anak')->group(function () {
+            Route::get('catatan/{uid}', [PengakuanAnakDetailController::class, 'showCatatan'])->name('pengakuan_anak.show_catatan');
+        });
+        Route::prefix('pembatalan_akta_kelahiran')->group(function () {
+            Route::get('catatan/{uid}', [PembatalanAktaKelahiranDetailController::class, 'showCatatan'])->name('pembatalan_akta_kelahiran.show_catatan');
+        });
+        Route::prefix('pembatalan_perceraian')->group(function () {
+            Route::get('catatan/{uid}', [PembatalanPerceraianDetailController::class, 'showCatatan'])->name('pembatalan_perceraian.show_catatan');
+        });
+        Route::prefix('pembatalan_perkawinan')->group(function () {
+            Route::get('catatan/{uid}', [PembatalanPerkawinanDetailController::class, 'showCatatan'])->name('pembatalan_perkawinan.show_catatan');
+        });
 
         Route::prefix('approvement')->group(function () {
-            Route::get('/approve_usulan/{uid}', [SubmissionController::class, 'approvement'])->name('submission.approvement');
+            Route::get('/approve_usulan/{uid}/{detail}', [SubmissionController::class, 'approvement'])->name('submission.approvement');
             Route::put('/approve_submission/{uid}', [SubmissionController::class, 'approvement_store'])->name('submission.approvement_store');
 
-            Route::get('/reject_submission/{uid}', [SubmissionController::class, 'rejectment'])->name('submission.rejectment');
+            Route::get('/reject_submission/{uid}/{detail}', [SubmissionController::class, 'rejectment'])->name('submission.rejectment');
             Route::put('/reject_submission/{uid}', [SubmissionController::class, 'rejectment_store'])->name('submission.rejectment_store');
         });
         Route::resources(['submission' => SubmissionController::class]);
@@ -134,7 +158,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
     })->name('catatan.preview');
 
 
-    Route::get('/send_email/{uid}', [UsulanController::class, 'send_mail'])->name('usulan.sendmail');
+    Route::get('/send_email/{uid}', [SubmissionController::class, 'send_mail'])->name('submission.sendmail');
     Route::post('/send_email/{uid}', function (Request $request, $uid) {
         $request->validate([
             'attachments'   => 'required|array|min:1|max:3', // Minimal 1 file, maksimal 3 file

@@ -246,11 +246,12 @@
     use App\Helpers\PermissionCommon;
   @endphp
   @if(PermissionCommon::check('usulan.approve_disdukcapil'))
-  _url.approve = `{{ route('submission.approvement', ':id') }}`
-  _url.reject = `{{ route('submission.rejectment', ':id') }}`
+  _url.approve = `{{ route('submission.approvement', [':id', ':detail']) }}`
+  _url.reject = `{{ route('submission.rejectment', [':id', ':detail']) }}`
+  _url.sendmail = `{{ route('submission.sendmail', ':id') }}`
   function approve(id, dimension) {
     Ryuna.blockUI()
-    $.get(_url.approve.replace(':id',id)).done((res) => {
+    $.get(_url.approve.replace(':id',id).replace(':detail', dimension)).done((res) => {
       Ryuna.large_modal()
       Ryuna.modal({
         title: res?.title,
@@ -291,6 +292,77 @@
   }
 
   function approve_reject_store(type) {
+    $('#response_container').empty();
+    Ryuna.blockElement('.modal-content');
+    let el_form = $('#myForm')
+    let target = el_form.attr('action')
+    let formData = new FormData(el_form[0])
+  
+    $.ajax({
+      url: target,
+      data: formData,
+      processData: false,
+      contentType: false,
+      type: 'POST',
+    }).done((res) => {
+      if(res?.status == true){
+        let html = '<div class="alert alert-success alert-dismissible fade show">'
+        html += `${res?.message}`
+        html += '</div>'
+        Ryuna.noty('success', '', res?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+  
+        Ryuna.close_modal()
+        if($('[name="_method"]').val() == undefined) {
+          el_form[0].reset()
+        }
+        window.LaravelDataTables["perbaikanaktadetail-table"].draw()
+      }
+    }).fail((xhr) => {
+      if(xhr?.status == 422){
+        let errors = xhr.responseJSON.errors
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += '<ul>';
+        for(let key in errors){
+          html += `<li>${errors[key]}</li>`;
+        }
+        html += '</ul>'
+        html += '</div>'
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }else{
+        let html = '<div class="alert alert-danger alert-dismissible fade show">'
+        html += `${xhr?.responseJSON?.message}`
+        html += '</div>'
+        Ryuna.noty('error', '', xhr?.responseJSON?.message)
+        $('#response_container').html(html)
+        Ryuna.unblockElement('.modal-content')
+      }
+    })
+  }
+
+  function sendMail(id) {
+    Ryuna.blockUI()
+    $.get(_url.sendmail.replace(':id',id)).done((res) => {
+      Ryuna.large_modal()
+      Ryuna.modal({
+        title: res?.title,
+        body: res?.body,
+        footer: res?.footer
+      })
+      Ryuna.unblockUI()
+    }).fail((xhr) => {
+      Ryuna.unblockUI()
+      Swal.fire({
+        title: 'Whoops!',
+        text: xhr?.responseJSON?.message ? xhr.responseJSON.message : 'Internal Server Error',
+        type: 'error',
+        confirmButtonColor: '#007bff'
+      })
+    })
+  }
+  function processMail() {
     $('#response_container').empty();
     Ryuna.blockElement('.modal-content');
     let el_form = $('#myForm')

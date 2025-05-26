@@ -13,15 +13,15 @@
                 <tr>
                   <td>
                     Nomor Perkara
-                    <h3 class="text-white">{{@$usulan->no_perkara}}</h3>
+                    <h3 class="text-white">{{@$submission->no_perkara}}</h3>
                   </td>
                   <td>
                     Jenis Perkara
-                    <h3 class="text-white">{{@$usulan->jenis_perkara}}</h3>
+                    <h3 class="text-white">{{ ucwords(str_replace('_', ' ', $submission->submission_type)) }}</h3>
                   </td>
                   <td>
                     Nama Pemohon
-                    <h3 class="text-white">{{@$usulan->pemohon->name}}</h3>
+                    <h3 class="text-white">{{ ucwords(str_replace('_', ' ', @$submission->pemohon->name)) }}</h3>
                   </td>
                 </tr>
               </tbody>
