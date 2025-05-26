@@ -56,7 +56,7 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
             Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('perbaikan_akta.show_catatan');
         });
         Route::prefix('akta_kematian')->group(function () {
-            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_kematian.show_catatan');
+            Route::get('catatan/{uid}', [AktaKematianDetailController::class, 'showCatatan'])->name('akta_kematian.show_catatan');
         });
         Route::prefix('akta_perkawinan')->group(function () {
             Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_perkawinan.show_catatan');

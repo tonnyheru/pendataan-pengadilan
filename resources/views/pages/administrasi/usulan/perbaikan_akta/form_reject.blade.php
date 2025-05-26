@@ -14,15 +14,39 @@
               <tr>
                 <td>
                   Nomor Perkara
-                  <h3 class="text-white">{{@$usulan->no_perkara}}</h3>
+                  <h3 class="text-white">{{@$submission->no_perkara}}</h3>
                 </td>
                 <td>
                   Jenis Perkara
-                  <h3 class="text-white">{{@$usulan->jenis_perkara}}</h3>
+                  <h3 class="text-white">{{ ucwords(str_replace('_', ' ', $submission->submission_type)) }}</h3>
                 </td>
                 <td>
                   Nama Pemohon
-                  <h3 class="text-white">{{@$usulan->pemohon->name}}</h3>
+                  <h3 class="text-white">{{ ucwords(str_replace('_', ' ', @$submission->pemohon->name)) }}</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Jenis Akta
+                  <h3 class="text-white">{{ ucwords(str_replace('_', ' ', @$detail->jenis_akta)) }}</h3>
+                </td>
+                <td>
+                  Nomor Akta
+                  <h3 class="text-white">{{ @$detail->nomor_akta }}</h3>
+                </td>
+                <td>
+                  Elemen Perbaikan
+                  <h3 class="text-white">{{ ucwords(@$detail->jenis_elemen_perbaikan)}}</h3>
+                </td>
+              </tr>
+              <tr>
+                <td>
+                  Data Sebelum Dirubah
+                  <h3 class="text-white">{{ @$detail->data_sebelum }}</h3>
+                </td>
+                <td>
+                  Data Setelah Dirubah
+                  <h3 class="text-white">{{ @$detail->data_sesudah }}</h3>
                 </td>
               </tr>
             </tbody>

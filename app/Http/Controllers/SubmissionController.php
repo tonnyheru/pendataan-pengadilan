@@ -15,7 +15,7 @@ class SubmissionController extends Controller
         switch ($detail) {
             case 'perbaikan_akta':
                 $detail = $submission->perbaikanAktaDetail;
-                $body = view('pages.administrasi.usulan.perbaikan_akta.form_approve', compact('submission', 'uid','detail'))->render();
+                $body = view('pages.administrasi.usulan.perbaikan_akta.form_approve', compact('submission', 'uid', 'detail'))->render();
                 $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
                 return [
@@ -24,8 +24,16 @@ class SubmissionController extends Controller
                     'footer' => $footer
                 ];
                 break;
-            case 'pindah_wilayah':
-                $submission = Submission::with('pindahWilayah')->find($uid);
+            case 'akta_kematian':
+                $detail = $submission->aktaKematianDetail;
+                $body = view('pages.administrasi.usulan.akta_kematian.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Penerbitan Akta Kematian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
                 break;
             case 'pindah_datang':
                 $submission = Submission::with('pindahDatang')->find($uid);
@@ -33,7 +41,6 @@ class SubmissionController extends Controller
             default:
                 return [];
         }
-
     }
 
     public function approvement_store(Request $request, $uid)
@@ -100,20 +107,38 @@ class SubmissionController extends Controller
         }
     }
 
-    public function rejectment($uid)
+    public function rejectment($uid, $detail)
     {
         if (!PermissionCommon::check('usulan.approve_disdukcapil')) abort(403);
-
-        $usulan = Submission::find($uid);
-        if ($usulan) {
-            $body = view('pages.administrasi.usulan.form_reject', compact('usulan', 'uid'))->render();
-            $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-danger" onclick="approve_reject_store(\'reject\')">Reject</button>';
-            return [
-                'title' => 'Reject Usulan',
-                'body' => $body,
-                'footer' => $footer
-            ];
+        $submission = Submission::find($uid);
+        switch ($detail) {
+            case 'perbaikan_akta':
+                $detail = $submission->perbaikanAktaDetail;
+                $body = view('pages.administrasi.usulan.perbaikan_akta.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Perbaikan Akta',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'akta_kematian':
+                $detail = $submission->aktaKematianDetail;
+                $body = view('pages.administrasi.usulan.akta_kematian.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Penerbitan Akta Kematian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pindah_datang':
+                $submission = Submission::with('pindahDatang')->find($uid);
+                break;
+            default:
+                return [];
         }
     }
 
@@ -127,19 +152,19 @@ class SubmissionController extends Controller
                 'catatan.required' => 'Catatan tidak boleh kosong',
             ]);
 
-            $usulan = Usulan::find($uid);
+            $usulan = Submission::find($uid);
             $formData = $request->except('_token', '_method');
             if ($usulan) {
                 $role = auth()->user()->role->name;
                 $name = auth()->user()->name;
                 $slug = auth()->user()->role->slug;
 
-                $formData['is_approve'] = '0';
+                $formData['status'] = '0';
                 $catatan = json_decode($usulan->catatan);
                 $catatan[] = [
                     'role' => $role,
                     'name' => $name,
-                    'status' => $formData['is_approve'],
+                    'status' => $formData['status'],
                     'catatan' => $formData['catatan'],
                     'timestamp' => date('Y-m-d H:i:s')
                 ];
@@ -151,48 +176,51 @@ class SubmissionController extends Controller
                 $trx = $usulan->update($formData);
                 if ($trx) {
                     $createdBy = $usulan->createdBy();
-                    try {
-                        $options = [
-                            'multipart' => [
-                                [
-                                    'name' => 'device_id',
-                                    'contents' => '93ce715666c4811b544060462e10db8f'
-                                ],
-                                [
-                                    'name' => 'number',
-                                    'contents' => $createdBy->no_telp,
-                                ],
-                                [
-                                    'name' => 'message',
-                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
-                                ]
-                            ]
-                        ];
-                        $client = new GuzzleClient([
-                            'http_errors' => false
-                        ]);
-                        $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
 
-                        $options2 = [
-                            'multipart' => [
-                                [
-                                    'name' => 'device_id',
-                                    'contents' => '93ce715666c4811b544060462e10db8f'
-                                ],
-                                [
-                                    'name' => 'number',
-                                    'contents' => $usulan->pemohon->no_telp,
-                                ],
-                                [
-                                    'name' => 'message',
-                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
-                                ]
-                            ]
-                        ];
-                        $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
-                    } catch (\Throwable $th) {
-                        //throw $th;
-                    }
+                    // prosedur kirim WA
+
+                    // try {
+                    //     $options = [
+                    //         'multipart' => [
+                    //             [
+                    //                 'name' => 'device_id',
+                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
+                    //             ],
+                    //             [
+                    //                 'name' => 'number',
+                    //                 'contents' => $createdBy->no_telp,
+                    //             ],
+                    //             [
+                    //                 'name' => 'message',
+                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
+                    //             ]
+                    //         ]
+                    //     ];
+                    //     $client = new GuzzleClient([
+                    //         'http_errors' => false
+                    //     ]);
+                    //     $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+
+                    //     $options2 = [
+                    //         'multipart' => [
+                    //             [
+                    //                 'name' => 'device_id',
+                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
+                    //             ],
+                    //             [
+                    //                 'name' => 'number',
+                    //                 'contents' => $usulan->pemohon->no_telp,
+                    //             ],
+                    //             [
+                    //                 'name' => 'message',
+                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
+                    //             ]
+                    //         ]
+                    //     ];
+                    //     $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
+                    // } catch (\Throwable $th) {
+                    //     //throw $th;
+                    // }
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'

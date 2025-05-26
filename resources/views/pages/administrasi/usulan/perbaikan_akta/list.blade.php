@@ -270,9 +270,9 @@
     })
   }
 
-  function reject(id) {
+  function reject(id, dimension) {
     Ryuna.blockUI()
-    $.get(_url.reject.replace(':id',id)).done((res) => {
+    $.get(_url.reject.replace(':id',id).replace(':detail', dimension)).done((res) => {
       Ryuna.large_modal()
       Ryuna.modal({
         title: res?.title,

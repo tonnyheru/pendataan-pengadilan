@@ -313,7 +313,7 @@ class PerbaikanAktaDetailController extends Controller
      */
     public function update(Request $request, $uid)
     {
-        if (!PermissionCommon::check('usulan.update')) abort(403);
+        if (!PermissionCommon::check('perbaikan_akta.update')) abort(403);
         $perbaikanAktaDetail = PerbaikanAktaDetail::find($uid);
         $request->validate([
             'no_perkara' => "required|unique:submissions,no_perkara," . $perbaikanAktaDetail->submission->uid . ",uid",

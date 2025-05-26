@@ -21,7 +21,10 @@
   }
 </style>
 <div class="row">
-
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Dokumen</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
   <div class="form-group col-md-12">
     <label>Nomor Perkara <span class="text-danger">*</span></label>
     <input type="text" name="no_perkara" class="form-control" placeholder="Nomor Perkara" value="{{ @$data->submission->no_perkara }}">
@@ -47,34 +50,6 @@
     </select>
   </div>
 
-  <div class="form-group col-md-6">
-    <label>NIK Jenazah <span class="text-danger">*</span></label>
-    <input type="text" name="nik_jenazah" class="form-control" placeholder="NIK Jenazah" value="{{ @$data->nik_jenazah }}">
-  </div>
-  <div class="form-group col-md-6">
-    <label>Nama Jenazah <span class="text-danger">*</span></label>
-    <input type="text" name="nama_jenazah" class="form-control" placeholder="Nama Jenazah" value="{{ @$data->nama_jenazah }}">
-  </div>
-
-  <div class="form-group col-md-12">
-    <label>Elemen Perbaikan / Perubahan <span class="text-danger">*</span></label>
-    <select name="jenis_elemen_perbaikan" class="form-control select2-elemen-perbaikan">
-      <option value=""></option>
-      <option value="dalam_negeri" @if(@$data->jenis_elemen_perbaikan == 'dalam_negeri') selected @endif>Dalam Negeri</option>
-      <option value="luar_negeri" @if(@$data->jenis_elemen_perbaikan == 'luar_negeri') selected @endif>Luar Negeri</option>
-    </select>
-  </div>
-
-  <div class="form-group col-md-6">
-    <label>Data Sebelum Diubah <span class="text-danger">*</span></label>
-    <input type="text" name="data_sebelum" class="form-control" placeholder="Data Sebelum Diubah" value="{{ @$data->data_sebelum }}">
-  </div>
-
-  <div class="form-group col-md-6">
-    <label>Data Setelah Diubah <span class="text-danger">*</span></label>
-    <input type="text" name="data_sesudah" class="form-control" placeholder="Data Setelah Diubah" value="{{ @$data->data_sesudah }}">
-  </div>
-
   <div class="form-group col-md-12">
     <label>Catatan</label>
     @if(@$data)
@@ -86,6 +61,118 @@
     <textarea name="catatan" class="form-control" rows="2"></textarea>
     @endif
   </div>
+
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Jenazah</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Jenazah <span class="text-danger">*</span></label>
+    <input type="text" name="nik_jenazah" class="form-control" placeholder="NIK Jenazah" value="{{ @$data->nik_jenazah }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Jenazah <span class="text-danger">*</span></label>
+    <input type="text" name="nama_jenazah" class="form-control" placeholder="Nama Jenazah" value="{{ @$data->nama_jenazah }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Wilayah Kelahiran <span class="text-danger">*</span></label>
+    <select name="wilayah_kelahiran" class="form-control select2-wilayah-kelahiran">
+      <option value=""></option>
+      <option value="dalam_negeri" @if(@$data->wilayah_kelahiran == 'dalam_negeri') selected @endif>Dalam Negeri</option>
+      <option value="luar_negeri" @if(@$data->wilayah_kelahiran == 'luar_negeri') selected @endif>Luar Negeri</option>
+    </select>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Provinsi Kelahiran <span class="text-danger">*</span></label>
+    <select id="provinsi_kelahiran" class="form-control select2-province-kelahiran" name="provinsi_kelahiran">
+        <option value=""></option>
+        @foreach($provinces as $province)
+            <option value="{{ $province->id }}" @if($province->id == @$data->provinsi_kelahiran) selected @endif>{{ $province->name }}</option>
+        @endforeach
+    </select>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Tanggal Kematian <span class="text-danger">*</span></label>
+    <div class='date'>
+      <input type='text' class="form-control" name="tanggal_kematian" id='tanggal_kematian' style="background-color: white; " placeholder="Pilih Tanggal Kematian" value="{{ @$data->tanggal_kematian }}" />
+    </div>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Waktu Kematian <span class="text-danger">*</span></label>
+    <div class='time'>
+      <input type='text' class="form-control" name="waktu_kematian" id='waktu_kematian' style="background-color: white; " placeholder="Pilih Waktu Kematian" value="{{ @$data->waktu_kematian }}" />
+    </div>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Tempat Kematian <span class="text-danger">*</span></label>
+    <input type="text" name="tempat_kematian" class="form-control" placeholder="Tempat Kematian" value="{{ @$data->tempat_kematian }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Sebab Kematian <span class="text-danger">*</span></label>
+    <input type="text" name="sebab_kematian" class="form-control" placeholder="Sebab Kematian" value="{{ @$data->sebab_kematian }}">
+  </div>
+  <div class="form-group col-md-12">
+    <label>Yang Menerangkan <span class="text-danger">*</span></label>
+    <input type="text" name="yang_menerangkan" class="form-control" placeholder="Yang Menerangkan" value="{{ @$data->yang_menerangkan }}">
+  </div>
+  <div class="form-group col-md-12">
+    <label>Keterangan </label>
+    <textarea name="keterangan" class="form-control" rows="3">{{ @$data->keterangan }}</textarea>
+  </div>
+
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Keluarga / Kerabat</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Ayah <span class="text-danger">*</span></label>
+    <input type="text" name="nik_ayah" class="form-control" placeholder="NIK Ayah" value="{{ @$data->nik_ayah }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Ayah <span class="text-danger">*</span></label>
+    <input type="text" name="nama_ayah" class="form-control" placeholder="Nama Ayah" value="{{ @$data->nama_ayah }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Ibu <span class="text-danger">*</span></label>
+    <input type="text" name="nik_ibu" class="form-control" placeholder="NIK Ibu" value="{{ @$data->nik_ibu }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Ibu <span class="text-danger">*</span></label>
+    <input type="text" name="nama_ibu" class="form-control" placeholder="Nama Ibu" value="{{ @$data->nama_ibu }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Saksi 1 <span class="text-danger">*</span></label>
+    <input type="text" name="nik_saksi1" class="form-control" placeholder="NIK Saksi 1" value="{{ @$data->nik_saksi1 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Saksi 1 <span class="text-danger">*</span></label>
+    <input type="text" name="nama_saksi1" class="form-control" placeholder="Nama Saksi 1" value="{{ @$data->nama_saksi1 }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Saksi 2 </label>
+    <input type="text" name="nik_saksi2" class="form-control" placeholder="NIK Saksi 2" value="{{ @$data->nik_saksi2 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Saksi 2 </label>
+    <input type="text" name="nama_saksi2" class="form-control" placeholder="Nama Saksi 2" value="{{ @$data->nama_saksi2 }}">
+  </div>
+
+
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Dokumen-Dokumen</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+
   @if(@$data)
     <div class="col-md-12">
       <div class="alert alert-warning">
@@ -96,10 +183,9 @@
   @php
   $dokumen = [
     'penetapan_pengadilan' => 'Penetapan Pengadilan',
-    'akta_kelahiran' => 'Akta Kelahiran (ASLI)',
     'kk_pemohon' => 'Kartu Keluarga Pemohon',
     'ktp_pemohon' => 'KTP Pemohon',
-    'keabsahan' => 'Keabsahan Akta Kelahiran',
+    'surat_kematian' => 'Surat Kematian',
   ];
   @endphp
   @foreach($dokumen as $key => $dok)
@@ -128,12 +214,21 @@
 </div>
 <script>
   $(() => {
+    $('#tanggal_kematian').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('#waktu_kematian').flatpickr({
+        enableTime: true,
+        noCalendar: true,
+        dateFormat: "H:i",
+        time_24hr: true
+    })
     const dokumen = [
       'penetapan_pengadilan',
-      'akta_kelahiran',
       'kk_pemohon',
       'ktp_pemohon',
-      'keabsahan'
+      'surat_kematian'
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {
@@ -257,12 +352,12 @@
       return $container;
     }
 
-    $('.select2-jenis-akta').select2({
-      placeholder: "Pilih Jenis Akta",
+    $('.select2-wilayah-kelahiran').select2({
+      placeholder: "Pilih Wilayah Kelahiran",
       allowClear: true
     });
-    $('.select2-elemen-perbaikan').select2({
-      placeholder: "Pilih Elemen Perbaikan / Perubahan",
+    $('.select2-province-kelahiran').select2({
+      placeholder: "Pilih Provinsi Kelahiran",
       allowClear: true
     });
   })

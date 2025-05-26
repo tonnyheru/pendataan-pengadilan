@@ -55,4 +55,9 @@ class Submission extends Model
     {
         return $this->hasOne(PerbaikanAktaDetail::class, 'submission_uid', 'uid');
     }
+
+    public function aktaKematianDetail()
+    {
+        return $this->hasOne(AktaKematianDetail::class, 'submission_uid', 'uid');
+    }
 }

@@ -216,7 +216,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
     {
         $button = [];
         $button[] = Button::make('excel')->text('<span title="Export Excel"><i class="fa fa-file-excel"></i></span>');
-        if (PermissionCommon::check('perbaikan_data.create')) {
+        if (PermissionCommon::check('perbaikan_akta.create')) {
             $button[] = Button::raw('<i class="fa fa-plus"></i> Tambah Usulan Perbaikan Akta')->action('function() { create() }');
         }
         return $this->builder()
@@ -245,7 +245,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('perbaikan_data.update') || PermissionCommon::check('perbaikan_data.delete')) {
+        if (PermissionCommon::check('perbaikan_akta.update') || PermissionCommon::check('perbaikan_akta.delete')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
