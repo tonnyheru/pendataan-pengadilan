@@ -184,6 +184,7 @@ class PembatalanAktaKelahiranDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'pembatalan_akta_kelahiran_details.submission_uid')
+                ->select('pembatalan_akta_kelahiran_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();

@@ -184,6 +184,7 @@ class AktaPerceraianDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'akta_perceraian_details.submission_uid')
+                ->select('akta_perceraian_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();

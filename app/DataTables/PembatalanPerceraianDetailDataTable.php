@@ -184,6 +184,7 @@ class PembatalanPerceraianDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'pembatalan_perceraian_details.submission_uid')
+                ->select('pembatalan_perceraian_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();

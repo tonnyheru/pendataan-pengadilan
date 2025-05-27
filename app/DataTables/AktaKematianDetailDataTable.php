@@ -184,6 +184,7 @@ class AktaKematianDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'akta_kematian_details.submission_uid')
+                ->select('akta_kematian_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();
@@ -227,7 +228,7 @@ class AktaKematianDetailDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('akta_kematian.update') || PermissionCommon::check('akta_kematian.delete')) {
+        if (PermissionCommon::check('akta_kematian.update') || PermissionCommon::check('akta_kematian.delete') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

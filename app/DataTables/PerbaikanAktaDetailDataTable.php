@@ -212,6 +212,7 @@ class PerbaikanAktaDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'perbaikan_akta_details.submission_uid')
+                ->select('perbaikan_akta_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();

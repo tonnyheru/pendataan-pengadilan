@@ -184,6 +184,7 @@ class PengangkatanAnakDetailDataTable extends DataTable
 
             return $model->newQuery()
                 ->join('submissions', 'submissions.uid', '=', 'pengangkatan_anak_details.submission_uid')
+                ->select('pengangkatan_anak_details.*')
                 ->where('submissions.disdukcapil_uid', $uid);
         }
         return $model->newQuery();
