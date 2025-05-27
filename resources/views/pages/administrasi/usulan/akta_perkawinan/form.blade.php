@@ -162,7 +162,7 @@
     <input type="number" name="perkawinan_ke_istri" class="form-control" placeholder="Perkawinan Ke" value="{{ @$data->perkawinan_ke_istri }}">
   </div>
 
-  <div class="form-group col-md-6">
+  <div class="form-group col-md-12">
     <label>Nama Suami Terakhir</label>
     <input type="text" name="nama_suami_terakhir" class="form-control" placeholder="Nama Suami Terakhir" value="{{ @$data->nama_suami_terakhir }}">
   </div>
@@ -185,6 +185,91 @@
     <input type="text" name="nama_ibu_istri" class="form-control" placeholder="Nama Ibu dari Istri" value="{{ @$data->nama_ibu_istri }}">
   </div>
 
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Pendukung</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>NIK Saksi 1 <span class="text-danger">*</span></label>
+    <input type="text" name="nik_saksi1" class="form-control" placeholder="NIK Saksi 1" value="{{ @$data->nik_saksi1 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Saksi 1 <span class="text-danger">*</span></label>
+    <input type="text" name="nama_saksi1" class="form-control" placeholder="Nama Saksi 1" value="{{ @$data->nama_saksi1 }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>NIK Saksi 2 <span class="text-danger">*</span></label>
+    <input type="text" name="nik_saksi2" class="form-control" placeholder="NIK Saksi 2" value="{{ @$data->nik_saksi2 }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Saksi 2 <span class="text-danger">*</span></label>
+    <input type="text" name="nama_saksi2" class="form-control" placeholder="Nama Saksi 2" value="{{ @$data->nama_saksi2 }}">
+  </div>
+  
+  <div class="form-group col-md-6">
+    <label>Tanggal Pemberkatan <span class="text-danger">*</span></label>
+    <div class='date'>
+      <input type='text' class="form-control" name="tanggal_pemberkatan" id='tanggal_pemberkatan' style="background-color: white; " placeholder="Pilih Tanggal Pemberkatan" value="{{ @$data->tanggal_pemberkatan }}" />
+    </div>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Tempat Pemberkatan <span class="text-danger">*</span></label>
+    <input type="text" name="tempat_pemberkatan" class="form-control" placeholder="Tempat Pemberkatan" value="{{ @$data->tempat_pemberkatan }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Tanggal Lapor <span class="text-danger">*</span></label>
+    <div class='date'>
+      <input type='text' class="form-control" name="tanggal_lapor" id='tanggal_lapor' style="background-color: white; " placeholder="Pilih Tanggal Lapor" value="{{ @$data->tanggal_lapor }}" />
+    </div>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Waktu Lapor <span class="text-danger">*</span></label>
+    <div class='time'>
+      <input type='text' class="form-control" name="waktu_lapor" id='waktu_lapor' style="background-color: white; " placeholder="Pilih Waktu Lapor" value="{{ @$data->waktu_lapor }}" />
+    </div>
+  </div>
+
+  @php
+    $agama = [
+          "islam" => "Islam",
+          "kristen" => "Kristen (Protestan)",
+          "katolik" => "Katolik",
+          "hindu" => "Hindu",
+          "buddha" => "Buddha",
+          "konghucu" => "Konghucu",
+    ];
+
+  @endphp
+  <div class="form-group col-md-6">
+    <label>Agama <span class="text-danger">*</span></label>
+    <select name="agama" class="form-control select2-agama" aria-describedby="validationtxtAgama" id="txtAgama">
+        @foreach($agama as $key => $value)
+        <option value="{{$key}}" {{ @$data->agama == $key ? "selected" : "" }}>{{$value}}</option>
+        @endforeach
+    </select>
+    <div id="validationtxtAgama" class="invalid-feedback"></div>
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Nama Pemuka Agama <span class="text-danger">*</span></label>
+    <input type="text" name="nama_pemuka_agama" class="form-control" placeholder="Nama Pemuka Agama" value="{{ @$data->nama_pemuka_agama }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Nomor Putusan <span class="text-danger">*</span></label>
+    <input type="text" name="no_putusan" class="form-control" placeholder="Nomor Putusan" value="{{ @$data->no_putusan }}">
+  </div>
+
+  <div class="form-group col-md-6">
+    <label>Tanggal Putusan <span class="text-danger">*</span></label>
+    <div class='date'>
+      <input type='text' class="form-control" name="tanggal_putusan" id='tanggal_putusan' style="background-color: white; " placeholder="Pilih Tanggal Putusan" value="{{ @$data->tanggal_putusan }}" />
+    </div>
+  </div>
 
 
   <div class="col-md-12 justify-content-start">
@@ -202,9 +287,11 @@
   @php
   $dokumen = [
     'penetapan_pengadilan' => 'Penetapan Pengadilan',
-    'kk_pemohon' => 'Kartu Keluarga Pemohon',
-    'ktp_pemohon' => 'KTP Pemohon',
-    'surat_kematian' => 'Surat Kematian',
+    'pemberkatan_nikah' => 'Pemberkatan Nikah',
+    'kk_suami' => 'Kartu Keluarga Suami',
+    'ktp_suami' => 'KTP Suami',
+    'kk_istri' => 'Kartu Keluarga Istri',
+    'ktp_istri' => 'KTP Istri',
   ];
   @endphp
   @foreach($dokumen as $key => $dok)
@@ -233,11 +320,19 @@
 </div>
 <script>
   $(() => {
-    $('#tanggal_kematian').flatpickr({
+    $('#tanggal_pemberkatan').flatpickr({
       static: true,
       dateFormat: "Y-m-d",
     })
-    $('#waktu_kematian').flatpickr({
+    $('#tanggal_lapor').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('#tanggal_putusan').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('#waktu_lapor').flatpickr({
         enableTime: true,
         noCalendar: true,
         dateFormat: "H:i",
@@ -245,9 +340,11 @@
     })
     const dokumen = [
       'penetapan_pengadilan',
-      'kk_pemohon',
-      'ktp_pemohon',
-      'surat_kematian'
+      'pemberkatan_nikah',
+      'kk_suami',
+      'ktp_suami',
+      'kk_istri',
+      'ktp_istri'
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {
@@ -371,13 +468,10 @@
       return $container;
     }
 
-    $('.select2-wilayah-kelahiran').select2({
-      placeholder: "Pilih Wilayah Kelahiran",
+    $('.select2-agama').select2({
+      placeholder: "Pilih Agama",
       allowClear: true
     });
-    $('.select2-province-kelahiran').select2({
-      placeholder: "Pilih Provinsi Kelahiran",
-      allowClear: true
-    });
+
   })
 </script>
