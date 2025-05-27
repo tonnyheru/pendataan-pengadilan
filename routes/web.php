@@ -59,10 +59,10 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
             Route::get('catatan/{uid}', [AktaKematianDetailController::class, 'showCatatan'])->name('akta_kematian.show_catatan');
         });
         Route::prefix('akta_perkawinan')->group(function () {
-            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_perkawinan.show_catatan');
+            Route::get('catatan/{uid}', [AktaPerkawinanDetailController::class, 'showCatatan'])->name('akta_perkawinan.show_catatan');
         });
         Route::prefix('akta_perceraian')->group(function () {
-            Route::get('catatan/{uid}', [PerbaikanAktaDetailController::class, 'showCatatan'])->name('akta_perceraian.show_catatan');
+            Route::get('catatan/{uid}', [AktaPerceraianDetailController::class, 'showCatatan'])->name('akta_perceraian.show_catatan');
         });
         Route::prefix('pengangkatan_anak')->group(function () {
             Route::get('catatan/{uid}', [PengangkatanAnakDetailController::class, 'showCatatan'])->name('pengangkatan_anak.show_catatan');

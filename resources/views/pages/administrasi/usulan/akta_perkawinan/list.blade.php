@@ -113,7 +113,7 @@
         }
         
         Ryuna.close_modal()
-        window.LaravelDataTables["aktakematiandetail-table"].draw()
+        window.LaravelDataTables["aktaperkawinandetail-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){
@@ -164,7 +164,7 @@
             type: 'success',
             confirmButtonColor: '#007bff'
           })
-        window.LaravelDataTables["aktakematiandetail-table"].draw()
+        window.LaravelDataTables["aktaperkawinandetail-table"].draw()
         }).fail((xhr) => {
           Swal.fire({
             title: xhr.responseJSON.message,
@@ -317,7 +317,7 @@
         if($('[name="_method"]').val() == undefined) {
           el_form[0].reset()
         }
-        window.LaravelDataTables["aktakematiandetail-table"].draw()
+        window.LaravelDataTables["aktaperkawinandetail-table"].draw()
       }
     }).fail((xhr) => {
       if(xhr?.status == 422){

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PengakuanAnakDetail extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = "pengakuan_anak_details";
     protected $primaryKey = 'uid';
     public $incrementing = false;
@@ -16,6 +17,7 @@ class PengakuanAnakDetail extends Model
         'uid',
         'submission_uid',
         'nama_anak',
+        'tipe',
     ];
 
     protected $casts = [

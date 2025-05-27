@@ -48,7 +48,7 @@ class AktaKematianDetailController extends Controller
      */
     public function store(Request $request)
     {
-        if (!PermissionCommon::check('perbaikan_akta.create')) abort(403);
+        if (!PermissionCommon::check('akta_kematian.create')) abort(403);
         $request->validate([
             'no_perkara' => 'required|unique:submissions,no_perkara',
             'pemohon_uid' => 'required',
@@ -311,7 +311,7 @@ class AktaKematianDetailController extends Controller
             $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
             return [
-                'title' => 'Edit Usulan Perbaikan Akta',
+                'title' => 'Edit Usulan Penerbitan Akta Kematian',
                 'body' => $body,
                 'footer' => $footer
             ];

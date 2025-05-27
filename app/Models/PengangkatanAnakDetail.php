@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class PengangkatanAnakDetail extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = "pengangkatan_anak_details";
     protected $primaryKey = 'uid';
     public $incrementing = false;

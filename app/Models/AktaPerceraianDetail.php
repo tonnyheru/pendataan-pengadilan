@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class AktaPerceraianDetail extends Model
 {
     use HasFactory;
+    public $timestamps = false;
     protected $table = "akta_perceraian_details";
     protected $primaryKey = 'uid';
     public $incrementing = false;

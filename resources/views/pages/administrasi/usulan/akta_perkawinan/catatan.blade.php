@@ -22,8 +22,8 @@
               $stat = 'Disetujui';
               $badge = 'bg-success';
               break;
-            case '99':
-              $status = 'Telah dirubah datanya';
+            case '4':
+              $status = 'Perubahan Data';
               $stat = 'Perubahan Data';
               $badge = 'bg-yellow';
               break;
@@ -40,7 +40,7 @@
         </span>
         <div class="timeline-content">
           <small class="text-muted font-weight-bold">{{ $value->timestamp }}</small>
-          <h5 class=" mt-3 mb-0">{{$status}} usulan dengan nomor perkara {{$aktaKematianDetail->submission->no_perkara}} dengan nama petugas {{$value->name}}</h5>
+          <h5 class=" mt-3 mb-0">{{$status}} usulan dengan nomor perkara {{$aktaPerkawinanDetail->submission->no_perkara}} dengan nama petugas {{$value->name}}</h5>
           <h5 class=" mt-3 mb-0">catatan : {{ $value->catatan }}</h5>
           <div class="mt-3">
             <span class="badge badge-pill {{$badge}} text-white">{{$stat}}</span>

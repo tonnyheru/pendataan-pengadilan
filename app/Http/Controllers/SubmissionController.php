@@ -35,8 +35,82 @@ class SubmissionController extends Controller
                     'footer' => $footer
                 ];
                 break;
-            case 'pindah_datang':
-                $submission = Submission::with('pindahDatang')->find($uid);
+            case 'akta_perkawinan':
+                $detail = $submission->aktaPerkawinanDetail;
+                $body = view('pages.administrasi.usulan.akta_perkawinan.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Penerbitan Akta Perkawinan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'akta_perceraian':
+                $detail = $submission->aktaPerceraianDetail;
+                $body = view('pages.administrasi.usulan.akta_perceraian.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Penerbitan Akta Perceraian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pengangkatan_anak':
+                $detail = $submission->pengangkatanAnakDetail;
+                $body = view('pages.administrasi.usulan.pengangkatan_anak.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Pengangkatan Anak',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pengakuan_anak':
+                $detail = $submission->pengakuanAnakDetail;
+                $body = view('pages.administrasi.usulan.pengakuan_anak.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Pengakuan Anak',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_akta_kelahiran':
+                $detail = $submission->pembatalanAktaKelahiranDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_akta_kelahiran.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Pembatalan Akta Kelahiran',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_perceraian':
+                $detail = $submission->pembatalanPerceraianDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_perceraian.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Pembatalan Perceraian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_perkawinan':
+                $detail = $submission->pembatalanPerkawinanDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_perkawinan.form_approve', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'approve\')">Approve</button>';
+                return [
+                    'title' => 'Approve Usulan Pembatalan Perkawinan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
                 break;
             default:
                 return [];
@@ -134,8 +208,82 @@ class SubmissionController extends Controller
                     'footer' => $footer
                 ];
                 break;
-            case 'pindah_datang':
-                $submission = Submission::with('pindahDatang')->find($uid);
+            case 'akta_perkawinan':
+                $detail = $submission->aktaPerkawinanDetail;
+                $body = view('pages.administrasi.usulan.akta_perkawinan.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Penerbitan Akta Perkawinan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'akta_perceraian':
+                $detail = $submission->aktaPerceraianDetail;
+                $body = view('pages.administrasi.usulan.akta_perceraian.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Penerbitan Akta Perceraian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pengangkatan_anak':
+                $detail = $submission->pengangkatanAnakDetail;
+                $body = view('pages.administrasi.usulan.pengangkatan_anak.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Pengangkatan Anak',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pengakuan_anak':
+                $detail = $submission->pengakuanAnakDetail;
+                $body = view('pages.administrasi.usulan.pengakuan_anak.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Pengakuan Anak',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_akta_kelahiran':
+                $detail = $submission->pembatalanAktaKelahiranDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_akta_kelahiran.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Pembatalan Akta Kelahiran',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_perceraian':
+                $detail = $submission->pembatalanPerceraianDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_perceraian.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Pembatalan Perceraian',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
+                break;
+            case 'pembatalan_perkawinan':
+                $detail = $submission->pembatalanPerkawinanDetail;
+                $body = view('pages.administrasi.usulan.pembatalan_perkawinan.form_reject', compact('submission', 'uid', 'detail'))->render();
+                $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" onclick="approve_reject_store(\'reject\')">Reject</button>';
+                return [
+                    'title' => 'Reject Usulan Pembatalan Perkawinan',
+                    'body' => $body,
+                    'footer' => $footer
+                ];
                 break;
             default:
                 return [];

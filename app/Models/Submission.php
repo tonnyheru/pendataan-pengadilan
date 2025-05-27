@@ -60,4 +60,36 @@ class Submission extends Model
     {
         return $this->hasOne(AktaKematianDetail::class, 'submission_uid', 'uid');
     }
+
+    public function aktaPerkawinanDetail()
+    {
+        return $this->hasOne(AktaPerkawinanDetail::class, 'submission_uid', 'uid');
+    }
+
+    public function aktaPerceraianDetail()
+    {
+        return $this->hasOne(AktaPerceraianDetail::class, 'submission_uid', 'uid');
+    }
+
+    public function pengangkatanAnakDetail()
+    {
+        return $this->hasOne(PengangkatanAnakDetail::class, 'submission_uid', 'uid');
+    }
+
+    public function pengakuanAnakDetail()
+    {
+        return $this->hasOne(PengakuanAnakDetail::class, 'submission_uid', 'uid');
+    }
+    public function pembatalanAktaKelahiranDetail()
+    {
+        return $this->hasOne(PembatalanAktaKelahiranDetail::class, 'submission_uid', 'uid');
+    }
+    public function pembatalanPerceraianDetail()
+    {
+        return $this->hasOne(PembatalanPerceraianDetail::class, 'submission_uid', 'uid');
+    }
+    public function pembatalanPerkawinanDetail()
+    {
+        return $this->hasOne(PembatalanPerkawinanDetail::class, 'submission_uid', 'uid');
+    }
 }
