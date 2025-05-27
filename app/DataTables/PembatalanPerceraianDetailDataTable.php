@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
+use App\Models\Disdukcapil;
 use App\Models\PembatalanPerceraianDetail;
 use App\Models\Submission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -176,6 +177,15 @@ class PembatalanPerceraianDetailDataTable extends DataTable
      */
     public function query(PembatalanPerceraianDetail $model): QueryBuilder
     {
+        if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
+            $role = auth()->user()->role->slug;
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+
+            return $model->newQuery()
+                ->join('submissions', 'submissions.uid', '=', 'pembatalan_perceraian_details.submission_uid')
+                ->where('submissions.disdukcapil_uid', $uid);
+        }
         return $model->newQuery();
     }
 
@@ -217,7 +227,7 @@ class PembatalanPerceraianDetailDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('pembatalan_perceraian.update') || PermissionCommon::check('pembatalan_perceraian.delete')) {
+        if (PermissionCommon::check('pembatalan_perceraian.update') || PermissionCommon::check('pembatalan_perceraian.delete') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

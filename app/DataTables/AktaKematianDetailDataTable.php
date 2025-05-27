@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
 use App\Models\AktaKematianDetail;
+use App\Models\Disdukcapil;
 use App\Models\Submission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -163,7 +164,7 @@ class AktaKematianDetailDataTable extends DataTable
                 );
             })
 
-            
+
 
             ->rawColumns(['action', 'status', 'dokumen']);
     }
@@ -176,6 +177,15 @@ class AktaKematianDetailDataTable extends DataTable
      */
     public function query(AktaKematianDetail $model): QueryBuilder
     {
+        if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
+            $role = auth()->user()->role->slug;
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+
+            return $model->newQuery()
+                ->join('submissions', 'submissions.uid', '=', 'akta_kematian_details.submission_uid')
+                ->where('submissions.disdukcapil_uid', $uid);
+        }
         return $model->newQuery();
     }
 

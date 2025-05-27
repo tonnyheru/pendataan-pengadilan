@@ -3,6 +3,7 @@
 namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
+use App\Models\Disdukcapil;
 use App\Models\PengakuanAnakDetail;
 use App\Models\Submission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
@@ -176,6 +177,15 @@ class PengakuanAnakDetailDataTable extends DataTable
      */
     public function query(PengakuanAnakDetail $model): QueryBuilder
     {
+        if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
+            $role = auth()->user()->role->slug;
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+
+            return $model->newQuery()
+                ->join('submissions', 'submissions.uid', '=', 'pengakuan_anak_details.submission_uid')
+                ->where('submissions.disdukcapil_uid', $uid);
+        }
         return $model->newQuery();
     }
 
@@ -217,7 +227,7 @@ class PengakuanAnakDetailDataTable extends DataTable
     {
 
         $column = [];
-        if (PermissionCommon::check('pengakuan_anak.update') || PermissionCommon::check('pengakuan_anak.delete')) {
+        if (PermissionCommon::check('pengakuan_anak.update') || PermissionCommon::check('pengakuan_anak.delete') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)

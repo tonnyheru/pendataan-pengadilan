@@ -4,6 +4,7 @@ namespace App\DataTables;
 
 use App\Helpers\PermissionCommon;
 use App\Models\AktaPerceraianDetail;
+use App\Models\Disdukcapil;
 use App\Models\Submission;
 use Illuminate\Database\Eloquent\Builder as QueryBuilder;
 use Yajra\DataTables\EloquentDataTable;
@@ -176,6 +177,15 @@ class AktaPerceraianDetailDataTable extends DataTable
      */
     public function query(AktaPerceraianDetail $model): QueryBuilder
     {
+        if (str_contains(auth()->user()->role->slug, 'disdukcapil')) {
+            $role = auth()->user()->role->slug;
+            $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
+                ->value('uid');
+
+            return $model->newQuery()
+                ->join('submissions', 'submissions.uid', '=', 'akta_perceraian_details.submission_uid')
+                ->where('submissions.disdukcapil_uid', $uid);
+        }
         return $model->newQuery();
     }
 
@@ -218,7 +228,7 @@ class AktaPerceraianDetailDataTable extends DataTable
     public function getColumns(): array
     {
         $column = [];
-        if (PermissionCommon::check('akta_perceraian.update') || PermissionCommon::check('akta_perceraian.delete')) {
+        if (PermissionCommon::check('akta_perceraian.update') || PermissionCommon::check('akta_perceraian.delete') || PermissionCommon::check('usulan.approve_disdukcapil')) {
             $column[] = Column::computed('action')
                 ->exportable(false)
                 ->printable(false)
