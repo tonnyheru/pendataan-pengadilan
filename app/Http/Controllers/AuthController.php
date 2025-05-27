@@ -21,10 +21,19 @@ class AuthController extends Controller
 
     public function login_process(Request $request)
     {
-        $request->validate([
-            'username' => 'required',
-            'password' => 'required',
-        ]);
+        $request->validate(
+            [
+                'username' => 'required',
+                'password' => 'required',
+                'g-recaptcha-response' => 'required|captcha', // Tambah ini
+            ],
+            [
+                'username.required' => 'Username harus diisi.',
+                'password.required' => 'Password harus diisi.',
+                'g-recaptcha-response.required' => 'Captcha harus diisi.',
+                'g-recaptcha-response.captcha' => 'Captcha tidak valid, silakan coba lagi.',
+            ]
+        );
 
         $credential = $request->only('username', 'password');
 
@@ -38,26 +47,7 @@ class AuthController extends Controller
             AuthCommon::setUser($user);
             app('session')->put('slug_permit', $slug);
             return redirect('/app/dashboard');
-            // if(in_array($user->role_id, [2,3])){
-            // } 
-
-            AuthCommon::logout();
         }
-
-        // if (AuthCommon::check_credential($credential)) {
-        //     $user = AuthCommon::getUser();
-        //     AuthCommon::setUser($user);
-        //     $role = $user->role->slug;
-        //     app('session')->put('role_permit', $role);
-        //     if ($role == "client") {
-        //         return redirect('/inventory/backup-data');
-        //     } else {
-        //         return redirect('/inventory/dashboard');
-        //     }
-
-        //     AuthCommon::logout();
-        // }
-
 
         return redirect('/login')
             ->withInput()

@@ -84,6 +84,7 @@
               </div>
               @enderror
               <form role="form" class="text-start" method="POST" action="{{ route('auth.login_process') }}">
+                
                 @csrf
                 <label>Username</label>
                 <div class="mb-3">
@@ -98,6 +99,14 @@
                   @if($errors->has('password'))
                     <span class="text-danger text-sm">{{ $errors->first('password') }}</span>
                   @endif
+                </div>
+                
+                {{-- CAPTCHA --}}
+                <div class="mb-3">
+                    {!! NoCaptcha::display() !!}
+                    @if ($errors->has('g-recaptcha-response'))
+                        <span class="text-danger text-sm">{{ $errors->first('g-recaptcha-response') }}</span>
+                    @endif
                 </div>
                 <div class="text-center">
                   <button type="submit" class="btn btn-primary w-100 mt-4 mb-0" style="background: #016004 !important">Log In</button>
@@ -144,6 +153,7 @@
   <script async defer src="{{asset('argon2/assets/js/buttons.github.io-buttons.js')}}"></script>
   <!-- Control Center for Soft Dashboard: parallax effects, scripts for the example pages etc -->
   <script src="{{asset('argon2/assets/js/js-argon-dashboard.min.js')}}"></script>
+  {!! NoCaptcha::renderJs() !!}
 </body>
 
 </html>
