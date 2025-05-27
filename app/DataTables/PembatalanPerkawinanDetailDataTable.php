@@ -199,7 +199,7 @@ class PembatalanPerkawinanDetailDataTable extends DataTable
     {
 
         $button = [];
-        $button[] = Button::make('excel')->text('<span title="Export Excel"><i class="fa fa-file-excel"></i></span>');
+         
         if (PermissionCommon::check('pembatalan_perkawinan.create')) {
             $button[] = Button::raw('<i class="fa fa-plus"></i> Tambah Usulan Pembatalan Perkawinan')->action('function() { create() }');
         }

@@ -198,7 +198,7 @@ class PengakuanAnakDetailDataTable extends DataTable
     public function html(): HtmlBuilder
     {
         $button = [];
-        $button[] = Button::make('excel')->text('<span title="Export Excel"><i class="fa fa-file-excel"></i></span>');
+         
         if (PermissionCommon::check('pengakuan_anak.create')) {
             $button[] = Button::raw('<i class="fa fa-plus"></i> Tambah Usulan Pengesahan / Pengakuan Anak')->action('function() { create() }');
         }
