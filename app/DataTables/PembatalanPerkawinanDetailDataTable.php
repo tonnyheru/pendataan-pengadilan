@@ -44,9 +44,9 @@ class PembatalanPerkawinanDetailDataTable extends DataTable
                         $html .= '<br><button onclick="approve(\'' . $item->submission->uid . '\',\'pembatalan_perkawinan\')" type="button" class="btn btn-sm bg-primary text-white mt-1" title="Approve Usulan"><i class="fas fa-clipboard-check"></i> Approve </button>';
                         $html .= '<button onclick="reject(\'' . $item->submission->uid . '\',\'pembatalan_perkawinan\')" type="button" class="btn btn-sm bg-danger text-white mt-1" title="Tolak Usulan"><i class="fas fa-times-hexagon"></i> Tolak </button>';
                     }
-                    // if ($item->submission->status == 2) {
-                    //     $html .= '<br><button onclick="sendMail(\'' . $item->submission->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Kirim Email"><i class="fas fa-paper-plane"></i> Kirim Email </button>';
-                    // }
+                    if ($item->submission->status == 2) {
+                        $html .= '<br><button onclick="sendMail(\'' . $item->submission->uid . '\')" type="button" class="btn btn-sm bg-diy text-white mt-1" title="Kirim Email"><i class="fas fa-paper-plane"></i> Kirim Email </button>';
+                    }
                 }
                 return $html;
             })
