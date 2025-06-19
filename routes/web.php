@@ -1,5 +1,6 @@
 <?php
 
+use App\Helpers\WhatsappHelper;
 use App\Http\Controllers\AktaKematianDetailController;
 use App\Http\Controllers\AktaPerceraianDetailController;
 use App\Http\Controllers\AktaPerkawinanDetailController;
@@ -29,6 +30,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\SendEmail;
+use App\Models\Submission;
 use GuzzleHttp\Client;
 
 /*
@@ -173,21 +175,66 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
             'attachments.*.max' => 'Maksimal Ukuran File Lampiran 2MB',
         ]);
         $data = $request->except('_token');
-        $usulan = Usulan::find($uid);
+        $usulan = Submission::find($uid);
         if ($usulan) {
+            $detail = $usulan->submission_type;
+            $jenis = '';
+            switch ($detail) {
+                case 'perbaikan_akta':
+                    $jenis = 'Perbaikan Akta';
+                    break;
+                case 'akta_kematian':
+                    $jenis = 'Penerbitan Akta Kematian';
+                    break;
+                case 'akta_perkawinan':
+                    $jenis = 'PenerbitanAkta Perkawinan';
+                    break;
+                case 'akta_perceraian':
+                    $jenis = 'Penerbitan Akta Perceraian';
+                    break;
+                case 'pengangkatan_anak':
+                    $jenis = 'Pengangkatan Anak';
+                    break;
+                case 'pengakuan_anak':
+                    $jenis = 'Pengesahan / Pengakuan Anak';
+                    break;
+                case 'pembatalan_akta_kelahiran':
+                    $jenis = 'Pembatalan Akta Kelahiran';
+                    break;
+                case 'pembatalan_perceraian':
+                    $jenis = 'Pembatalan Akta Perceraian';
+                    break;
+                case 'pembatalan_perkawinan':
+                    $jenis = 'Pembatalan Akta Perkawinan';
+                    break;
+                default:
+                    $jenis = 'Tidak Diketahui';
+                    break;
+            }
             $attach = [];
             $kepada = $usulan->pemohon->email;
             $data['logo'] = $usulan->disdukcapil->cdn_picture;
-            $data['title'] = $usulan->disdukcapil->nama;
-            $data['nama'] = $usulan->pemohon->name;
-            $data['alamat'] = $usulan->pemohon->alamat;
-            $data['no_telp'] = $usulan->pemohon->no_telp;
-            $data['email'] = $usulan->pemohon->email;
-            $data['no_perkara'] = $usulan->no_perkara;
-            $data['jenis_perkara'] = $usulan->jenis_perkara;
-            $data['nama_disdukcapil'] = $usulan->disdukcapil->nama;
+            $data['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
             $data['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
-            $data['no_telp_disdukcapil'] = $usulan->disdukcapil->no_telp;
+            $nama_disdukcapil = $usulan->disdukcapil->nama;
+            switch($nama_disdukcapil) {
+                case 'Disdukcapil Kabupaten Bandung Barat':
+                    $data['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
+                    break;
+                case 'Disdukcapil Kabupaten Bandung':
+                    $data['alamat-line2'] = 'Telp. (022) 5892126';
+                    break;
+                case 'Disdukcapil Kota Cimahi':
+                    $data['alamat-line2'] = 'Telepon: (022) 6631885 | Website: <a href="https://disdukcapil.cimahikota.go.id">https://disdukcapil.cimahikota.go.id</a> | Email: <a href="mailto:disdukcapil@cimahikota.go.id">disdukcapil@cimahikota.go.id</a>';
+                    break;
+                default:
+                    $data['alamat-line2'] = '';
+            }
+            $data['nama'] = $usulan->pemohon->name;
+            $data['alamat_pemohon'] = $usulan->pemohon->alamat;
+            $data['no_perkara'] = $usulan->no_perkara;
+            $data['jenis_perkara'] = $jenis;
+            $data['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
 
             // dd($request->file('attachments'));
 
@@ -201,30 +248,31 @@ Route::prefix('app')->middleware(PengadilanAuth::class)->group(function () {
 
             // dd($data);
             Mail::to($kepada)->send(new SendEmail($data));
-            try {
-                $options = [
-                    'multipart' => [
-                        [
-                            'name' => 'device_id',
-                            'contents' => '93ce715666c4811b544060462e10db8f'
-                        ],
-                        [
-                            'name' => 'number',
-                            'contents' => $usulan->pemohon->no_telp,
-                        ],
-                        [
-                            'name' => 'message',
-                            'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Terima kasih telah menggunakan layanan kami, mohon cek email untuk dokumen yang sudah diperbaharui.'
-                        ]
-                    ]
-                ];
-                $client = new Client([
-                    'http_errors' => false
-                ]);
-                $res = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
-            } catch (\Throwable $th) {
-                //throw $th;
-            }
+            $disdukcapil = $usulan->disdukcapil->nama;
+            $nama_pemohon = $usulan->pemohon->name;
+            $alamat_pemohon = $usulan->pemohon->alamat;
+            $nomor_perkara = $usulan->no_perkara;
+            $tanggal_pengajuan = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+            $message = <<<EOT
+            Kepada Yth. $nama_pemohon,
+            $alamat_pemohon
+
+            Kami dari Disdukcapil menginformasikan bahwa permohonan pembaharuan dokumen catatan sipil Anda telah diproses dan dokumen baru telah diterbitkan. Sebagai bukti pembaharuan, kami lampirkan dokumen catatan sipil yang telah diperbaharui untuk keperluan Anda, silakan cek email Anda.
+
+            Informasi terkait dokumen yang di perbaharui:
+
+            📝 Nama Pemohon      : $nama_pemohon
+            📑 Nomor Perkara     : $nomor_perkara
+            📅 Tanggal Pengajuan : $tanggal_pengajuan
+            🗃 Jenis Permohonan  : $jenis
+
+            Harap periksa dokumen terlampir dan pastikan semua informasi yang tercantum sudah benar. Jika Anda membutuhkan bantuan lebih lanjut atau memiliki pertanyaan mengenai dokumen ini, jangan ragu untuk menghubungi kami.
+            Terimakasih.
+
+            Hormat Kami,
+            $disdukcapil
+            EOT;
+            WhatsappHelper::sendSingleMessage($usulan->pemohon->no_telp, $message);
 
             foreach ($data['attach'] as $file) {
                 unlink(public_path('upload/email/' . $file));

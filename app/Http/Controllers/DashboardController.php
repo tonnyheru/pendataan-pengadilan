@@ -23,6 +23,7 @@ class DashboardController extends Controller
             'colors' => ['#F5365C', '#2DCE89']
         ];
 
+        return view('emails.notifiedpemohon');
         return view('pages.dashboard.admin', compact('statistics', 'chartData'));
     }
 }

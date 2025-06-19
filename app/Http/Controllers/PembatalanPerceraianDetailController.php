@@ -4,12 +4,15 @@ namespace App\Http\Controllers;
 
 use App\DataTables\PembatalanPerceraianDetailDataTable;
 use App\Helpers\PermissionCommon;
+use App\Helpers\WhatsappHelper;
+use App\Mail\NotifEmail;
 use App\Models\Disdukcapil;
 use App\Models\PembatalanPerceraianDetail;
 use App\Models\Pemohon;
 use App\Models\Submission;
 use App\Models\SubmissionDocument;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
 class PembatalanPerceraianDetailController extends Controller
@@ -207,23 +210,45 @@ class PembatalanPerceraianDetailController extends Controller
                 }
 
 
-                // $disdukcapil = Disdukcapil::find($data['delegasi']);
-                // $pemohon = Pemohon::find($data['pemohon_uid']);
-                // if ($disdukcapil) {
-                //     $notif = [];
-                //     $notif['logo'] = $disdukcapil->cdn_picture;
-                //     $notif['title'] = 'Notifikasi Usulan Baru';
-                //     $notif['nama'] = $pemohon->name;
-                //     $notif['no_telp'] = $pemohon->no_telp;
-                //     $notif['no_perkara'] = $data['no_perkara'];
-                //     $notif['alamat'] = $pemohon->alamat;
-                //     $notif['email'] = $pemohon->email;
-                //     $notif['jenis_perkara'] = $data['jenis_perkara'];
-                //     $notif['nama_disdukcapil'] = $disdukcapil->nama;
-                //     $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
-                //     $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
-                //     Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
-                // }
+                $disdukcapil = Disdukcapil::find($data['disdukcapil']);
+                $pemohon = Pemohon::find($data['pemohon_uid']);
+                if ($disdukcapil) {
+                    $notif = [];
+                    $notif['logo'] = $disdukcapil->cdn_picture;
+                    $notif['title'] = 'Notifikasi Usulan Baru';
+                    $notif['nama'] = $pemohon->name;
+                    $notif['no_telp'] = $pemohon->no_telp;
+                    $notif['no_perkara'] = $data['no_perkara'];
+                    $notif['alamat'] = $pemohon->alamat;
+                    $notif['email'] = $pemohon->email;
+                    $notif['jenis_perkara'] = "Pembatalan Akta Perceraian";
+                    $notif['nama_disdukcapil'] = $disdukcapil->nama;
+                    $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
+                    $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
+                    $notif['tanggal_pengajuan'] = date('d-m-Y H:i:s');
+                    Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
+                    $disdukcapil = $disdukcapil->nama;
+                    $nama_pemohon = $pemohon->name;
+                    $nomor_perkara = $data['no_perkara'];
+                    $tanggal_pengajuan = date('d-m-Y H:i:s');
+                    $jenis_permohonan = "Pembatalan Akta Perceraian";
+                    $message = <<<EOT
+                    Yth. $disdukcapil,
+
+                    Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang telah dikirimkan oleh Pengadilan Negeri Bale Bandung. Kami mohon agar Disdukcapil dapat segera menindaklanjuti usulan yang telah diajukan.
+
+                    Informasi Terkait Usulan yang Dikirimkan:
+
+                    📝 Nama Pemohon      : $nama_pemohon
+                    📑 Nomor Perkara     : $nomor_perkara
+                    📅 Tanggal Pengajuan : $tanggal_pengajuan
+                    🗃 Jenis Permohonan  : $jenis_permohonan
+
+                    Terima kasih atas kerjasamanya.
+                    Pengadilan Negeri Bale Bandung
+                    EOT;
+                    WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
+                }
 
 
                 return response([

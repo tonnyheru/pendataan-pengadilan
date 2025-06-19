@@ -3,8 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionCommon;
+use App\Helpers\WhatsappHelper;
+use App\Mail\ApprovalEmail;
 use App\Models\Submission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class SubmissionController extends Controller
 {
@@ -155,7 +158,94 @@ class SubmissionController extends Controller
 
 
                 $trx = $usulan->update($formData);
+                $detail = $usulan->submission_type;
+                $jenis = '';
+                switch ($detail) {
+                    case 'perbaikan_akta':
+                        $jenis = 'Perbaikan Akta';
+                        break;
+                    case 'akta_kematian':
+                        $jenis = 'Penerbitan Akta Kematian';
+                        break;
+                    case 'akta_perkawinan':
+                        $jenis = 'PenerbitanAkta Perkawinan';
+                        break;
+                    case 'akta_perceraian':
+                        $jenis = 'Penerbitan Akta Perceraian';
+                        break;
+                    case 'pengangkatan_anak':
+                        $jenis = 'Pengangkatan Anak';
+                        break;
+                    case 'pengakuan_anak':
+                        $jenis = 'Pengesahan / Pengakuan Anak';
+                        break;
+                    case 'pembatalan_akta_kelahiran':
+                        $jenis = 'Pembatalan Akta Kelahiran';
+                        break;
+                    case 'pembatalan_perceraian':
+                        $jenis = 'Pembatalan Akta Perceraian';
+                        break;
+                    case 'pembatalan_perkawinan':
+                        $jenis = 'Pembatalan Akta Perkawinan';
+                        break;
+                    default:
+                        $jenis = 'Tidak Diketahui';
+                        break;
+                }
                 if ($trx) {
+                    $notif = [];
+                    $notif['logo'] = $usulan->disdukcapil->cdn_picture;
+                    $notif['approval'] = "approve";
+                    $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                    $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
+                    $nama_disdukcapil = $usulan->disdukcapil->nama;
+                    switch($nama_disdukcapil) {
+                        case 'Disdukcapil Kabupaten Bandung Barat':
+                            $notif['telepon'] = '';
+                            $notif['website'] = 'Website : <a href="http://bandungbaratkab.go.id/">http://bandungbaratkab.go.id/</a>';
+                            $notif['email'] = 'Email : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>';
+                            break;
+                        case 'Disdukcapil Kabupaten Bandung':
+                            $notif['telepon'] = 'Telp. (022) 5892126';
+                            $notif['website'] = '';
+                            $notif['email'] = '';
+                            break;
+                        case 'Disdukcapil Kota Cimahi':
+                            $notif['telepon'] = 'Telepon : (022) 1234567';
+                            $notif['website'] = 'Website : <a href="https://disdukcapil.cimahikota.go.id">https://disdukcapil.cimahikota.go.id</a>';
+                            $notif['email'] = 'Email : <a href="mailto:disdukcapil@cimahikota.go.id">disdukcapil@cimahikota.go.id</a>';
+                            break;
+                        default:
+                            $notif['telepon'] = '';
+                            $notif['website'] = '';
+                            $notif['email'] = '';
+                    }
+                    $notif['nama'] = $usulan->pemohon->name;
+                    $notif['no_perkara'] = $usulan->no_perkara;
+                    $notif['jenis_perkara'] = $jenis;
+                    $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                    // kirim ke pengadilan
+                    Mail::to("abumilhan78@gmail.com")->send(new ApprovalEmail($notif));
+                    $disdukcapil = $usulan->disdukcapil->nama;
+                    $nama_pemohon = $usulan->pemohon->name;
+                    $nomor_perkara = $usulan->no_perkara;
+                    $tanggal_pengajuan = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                    $message = <<<EOT
+                    Yth. Pengadilan Negeri Bale Bandung,
+
+                    Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang diajukan oleh Pengadilan Negeri Bale Bandung *telah diterima dan disetujui* oleh pihak Disdukcapil. Proses pembaharuan dokumen catatan sipil untuk pemohon akan segera diproses sesuai dengan prosedur yang berlaku.
+
+                    Informasi Terkait Usulan yang Dikirimkan:
+
+                    📝 Nama Pemohon      : $nama_pemohon
+                    📑 Nomor Perkara     : $nomor_perkara
+                    📅 Tanggal Pengajuan : $tanggal_pengajuan
+                    🗃 Jenis Permohonan  : $jenis
+
+                    Terima kasih atas kerjasamanya.
+                    $disdukcapil
+                    EOT;
+                    WhatsappHelper::sendSingleMessage('085156283616', $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Disetujui'
@@ -322,53 +412,86 @@ class SubmissionController extends Controller
 
 
                 $trx = $usulan->update($formData);
+                $detail = $usulan->submission_type;
+                $jenis = '';
+                switch ($detail) {
+                    case 'perbaikan_akta':
+                        $jenis = 'Perbaikan Akta';
+                        break;
+                    case 'akta_kematian':
+                        $jenis = 'Penerbitan Akta Kematian';
+                        break;
+                    case 'akta_perkawinan':
+                        $jenis = 'PenerbitanAkta Perkawinan';
+                        break;
+                    case 'akta_perceraian':
+                        $jenis = 'Penerbitan Akta Perceraian';
+                        break;
+                    case 'pengangkatan_anak':
+                        $jenis = 'Pengangkatan Anak';
+                        break;
+                    case 'pengakuan_anak':
+                        $jenis = 'Pengesahan / Pengakuan Anak';
+                        break;
+                    case 'pembatalan_akta_kelahiran':
+                        $jenis = 'Pembatalan Akta Kelahiran';
+                        break;
+                    case 'pembatalan_perceraian':
+                        $jenis = 'Pembatalan Akta Perceraian';
+                        break;
+                    case 'pembatalan_perkawinan':
+                        $jenis = 'Pembatalan Akta Perkawinan';
+                        break;
+                    default:
+                        $jenis = 'Tidak Diketahui';
+                        break;
+                }
                 if ($trx) {
-                    $createdBy = $usulan->createdBy();
+                    $notif = [];
+                    $notif['logo'] = $usulan->disdukcapil->cdn_picture;
+                    $notif['approval'] = "reject";
+                    $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                    $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
+                    $nama_disdukcapil = $usulan->disdukcapil->nama;
+                    switch($nama_disdukcapil) {
+                        case 'Disdukcapil Kabupaten Bandung Barat':
+                            $notif['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
+                            break;
+                        case 'Disdukcapil Kabupaten Bandung':
+                            $notif['alamat-line2'] = 'Telp. (022) 5892126';
+                            break;
+                        case 'Disdukcapil Kota Cimahi':
+                            $notif['alamat-line2'] = 'Telepon: (022) 6631885 | Website: <a href="https://disdukcapil.cimahikota.go.id">https://disdukcapil.cimahikota.go.id</a> | Email: <a href="mailto:disdukcapil@cimahikota.go.id">disdukcapil@cimahikota.go.id</a>';
+                            break;
+                        default:
+                            $notif['alamat-line2'] = '';
+                    }
+                    $notif['nama'] = $usulan->pemohon->name;
+                    $notif['no_perkara'] = $usulan->no_perkara;
+                    $notif['jenis_perkara'] = $jenis;
+                    $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                    // kirim ke pengadilan
+                    Mail::to("abumilhan78@gmail.com")->send(new ApprovalEmail($notif));
+                    $disdukcapil = $usulan->disdukcapil->nama;
+                    $nama_pemohon = $usulan->pemohon->name;
+                    $nomor_perkara = $usulan->no_perkara;
+                    $tanggal_pengajuan = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                    $message = <<<EOT
+                    Yth. Pengadilan Negeri Bale Bandung,
 
-                    // prosedur kirim WA
+                    Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang diajukan oleh Pengadilan Negeri Bale Bandung *ditolak* oleh pihak Disdukcapil. Mohon agar dapat melakukan verifikasi lebih lanjut dan mengajukan kembali permohonan yang sesuai dengan prosedur yang berlaku.
 
-                    // try {
-                    //     $options = [
-                    //         'multipart' => [
-                    //             [
-                    //                 'name' => 'device_id',
-                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
-                    //             ],
-                    //             [
-                    //                 'name' => 'number',
-                    //                 'contents' => $createdBy->no_telp,
-                    //             ],
-                    //             [
-                    //                 'name' => 'message',
-                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
-                    //             ]
-                    //         ]
-                    //     ];
-                    //     $client = new GuzzleClient([
-                    //         'http_errors' => false
-                    //     ]);
-                    //     $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+                    Informasi Terkait Usulan yang Dikirimkan:
 
-                    //     $options2 = [
-                    //         'multipart' => [
-                    //             [
-                    //                 'name' => 'device_id',
-                    //                 'contents' => '93ce715666c4811b544060462e10db8f'
-                    //             ],
-                    //             [
-                    //                 'name' => 'number',
-                    //                 'contents' => $usulan->pemohon->no_telp,
-                    //             ],
-                    //             [
-                    //                 'name' => 'message',
-                    //                 'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
-                    //             ]
-                    //         ]
-                    //     ];
-                    //     $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
-                    // } catch (\Throwable $th) {
-                    //     //throw $th;
-                    // }
+                    📝 Nama Pemohon      : $nama_pemohon
+                    📑 Nomor Perkara     : $nomor_perkara
+                    📅 Tanggal Pengajuan : $tanggal_pengajuan
+                    🗃 Jenis Permohonan  : $jenis
+
+                    Terima kasih atas kerjasamanya.
+                    $disdukcapil
+                    EOT;
+                    WhatsappHelper::sendSingleMessage('085156283616', $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'

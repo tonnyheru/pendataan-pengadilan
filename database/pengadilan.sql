@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: May 27, 2025 at 07:40 AM
+-- Generation Time: Jun 19, 2025 at 06:13 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -50,13 +50,6 @@ CREATE TABLE `akta_kematian_details` (
   `nama_saksi2` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `akta_kematian_details`
---
-
-INSERT INTO `akta_kematian_details` (`uid`, `submission_uid`, `nik_jenazah`, `nama_jenazah`, `wilayah_kelahiran`, `provinsi_kelahiran`, `tanggal_kematian`, `waktu_kematian`, `tempat_kematian`, `sebab_kematian`, `yang_menerangkan`, `keterangan`, `nik_ayah`, `nama_ayah`, `nik_ibu`, `nama_ibu`, `nik_saksi1`, `nama_saksi1`, `nik_saksi2`, `nama_saksi2`) VALUES
-('88aa6e9b-373f-400a-9653-87721bbae297', '603c7c1a-9b62-430b-9ebb-4397cda9cb16', '1234123412341234', 'JENAZAH', 'dalam_negeri', '32', '2025-05-08', '12:00:00', 'Masjid', 'Tidur', 'Asatidz', 'meninggal karena dipanggil', '1234123412341234', 'Ayah Jenazah', '1234123412341234', 'Ibu Jenazah', '1234123412341234', 'Saksi 1 Jenazah', NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -94,13 +87,6 @@ CREATE TABLE `akta_perceraian_details` (
   `waktu_lapor` time DEFAULT NULL,
   `keterangan` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `akta_perceraian_details`
---
-
-INSERT INTO `akta_perceraian_details` (`uid`, `submission_uid`, `nik_suami`, `kk_suami`, `paspor_suami`, `nama_suami`, `tempat_lahir_suami`, `tanggal_lahir_suami`, `alamat_suami`, `perceraian_ke`, `kewarganegaraan_suami`, `nik_istri`, `kk_istri`, `paspor_istri`, `nama_istri`, `tempat_lahir_istri`, `tanggal_lahir_istri`, `alamat_istri`, `kewarganegaraan_istri`, `yang_mengajukan`, `no_akta_kawin`, `tanggal_akta_kawin`, `tempat_perkawinan`, `no_putusan`, `tanggal_putusan`, `sebab_perceraian`, `tanggal_lapor`, `waktu_lapor`, `keterangan`) VALUES
-('c3048324-465d-4adf-9bd1-b1206fbdc5e4', '98728984-188a-4041-8831-6c83bfa996d7', '1234123412341234', '1234123412341234', NULL, 'Suami', 'Bandung', '2025-05-01', 'Alamat Suami', '1', 'Indonesia', '1234123412341234', '1234123412341234', NULL, 'Istri', 'Bandung', '2025-05-15', 'Alamat Istri', 'Indonesia', 'Suami', 'AKTA.KAWIN/V/2025', '2025-05-14', 'Gedung', 'PUTUSAN/V/2025', '2025-05-21', 'Meninggal', '2025-05-14', '12:00:00', 'ini keterangan');
 
 -- --------------------------------------------------------
 
@@ -150,13 +136,6 @@ CREATE TABLE `akta_perkawinan_details` (
   `tanggal_putusan` date DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `akta_perkawinan_details`
---
-
-INSERT INTO `akta_perkawinan_details` (`uid`, `submission_uid`, `nik_suami`, `kk_suami`, `nama_suami`, `kewarganegaraan_suami`, `alamat_suami`, `anak_ke_suami`, `perkawinan_ke_suami`, `nama_istri_terakhir`, `istri_ke`, `nik_ayah_suami`, `nama_ayah_suami`, `nik_ibu_suami`, `nama_ibu_suami`, `nik_istri`, `kk_istri`, `nama_istri`, `kewarganegaraan_istri`, `alamat_istri`, `anak_ke_istri`, `perkawinan_ke_istri`, `nama_suami_terakhir`, `nik_ayah_istri`, `nama_ayah_istri`, `nik_ibu_istri`, `nama_ibu_istri`, `nik_saksi1`, `nama_saksi1`, `nik_saksi2`, `nama_saksi2`, `tanggal_pemberkatan`, `tempat_pemberkatan`, `tanggal_lapor`, `waktu_lapor`, `agama`, `nama_pemuka_agama`, `no_putusan`, `tanggal_putusan`) VALUES
-('3a92c61f-8b56-45f1-bd6d-204b302162c2', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', '1234123412341234', '1234123412341234', 'Suami', 'Indonesia', 'Alamat Suami', '1', '1', NULL, '1', '1234123412341234', 'Ayah Suami', '1234123412341234', 'Ibu Suami', '1234123412341234', '1234123412341234', 'Istri', 'Indonesia', 'Alamat Istri', '1', '1', NULL, '1234123412341234', 'Ayah Istri', '1234123412341234', 'Ibu Istri', '1234123412341234', 'Saksi 1', '1234123412341234', 'Saksi 2', '2025-05-15', 'Gedung', '2025-05-23', '12:00:00', 'islam', 'Ustadz', 'PUTUSAN/V/2025', '2025-05-21');
-
 -- --------------------------------------------------------
 
 --
@@ -205,9 +184,9 @@ CREATE TABLE `disdukcapil` (
 --
 
 INSERT INTO `disdukcapil` (`uid`, `nama`, `alamat`, `no_telp`, `email`, `cdn_picture`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('1c39d652-51f0-4cf8-b833-791eb6372528', 'Disdukcapil Kabupaten Bandung Barat', 'Komplek Pemda KBB Jl. Raya Padalarang Cisarua Km.2 Ngamprah, Jawa Barat, Indonesia', '08562122827', 'kevinbramasta321@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/bandung_barat.png', '2025-03-17 05:25:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-20 02:21:26', NULL),
-('8a7fb795-51c5-49c1-a91d-403f43138a4e', 'Disdukcapil Kabupaten Bandung', 'Jl. Raya Soreang, Kabupaten Bandung 40911', '085318202833', 'kevinbramasta321@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-bandung.png', '2025-03-17 05:24:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-17 15:57:42', NULL),
-('b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'Disdukcapil Kota Cimahi', 'Mal Pelayanan Publik Kota Cimahi, Jl. Aruman Lt. 3, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40514', '(022) 6631885', 'tonnyheru29@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-cimahi.png', '2025-03-17 05:21:13', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-03-18 02:48:42', NULL);
+('1c39d652-51f0-4cf8-b833-791eb6372528', 'Disdukcapil Kabupaten Bandung Barat', 'Komplek Pemda KBB Jl. Raya Padalarang Cisarua Km.2 Ngamprah, Jawa Barat, Indonesia', '085156283616', 'sipalingg340@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/bandung_barat.png', '2025-03-17 05:25:07', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-17 12:39:47', NULL),
+('8a7fb795-51c5-49c1-a91d-403f43138a4e', 'Disdukcapil Kabupaten Bandung', 'Jl. Raya Soreang, Kabupaten Bandung 40911', '085156283616', 'sipalingg340@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-bandung.png', '2025-03-17 05:24:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-17 12:39:57', NULL),
+('b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', 'Disdukcapil Kota Cimahi', 'Mal Pelayanan Publik Kota Cimahi, Jl. Aruman Lt. 3, Pasirkaliki, Kec. Cimahi Utara, Kota Cimahi, Jawa Barat 40514', '085156283616', 'sipalingg340@gmail.com', 'https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo-cimahi.png', '2025-03-17 05:21:13', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-17 12:39:31', NULL);
 
 -- --------------------------------------------------------
 
@@ -382,13 +361,6 @@ CREATE TABLE `pembatalan_akta_kelahiran_details` (
   `nama_pemilik_akta` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pembatalan_akta_kelahiran_details`
---
-
-INSERT INTO `pembatalan_akta_kelahiran_details` (`uid`, `submission_uid`, `nama_pemilik_akta`) VALUES
-('c65a36cd-22b0-4c6d-bf5d-50031b73f9a2', '3812eb78-39e7-492f-bb7b-ee27aec6b620', 'Robert Edit');
-
 -- --------------------------------------------------------
 
 --
@@ -402,13 +374,6 @@ CREATE TABLE `pembatalan_perceraian_details` (
   `nama_istri` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `pembatalan_perceraian_details`
---
-
-INSERT INTO `pembatalan_perceraian_details` (`uid`, `submission_uid`, `nama_suami`, `nama_istri`) VALUES
-('ce38fd9b-5bcf-4d6f-8e9b-70c291853673', 'ffbfe124-09ca-42b0-991a-b557e413524a', 'Suami Edit', 'Istri Edit');
-
 -- --------------------------------------------------------
 
 --
@@ -421,13 +386,6 @@ CREATE TABLE `pembatalan_perkawinan_details` (
   `nama_suami` varchar(255) DEFAULT NULL,
   `nama_istri` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pembatalan_perkawinan_details`
---
-
-INSERT INTO `pembatalan_perkawinan_details` (`uid`, `submission_uid`, `nama_suami`, `nama_istri`) VALUES
-('65c8b6c4-f0d7-44b6-981d-9428cc1bbb35', '01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'Suami Edit', 'Istri Edit');
 
 -- --------------------------------------------------------
 
@@ -477,7 +435,7 @@ CREATE TABLE `pemohon` (
 --
 
 INSERT INTO `pemohon` (`uid`, `name`, `province`, `regency`, `district`, `village`, `kk`, `nik`, `tanggal_lahir`, `tempat_lahir`, `akta_kelahiran`, `alamat`, `email`, `no_telp`, `jenis_kelamin`, `blood_type`, `agama`, `status_kawin`, `akta_kawin`, `tanggal_kawin`, `akta_cerai`, `tanggal_cerai`, `family_relationship`, `education`, `job`, `nama_ibu`, `nama_ayah`, `nomor_paspor`, `tanggal_berlaku_paspor`, `keterangan`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('468239ba-5c5b-4e16-b356-90ae1260084b', 'Mochammad Qaysa Al-Haq', '32', '3204', '3204260', '3204260004', '1234123412341234', '1234123412341234', '2025-05-01', 'Bandung', 'asd akta', 'Margahayu Permai, Blok S10, No 10', 'abumilhan78@gmail.com', '085156283616', 'Laki-laki', '2', '1', '2', NULL, NULL, NULL, NULL, '2', '5', '3', 'asd ibu edit', 'asd ayah edit', NULL, NULL, NULL, '2025-05-16 02:27:59', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-16 07:11:47', NULL);
+('468239ba-5c5b-4e16-b356-90ae1260084b', 'Mochammad Qaysa Al-Haq', '32', '3204', '3204260', '3204260004', '1234123412341234', '1234123412341234', '2025-05-01', 'Bandung', 'asd akta', 'Margahayu Permai, Blok S10, No 10', 'sipalingg340@gmail.com', '085156283616', 'Laki-laki', '2', '1', '2', NULL, NULL, NULL, NULL, '2', '5', '3', 'asd ibu edit', 'asd ayah edit', NULL, NULL, NULL, '2025-05-16 02:27:59', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 04:05:48', NULL);
 
 -- --------------------------------------------------------
 
@@ -488,16 +446,8 @@ INSERT INTO `pemohon` (`uid`, `name`, `province`, `regency`, `district`, `villag
 CREATE TABLE `pengakuan_anak_details` (
   `uid` varchar(40) NOT NULL,
   `submission_uid` varchar(40) DEFAULT NULL,
-  `nama_anak` varchar(255) DEFAULT NULL,
-  `tipe` varchar(100) DEFAULT NULL
+  `nama_anak` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pengakuan_anak_details`
---
-
-INSERT INTO `pengakuan_anak_details` (`uid`, `submission_uid`, `nama_anak`, `tipe`) VALUES
-('d127a189-76fe-4b5c-b6b7-98090621d77c', '9ce27308-4db8-49ac-9507-d5799a65df31', 'Indra Pratama Edit', 'pengakuan');
 
 -- --------------------------------------------------------
 
@@ -510,13 +460,6 @@ CREATE TABLE `pengangkatan_anak_details` (
   `submission_uid` varchar(40) DEFAULT NULL,
   `nama_anak` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `pengangkatan_anak_details`
---
-
-INSERT INTO `pengangkatan_anak_details` (`uid`, `submission_uid`, `nama_anak`) VALUES
-('1c4b421d-80b9-4935-afe4-8b7300b97fff', 'f3926883-8b35-44d7-8878-ed6d7c6486d9', 'Indra Pratama Edit');
 
 -- --------------------------------------------------------
 
@@ -539,7 +482,8 @@ CREATE TABLE `perbaikan_akta_details` (
 --
 
 INSERT INTO `perbaikan_akta_details` (`uid`, `submission_uid`, `jenis_akta`, `nomor_akta`, `jenis_elemen_perbaikan`, `data_sebelum`, `data_sesudah`) VALUES
-('bef04c2c-05a8-4a09-881e-5384a982d56b', '23f85fef-752a-438c-a659-c5afbf463732', 'akta_kelahiran', 'NOMORAKTA/123/2004', 'nama', 'Mochammad Qaysa Al-Haq', 'Mochammad Robert Maulana');
+('57aba970-95e6-4e96-ba0d-ca10b32ef696', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'akta_kelahiran', '123', 'nama', 'qay', 'say'),
+('c4675aee-9a2a-4cff-b952-aff93b713bda', '1f51b319-980c-4503-af11-0275b163f103', 'akta_kelahiran', 'ASD123', 'nama', 'Mochammad Qaysa Al-Haq', 'Mochammad Robert Santoso');
 
 -- --------------------------------------------------------
 
@@ -833,15 +777,8 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`uid`, `no_perkara`, `submission_type`, `pemohon_uid`, `disdukcapil_uid`, `status`, `catatan`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'PEMBATALAN.PERKAWINAN/V/2025', 'pembatalan_perkawinan', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"CATATAN PEMBATALAN PERKAWINAN\",\"timestamp\":\"2025-05-27 05:09:12\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"disetujui\",\"timestamp\":\"2025-05-27 12:37:20\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"4\",\"catatan\":\"CATATAN PEMBATALAN PERKAWINAN\",\"timestamp\":\"2025-05-27 05:38:32\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 12:38:44\"}]', '2025-05-27 05:38:44', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 05:09:12', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 05:39:22', 'a9467865-37c1-4104-bd63-b26a33c915db'),
-('23f85fef-752a-438c-a659-c5afbf463732', 'NOPER/123/V/ASD', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"Ini catatan saya\",\"timestamp\":\"2025-05-23 03:30:08\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak karena ga jelas\",\"timestamp\":\"2025-05-26 09:17:38\"}]', '2025-05-26 02:17:38', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-23 03:30:08', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-26 02:41:09', NULL),
-('3812eb78-39e7-492f-bb7b-ee27aec6b620', 'PEMBATALAN.AKTA.KELAHIRAN/V/2025', 'pembatalan_akta_kelahiran', '468239ba-5c5b-4e16-b356-90ae1260084b', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"CATATAN PEMBATALAN AKTA\",\"timestamp\":\"2025-05-27 04:33:53\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"4\",\"catatan\":\"CATATAN PEMBATALAN AKTA\",\"timestamp\":\"2025-05-27 04:37:19\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima\",\"timestamp\":\"2025-05-27 11:38:38\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 11:39:03\"}]', '2025-05-27 04:39:03', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 04:33:53', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 04:39:15', 'a9467865-37c1-4104-bd63-b26a33c915db'),
-('603c7c1a-9b62-430b-9ebb-4397cda9cb16', 'AKTA.KEMATIAN/123/V/ASD', 'akta_kematian', '468239ba-5c5b-4e16-b356-90ae1260084b', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '0', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"ini catatan pertama\",\"timestamp\":\"2025-05-26 07:15:18\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"approve lengkap\",\"timestamp\":\"2025-05-26 14:24:27\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak karena palsu matinya\",\"timestamp\":\"2025-05-26 14:29:28\"}]', '2025-05-26 07:29:28', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-26 07:15:18', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-26 07:29:28', NULL),
-('98728984-188a-4041-8831-6c83bfa996d7', 'AKTA.PERCERAIAN/V/2025', 'akta_perceraian', '468239ba-5c5b-4e16-b356-90ae1260084b', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"ini catatan perceraian\",\"timestamp\":\"2025-05-27 02:36:34\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima\",\"timestamp\":\"2025-05-27 09:38:37\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 09:38:57\"}]', '2025-05-27 02:38:57', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 02:36:34', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 02:39:11', NULL),
-('9ce27308-4db8-49ac-9507-d5799a65df31', 'PENGAKUAN.ANAK/V/2025', 'pengakuan_anak', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"ini catatan pengakuan anak\",\"timestamp\":\"2025-05-27 04:04:52\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"4\",\"catatan\":\"ini catatan pengangkatan anak\",\"timestamp\":\"2025-05-27 04:09:10\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diakui\",\"timestamp\":\"2025-05-27 11:15:11\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 11:15:25\"}]', '2025-05-27 04:15:25', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 04:04:52', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 04:15:34', 'a9467865-37c1-4104-bd63-b26a33c915db'),
-('ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'AKTA.PERKAWINAN/V/2025', 'akta_perkawinan', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '0', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"ASD\",\"timestamp\":\"2025-05-27 01:24:50\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"Disetujui\",\"timestamp\":\"2025-05-27 08:30:44\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 08:31:52\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 08:32:27\"}]', '2025-05-27 01:32:27', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 01:24:50', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 01:32:27', NULL),
-('f3926883-8b35-44d7-8878-ed6d7c6486d9', 'PENGANGKATAN.ANAK/V/2025', 'pengangkatan_anak', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"ini catatan pengangkatan anak\",\"timestamp\":\"2025-05-27 03:24:05\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"4\",\"catatan\":\"ini catatan pengangkatan anak edit\",\"timestamp\":\"2025-05-27 03:27:25\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima\",\"timestamp\":\"2025-05-27 10:28:18\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 10:28:35\"}]', '2025-05-27 03:28:35', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 03:24:05', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 03:30:11', 'a9467865-37c1-4104-bd63-b26a33c915db'),
-('ffbfe124-09ca-42b0-991a-b557e413524a', 'PEMBATALAN.PERCERAIAN', 'pembatalan_perceraian', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"CATATAN PEMBATALAN PERCERAIAN\",\"timestamp\":\"2025-05-27 04:56:15\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"4\",\"catatan\":\"CATATAN PEMBATALAN PERCERAIAN\",\"timestamp\":\"2025-05-27 04:59:57\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"disetujui\",\"timestamp\":\"2025-05-27 12:00:51\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-05-27 12:01:15\"}]', '2025-05-27 05:01:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 04:56:15', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-27 05:01:20', 'a9467865-37c1-4104-bd63-b26a33c915db');
+('1f51b319-980c-4503-af11-0275b163f103', 'NOPER-123/V/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '0', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"nama saya bagus\",\"timestamp\":\"2025-05-24 17:14:23\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"sipp\",\"timestamp\":\"2025-05-25 23:01:23\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-06-19 01:45:09\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-06-19 01:46:15\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak boss\",\"timestamp\":\"2025-06-19 10:41:12\"}]', '2025-06-19 03:41:12', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-24 17:14:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 03:41:12', NULL),
+('93a01e28-4d04-47b7-8863-6c47da5a47a4', 'TERBITNIKAH/V/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '2', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":null,\"timestamp\":\"2025-06-19 00:30:34\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"sudah sesuai\",\"timestamp\":\"2025-06-19 01:37:42\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"mantap\",\"timestamp\":\"2025-06-19 01:38:40\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima sangat\",\"timestamp\":\"2025-06-19 10:33:33\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima sangat\",\"timestamp\":\"2025-06-19 10:40:17\"}]', '2025-06-19 03:40:17', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-18 17:30:34', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 03:40:17', NULL);
 
 -- --------------------------------------------------------
 
@@ -863,47 +800,15 @@ CREATE TABLE `submission_documents` (
 --
 
 INSERT INTO `submission_documents` (`uid`, `submission_uid`, `document_name`, `document_type`, `file_path`, `uploaded_at`) VALUES
-('09701b19-9907-48c0-bf94-2cec1580d99c', '01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'permintaan-akses.pdf', 'kk', '30c21f9ec3ce95f518cd584e509f922e1748322552.pdf', '2025-05-26 22:09:12'),
-('0f7d330d-bfec-406a-88fd-ef4e80daf6c6', '9ce27308-4db8-49ac-9507-d5799a65df31', 'akses-operasi.pdf', 'akta_kelahiran', '8189d51cf55bf79f0214f80f8742516f1748318692.pdf', '2025-05-26 21:04:52'),
-('1072c9e6-3e69-42a4-a0cd-ae4049738a06', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'akses-operasi.pdf', 'penetapan_pengadilan', 'e2ab25249a182d07747ca39aef8a185a1748309090.pdf', '2025-05-26 18:24:50'),
-('14b54753-083d-4c55-9f4f-e8950e7fc1f7', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'activity-list-komputer.drawio.png', 'ktp_suami', 'bd69b44f3a1ac6b4dd290967e49032711748309090.png', '2025-05-26 18:24:50'),
-('17fc11e1-cb1d-4cc9-b5e1-fc1698d5a73c', '603c7c1a-9b62-430b-9ebb-4397cda9cb16', 'activity-show-history-komputer.drawio.png', 'kk_pemohon', 'd5b32d50ea4a23094ae07c69ad1f0df31748243718.png', '2025-05-26 00:15:18'),
-('1a364e8f-0707-43e9-9ee1-d5e01f5dd064', 'ffbfe124-09ca-42b0-991a-b557e413524a', 'activity-create-karyawan.drawio.png', 'ktp_pemohon', '535bc2001d708a778c79949fbb3fd3161748321775.png', '2025-05-26 21:56:15'),
-('1d0a67d7-d73e-4c83-9c5c-75e72a83f0d7', '9ce27308-4db8-49ac-9507-d5799a65df31', 'permintaan-akses.pdf', 'kk_orangtua', 'ad259815e0f51991326540f2b8c621791748318692.pdf', '2025-05-26 21:04:52'),
-('262cfe49-9c07-452b-8b58-6a60909091ef', '603c7c1a-9b62-430b-9ebb-4397cda9cb16', 'WhatsApp Image 2025-04-25 at 1.52.12 PM.jpeg', 'surat_kematian', '92c2a02bd48ee6a1db31e1e7f3777a291748243718.jpeg', '2025-05-26 00:15:18'),
-('2c9babb4-b5e7-42e1-9d95-b2b800fbd1eb', '01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', 'e6d110545cf6dc54af1a7e4eca4976eb1748322552.pdf', '2025-05-26 22:09:12'),
-('37d20a2e-70f8-4451-bfb2-ada3d361a1f6', 'f3926883-8b35-44d7-8878-ed6d7c6486d9', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', '443b11c491e9f7a4b4079190eecdecba1748316245.pdf', '2025-05-26 20:24:05'),
-('43c8847b-7a53-437e-bce4-5a2f0d19d66c', 'ffbfe124-09ca-42b0-991a-b557e413524a', 'akses-operasi.pdf', 'akta_perceraian', '2cf0557b7d9ee19d718d2344cc31eb5e1748321775.pdf', '2025-05-26 21:56:15'),
-('44e4f3c3-51fc-4f66-bc9a-63a4431de9ff', '603c7c1a-9b62-430b-9ebb-4397cda9cb16', 'Khilda_j-sika.pdf', 'penetapan_pengadilan', '5a5c0b261111fbf8e864ba3827fa24b21748243718.pdf', '2025-05-26 00:15:18'),
-('48e76cea-968e-4b68-84c5-78c5090c695d', '9ce27308-4db8-49ac-9507-d5799a65df31', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', 'f53e37c0e15f4b542fa512bcd2ff0c8c1748318692.pdf', '2025-05-26 21:04:52'),
-('4b729b30-2d41-48f8-b3be-d568bf41cb3a', '3812eb78-39e7-492f-bb7b-ee27aec6b620', '20250505145352[250430] sp-akun-gsb-pn-bale-bandung.pdf', 'ktp_pemohon', '2db92d1a1b9987d57d30c795ea8051b41748320433.pdf', '2025-05-26 21:33:53'),
-('5137857e-0646-4d3f-b62f-cdcc10f902b0', '23f85fef-752a-438c-a659-c5afbf463732', 'akses-operasi.pdf', 'akta_kelahiran', '6db7082b9afd54cce83d40ae75f5c7601747971008.pdf', '2025-05-22 20:30:08'),
-('534a1c14-1612-4fd7-be51-66efac8d2903', '98728984-188a-4041-8831-6c83bfa996d7', 'activity-list-karyawan.drawio.png', 'ktp_istri', '8159c148721b7d12130508d83fac1f151748313394.png', '2025-05-26 19:36:34'),
-('5a1e8f35-aa50-45e5-8e22-469d6dfe2047', '98728984-188a-4041-8831-6c83bfa996d7', 'activity-edit-karyawan.drawio.png', 'ktp_suami', '316e70594ed6957cf1521fa7fd08c22f1748313394.png', '2025-05-26 19:36:34'),
-('5c0930a6-be24-437c-95df-7d291c736025', '603c7c1a-9b62-430b-9ebb-4397cda9cb16', 'Analisis-Prediksi-BMI-dengan-KNN-Regressor.pdf', 'ktp_pemohon', '37e327e2e73d8f6f1fb558a6cdcc92c01748243718.pdf', '2025-05-26 00:15:18'),
-('661e603e-b3ed-4423-824a-8d37760c8c2d', '23f85fef-752a-438c-a659-c5afbf463732', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', 'befb7c5c07d98ef182ddf8bfb6a8eb1e1747971008.pdf', '2025-05-22 20:30:08'),
-('68d81bec-5887-4e1c-ac56-af8fc309e534', '3812eb78-39e7-492f-bb7b-ee27aec6b620', 'akses-operasi.pdf', 'akta_kelahiran', '22c1d18ffba6d78da239df67d8220bcb1748320433.pdf', '2025-05-26 21:33:53'),
-('6af5e3ae-d81e-4a11-b279-dd8afc6f7c76', 'ffbfe124-09ca-42b0-991a-b557e413524a', 'permintaan-akses.pdf', 'kk', '3768c8824ba35ac663c1e69573c72deb1748321775.pdf', '2025-05-26 21:56:15'),
-('83e2a590-654c-4d36-80a8-64955944597d', '3812eb78-39e7-492f-bb7b-ee27aec6b620', 'permintaan-akses.pdf', 'kk', 'b5498d5a6f3034efa16ffc5f515b2ad41748320433.pdf', '2025-05-26 21:33:53'),
-('8bcbf1c3-01f6-48e4-aba7-0bb65c396b9f', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'activity-login.drawio.png', 'kk_istri', '5988b3c16472fc154348ca9782645e371748309090.png', '2025-05-26 18:24:50'),
-('8bffe9fb-293c-47e9-b761-3951033a721b', '98728984-188a-4041-8831-6c83bfa996d7', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', '16edd3fdef52b4da23c7260f6026de5e1748313394.pdf', '2025-05-26 19:36:34'),
-('9f65028c-d7fd-4644-ada5-afec30448a75', '98728984-188a-4041-8831-6c83bfa996d7', 'permintaan-akses.pdf', 'kk_suami', 'ce8975e8e685b7860d880264c6f687d91748313394.pdf', '2025-05-26 19:36:34'),
-('a6eb27f8-e1fa-48d6-a148-b8e587d20543', '23f85fef-752a-438c-a659-c5afbf463732', 'activity-create-komputer.drawio.png', 'ktp_pemohon', '2126e04e75acb19c15147847203bc7aa1747971008.png', '2025-05-22 20:30:08'),
-('a785b99c-1e43-4642-bd41-4a38f0f09a2e', 'f3926883-8b35-44d7-8878-ed6d7c6486d9', '20250505145352[250430] sp-akun-gsb-pn-bale-bandung.pdf', 'ktp_pemohon', 'ffb9b1345a445ca36627cd80e8414dc41748316245.pdf', '2025-05-26 20:24:05'),
-('aa33aa21-9ccd-462e-a8df-01af160edb03', '01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'akses-operasi.pdf', 'akta_perkawinan', 'fa9f7de6cad1c1c4fedaf4c370e227541748322552.pdf', '2025-05-26 22:09:12'),
-('ba647425-76d6-441a-96fa-7baad700c298', 'f3926883-8b35-44d7-8878-ed6d7c6486d9', 'akses-operasi.pdf', 'akta_kelahiran', 'ac8a5f5ed99d2b3ac2b05b7904987cc21748316245.pdf', '2025-05-26 20:24:05'),
-('bc5c5928-0560-4c97-822f-ea4f1c65dbd8', '23f85fef-752a-438c-a659-c5afbf463732', 'permintaan-akses.pdf', 'kk_pemohon', '6dc6065b3160d12b981f947aecc864421747971008.pdf', '2025-05-22 20:30:08'),
-('d096d123-5bea-46d4-9c08-7d320f40e286', 'f3926883-8b35-44d7-8878-ed6d7c6486d9', 'permintaan-akses.pdf', 'kk_orang_tua_angkat', '3e49b2c4b42f9ac0650a7b3e6deb03021748316245.pdf', '2025-05-26 20:24:05'),
-('d453ee7b-15ab-4f1f-b786-bc3db06a671c', '98728984-188a-4041-8831-6c83bfa996d7', 'akses-operasi.pdf', 'akta_perkawinan', '46749c32b5b4dec9c29f3a28069c09701748313394.pdf', '2025-05-26 19:36:34'),
-('d99e1e8a-f5df-4020-acdc-0f6941de60e2', '9ce27308-4db8-49ac-9507-d5799a65df31', 'activity-list-karyawan.drawio.png', 'ktp_pemohon', '25009a588faa38d7346ac0ce047252d51748318692.png', '2025-05-26 21:04:52'),
-('ddd9e238-4842-4043-8600-aa835deae1c5', '98728984-188a-4041-8831-6c83bfa996d7', 'activity-delete-komputer.drawio.png', 'kk_istri', '79599ca609d0d7f4b113abb1e106aa391748313394.png', '2025-05-26 19:36:34'),
-('e06c79f3-4775-4fcf-8345-48b5bebaa752', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'activity-create-komputer.drawio.png', 'kk_suami', '8ffe2efd84f4ee68e0497b9e97b180551748309090.png', '2025-05-26 18:24:50'),
-('e35e4415-de53-48bd-8455-9c87e8bc2800', '23f85fef-752a-438c-a659-c5afbf463732', 'activity-list-karyawan.drawio.png', 'keabsahan', 'ff8f92f5b58ea442fde3e13104400b3f1747971008.png', '2025-05-22 20:30:08'),
-('e5597f41-87f4-44b1-b8e7-06a764d07a5c', '3812eb78-39e7-492f-bb7b-ee27aec6b620', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', '3a4f7cdd9155b272f39c912210ca213e1748320433.pdf', '2025-05-26 21:33:53'),
-('e9da2add-7c51-40a4-af06-5d7278a517a9', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'permintaan-akses.pdf', 'pemberkatan_nikah', '50efd9456a7352c648bc4cf6fae2d3d11748309090.pdf', '2025-05-26 18:24:50'),
-('ef8f669d-c102-4d6f-91da-8aaaa552559e', '01c5532f-7c29-4f7b-a915-fda98ed4dab7', 'activity-delete-karyawan.drawio.png', 'ktp_pemohon', '04063754ae22579638c83624cd1a9e3d1748322552.png', '2025-05-26 22:09:12'),
-('f3b485d5-dcfb-43e5-aec5-4df0e439656f', 'ffbfe124-09ca-42b0-991a-b557e413524a', 'surat_undangan_Irman[1].pdf', 'penetapan_pengadilan', '19767bf4ea95a6b10e3141b6c5963ede1748321775.pdf', '2025-05-26 21:56:15'),
-('f6d0b40a-b549-4d94-a49b-759fe90d0bbb', 'ae880c44-6ab2-42b3-83f6-d5fb661ef2a4', 'activity-delete-karyawan.drawio.png', 'ktp_istri', '2aab865a40c6f2ac15ec8ff1751f35441748309090.png', '2025-05-26 18:24:50');
+('1b6a63d6-d515-469c-bbdd-01a1cef3839a', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'activity-delete-komputer.drawio.png', 'kk_pemohon', '63197e716b40aeece18f17f7dbbc0f791750267834.png', '2025-06-18 17:30:34'),
+('27389fe8-ca4d-4c57-ae01-afc71bf4cb46', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'Frame 44.png', 'penetapan_pengadilan', 'df0d3d10b3c17afd64d2f0580fde8a301750267834.png', '2025-06-18 17:30:34'),
+('41daf0f9-e9e1-4516-884d-72157902a68f', '1f51b319-980c-4503-af11-0275b163f103', 'Frame 44.png', 'keabsahan', '9af776b7ae5e63ac4dee80bba4f0137b1748106863.png', '2025-05-24 10:14:23'),
+('6db9cd63-7175-4bad-a902-032e7b999940', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'activity-show-history-komputer.drawio.png', 'akta_kelahiran', 'e34686107f1d10fe44a84feccab2bcd91750267834.png', '2025-06-18 17:30:34'),
+('7dda2223-3180-4e74-bee0-558552802dbd', '1f51b319-980c-4503-af11-0275b163f103', 'activity-show-history-komputer.drawio.png', 'penetapan_pengadilan', 'f2c6b16011b8bf5bb48ae2d0e166c3eb1748106863.png', '2025-05-24 10:14:23'),
+('8df7c2bc-d37b-46af-8a5d-5a9294d127cf', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'diagrams-USE CASE DIAGRAM.drawio.png', 'ktp_pemohon', 'be10a6de11e18c9986b5c702142b48b11750267834.png', '2025-06-18 17:30:34'),
+('9d2b36be-7a03-4ff0-a425-c8b313e6e523', '1f51b319-980c-4503-af11-0275b163f103', 'Soal UTS TRO_Genap2025.pdf', 'kk_pemohon', 'd9645afea1e257d8dcf1e963877641231748106863.pdf', '2025-05-24 10:14:23'),
+('9dbb741d-1fdb-4b52-b274-b95a4779fb93', '1f51b319-980c-4503-af11-0275b163f103', 'activity-list-komputer.drawio.png', 'akta_kelahiran', 'f9b04ff466a779ddef276eb81c7be3751748106863.png', '2025-05-24 10:14:23'),
+('d15821d6-7908-40f4-98de-f6e79f80036b', '1f51b319-980c-4503-af11-0275b163f103', 'activity-create-karyawan.drawio.png', 'ktp_pemohon', 'bb6b80e2914972170c837d143ca2c8e41748106863.png', '2025-05-24 10:14:23');
 
 -- --------------------------------------------------------
 

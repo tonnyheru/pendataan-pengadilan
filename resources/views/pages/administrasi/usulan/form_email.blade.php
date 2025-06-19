@@ -31,9 +31,9 @@
       <div class="col-md-12 justify-content-md-center row">
           @php
           $dokumen = [
-            'ktp' => 'KTP',
-            'kk' => 'Kartu Keluarga',
-            'akta' => 'Akta Kelahiran',
+            'dokumen_1' => 'Dokumen 1',
+            'dokumen_2' => 'Dokumen 2',
+            'dokumen_3' => 'Dokumen 3',
           ];
           @endphp
           @foreach($dokumen as $key => $dok)
@@ -67,9 +67,9 @@
 <script>
  $(() => {
   const dokumen = [
-      'ktp',
-      'kk',
-      'akta',
+      'dokumen_1',
+      'dokumen_2',
+      'dokumen_3',
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {

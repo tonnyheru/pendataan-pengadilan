@@ -10,16 +10,14 @@ date_default_timezone_set('Asia/Jakarta');
         <td colspan="2" style="text-align:center; padding-bottom:10px; border-bottom:2px solid #000;">
           <table width="100%" style="border:none;">
             <tr>
-              <td style="width:10%; text-align:center;">
-                <img src="https://raw.githubusercontent.com/tonnyheru/cdn-pengadilan/refs/heads/main/logo.png" alt="Logo" style="max-width:90px;">
+              <td style="width:5%; text-align:center;">
+                <img src="{{ @$data['logo'] }}" alt="Logo" style="max-width:80px;">
               </td>
-              <td style="width:80%; text-align:center; font-family: 'Times New Roman', Times, serif;">
-                <div style="font-size:14px; font-weight:bold;">MAHKAMAH AGUNG REPUBLIK INDONESIA</div>
-                <div style="font-size:14px; font-weight:bold;">DIREKTORAT JENDERAL BADAN PERADILAN UMUM</div>
-                <div style="font-size:14px; font-weight:bold;">PENGADILAN TINGGI BANDUNG</div>
-                <div style="font-size:20px; font-weight:bold;">PENGADILAN NEGERI BALE BANDUNG</div>
-                <div style="font-size:12px;">Jl. Jaksa Naranata, Baleendah, Kabupaten Bandung 40375</div>
-                <div style="font-size:12px;">Tlp/Fax: (022) 5940791 | Website: pn-balebandung.go.id | Email: pn.balebandung@gmail.com</div>
+              <td style="width:95%; text-align:center; font-family: 'Times New Roman', Times, serif;">
+                <div style="font-size:14px; font-weight:bold;">PEMERINTAH DAERAH {{ @$data['daerah_disdukcapil'] }}</div>
+                <div style="font-size:16px; font-weight:bold;">DINAS KEPENDUDUKAN DAN PENCATATAN SIPIL</div>
+                <div style="font-size:11px;">{{ @$data['alamat_disdukcapil'] }}</div>
+                <div style="font-size:11px;">{!! @$data['alamat-line2'] !!}</div>
               </td>
             </tr>
           </table>
@@ -32,16 +30,18 @@ date_default_timezone_set('Asia/Jakarta');
       </tr>
       <tr>
         <td colspan="2" style="padding:10px 0;font-size:14px;">
-          <p style="margin:0 0 40px 0;"><strong>Subjek: Pemberitahuan Usulan Pemohon untuk Persetujuan Disdukcapil</strong></p>
+          <p style="margin:0 0 40px 0;"><strong>Subjek: Usulan Pemohon Ditolak oleh Disdukcapil</strong></p>
           
           <p style="margin:0 0 30px 0;">Kepada Yth.<br>
-          Kepala Dinas Kependudukan dan Pencatatan Sipil<br>
-          {{ @$data['nama_disdukcapil'] }}<br>
-          {{ @$data['alamat_disdukcapil'] }}</p>
+           Pengadilan Negeri Bale Bandung<br>
+          Jalan Jaksa Naranata Kel/Kec. Bale Endah Kabupaten Bandung, Jawa Barat 40375</p>
 
-          <p style="margin:0 0 10px 0;">Dengan hormat,<br>Kami memberitahukan bahwa telah ada usulan yang diajukan oleh Pengadilan Negeri Bale Bandung terkait perkara catatan sipil yang membutuhkan persetujuan dari pihak Disdukcapil. Usulan ini memerlukan verifikasi dan persetujuan dari Disdukcapil sesuai dengan prosedur yang berlaku.</p>
+          <p style="margin:0 0 10px 0;">Dengan hormat,<br>  Kami informasikan bahwa usulan pemohon terkait perkara catatan sipil yang diajukan oleh
+          Pengadilan Negeri Bale Bandung telah ditolak oleh pihak Disdukcapil. Dikarenakan Data yang
+          diajukan tidak sesuai dengan dokumen resmi yang terdaftar di sistem Disdukcapil. mohon
+          periksa dan perbaiki dokumen sesuai persyaratan yang telah di tetapkan.</p>
 
-          <p style="margin:20px 0 5px 0;"><strong>Detail Usulan Pemohon:</strong></p>
+          <p style="margin:20px 0 5px 0;"><strong> Berikut adalah informasi terkait usulan yang ditolak:</strong></p>
         </td>
       </tr>
 
@@ -68,18 +68,17 @@ date_default_timezone_set('Asia/Jakarta');
               <td style="width:3%; text-align:left;">:</td>
               <td style="width:72%; text-align:left;">{{ @$data['tanggal_pengajuan'] }}</td>
             </tr>
-            <tr>
-              <td style="width:25%; text-align:left;">Berkas Terlampir</td>
-              <td style="width:3%; text-align:left;">:</td>
-              <td style="width:72%; text-align:left;">-</td>
-            </tr>
           </table>
         </td>
       </tr>
       <tr>
         <td colspan="2" style="padding-top:20px;font-size:14px;">
-          <p>Mohon untuk segera melakukan verifikasi terhadap usulan ini. Terima kasih.</p>
+          <p> Terima kasih atas kerjasama yang baik.</p>
         </td>
+      </tr>
+      
+      <tr>
+        <td colspan="2" style="height:50;">&nbsp;</td>
       </tr>
 
       {{-- <tr>
@@ -100,7 +99,7 @@ date_default_timezone_set('Asia/Jakarta');
             <tr>
               <td style="width:50%; text-align:left;"></td>
               <td style="width:20%; text-align:left;"></td>
-              <td style="width:30%; text-align:center;">Hormat Kami,<br>Admin PN Bale Bandung</td>
+              <td style="width:30%; text-align:center;">Hormat Kami,<br>Admin Disdukcapil</td>
             </tr>
             <tr style="height: 70px;"></tr>
             <tr>
