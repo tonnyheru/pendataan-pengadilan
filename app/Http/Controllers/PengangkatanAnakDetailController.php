@@ -221,13 +221,13 @@ class PengangkatanAnakDetailController extends Controller
                     $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
                     $notif['tanggal_pengajuan'] = date('d-m-Y H:i:s');
                     Mail::to($disdukcapil->email)->send(new NotifEmail($notif));
-                    $disdukcapil = $disdukcapil->nama;
+                    $nama_disdukcapil = $disdukcapil->nama;
                     $nama_pemohon = $pemohon->name;
                     $nomor_perkara = $data['no_perkara'];
                     $tanggal_pengajuan = date('d-m-Y H:i:s');
                     $jenis_permohonan = "Pengangkatan Anak";
                     $message = <<<EOT
-                    Yth. $disdukcapil,
+                    Yth. $nama_disdukcapil,
 
                     Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang telah dikirimkan oleh Pengadilan Negeri Bale Bandung. Kami mohon agar Disdukcapil dapat segera menindaklanjuti usulan yang telah diajukan.
 
