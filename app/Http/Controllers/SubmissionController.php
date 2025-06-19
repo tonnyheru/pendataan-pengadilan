@@ -225,7 +225,7 @@ class SubmissionController extends Controller
                     $notif['jenis_perkara'] = $jenis;
                     $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
                     // kirim ke pengadilan
-                    Mail::to("abumilhan78@gmail.com")->send(new ApprovalEmail($notif));
+                    Mail::to("kevinbramasta321@gmail.com")->send(new ApprovalEmail($notif));
                     $disdukcapil = $usulan->disdukcapil->nama;
                     $nama_pemohon = $usulan->pemohon->name;
                     $nomor_perkara = $usulan->no_perkara;
@@ -245,7 +245,8 @@ class SubmissionController extends Controller
                     Terima kasih atas kerjasamanya.
                     $disdukcapil
                     EOT;
-                    WhatsappHelper::sendSingleMessage('085156283616', $message);
+                    //ieu whatsapp pengadilan
+                    WhatsappHelper::sendSingleMessage('08562122827', $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Disetujui'
@@ -471,7 +472,7 @@ class SubmissionController extends Controller
                     $notif['jenis_perkara'] = $jenis;
                     $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
                     // kirim ke pengadilan
-                    Mail::to("abumilhan78@gmail.com")->send(new ApprovalEmail($notif));
+                    Mail::to("tonnyheru29@gmail.com")->send(new ApprovalEmail($notif));
                     $disdukcapil = $usulan->disdukcapil->nama;
                     $nama_pemohon = $usulan->pemohon->name;
                     $nomor_perkara = $usulan->no_perkara;
@@ -491,7 +492,7 @@ class SubmissionController extends Controller
                     Terima kasih atas kerjasamanya.
                     $disdukcapil
                     EOT;
-                    WhatsappHelper::sendSingleMessage('085156283616', $message);
+                    WhatsappHelper::sendSingleMessage('08562122827', $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'
