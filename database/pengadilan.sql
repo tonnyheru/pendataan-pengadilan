@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jun 19, 2025 at 06:13 AM
+-- Generation Time: Jun 20, 2025 at 09:01 AM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.1.25
 
@@ -461,6 +461,13 @@ CREATE TABLE `pengangkatan_anak_details` (
   `nama_anak` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `pengangkatan_anak_details`
+--
+
+INSERT INTO `pengangkatan_anak_details` (`uid`, `submission_uid`, `nama_anak`) VALUES
+('19b101f9-751c-4597-a939-912f0196381d', '372f0518-4564-44b2-846b-9c33c1d47b01', 'Downey Jr.');
+
 -- --------------------------------------------------------
 
 --
@@ -482,8 +489,7 @@ CREATE TABLE `perbaikan_akta_details` (
 --
 
 INSERT INTO `perbaikan_akta_details` (`uid`, `submission_uid`, `jenis_akta`, `nomor_akta`, `jenis_elemen_perbaikan`, `data_sebelum`, `data_sesudah`) VALUES
-('57aba970-95e6-4e96-ba0d-ca10b32ef696', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'akta_kelahiran', '123', 'nama', 'qay', 'say'),
-('c4675aee-9a2a-4cff-b952-aff93b713bda', '1f51b319-980c-4503-af11-0275b163f103', 'akta_kelahiran', 'ASD123', 'nama', 'Mochammad Qaysa Al-Haq', 'Mochammad Robert Santoso');
+('8c87403a-25e1-4260-9d42-17ff411ddb9b', '44d725e0-1793-4bbe-a701-221c7d3b4886', 'akta_kelahiran', '123', 'nama', 'Qaysa', 'Robert');
 
 -- --------------------------------------------------------
 
@@ -636,18 +642,45 @@ CREATE TABLE `role_permissions` (
 --
 
 INSERT INTO `role_permissions` (`role_uid`, `permission_uid`) VALUES
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '00bd6f1b-fe53-424c-9ea6-c5cc870006da'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '47fd87da-5f6b-4caf-8a5f-cdf8dfc28faf'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '4aab5536-0cae-4a5c-9b19-d8543fb0a109'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '883d1b85-9356-4811-a8f4-96a21c67ad2d'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '92a2947d-5e7d-4be5-8a28-66cb9501b8dd'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', '9f72d445-d180-46ad-bb4d-fef86e893850'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'bc812bd0-4aee-48e1-8220-a6c9762a2873'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'd55eefa2-0b1f-4149-a3b9-8f627fb92b38'),
+('03a16a0c-88a3-4811-ae39-9afbd62c238c', 'fa54349a-60d3-44bf-9784-8cc249f628aa'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '00bd6f1b-fe53-424c-9ea6-c5cc870006da'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '47fd87da-5f6b-4caf-8a5f-cdf8dfc28faf'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '4aab5536-0cae-4a5c-9b19-d8543fb0a109'),
 ('0ed489f1-ba09-401d-a6e7-769755f3d916', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
 ('0ed489f1-ba09-401d-a6e7-769755f3d916', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '883d1b85-9356-4811-a8f4-96a21c67ad2d'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '92a2947d-5e7d-4be5-8a28-66cb9501b8dd'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', '9f72d445-d180-46ad-bb4d-fef86e893850'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'bc812bd0-4aee-48e1-8220-a6c9762a2873'),
 ('0ed489f1-ba09-401d-a6e7-769755f3d916', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('0ed489f1-ba09-401d-a6e7-769755f3d916', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'd55eefa2-0b1f-4149-a3b9-8f627fb92b38'),
+('0ed489f1-ba09-401d-a6e7-769755f3d916', 'fa54349a-60d3-44bf-9784-8cc249f628aa'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '00bd6f1b-fe53-424c-9ea6-c5cc870006da'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '47fd87da-5f6b-4caf-8a5f-cdf8dfc28faf'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '4aab5536-0cae-4a5c-9b19-d8543fb0a109'),
 ('36b9c86f-ec74-4100-b097-7621ac8e15a6', '64cc6edf-0f5d-422a-9583-325bdca9f369'),
 ('36b9c86f-ec74-4100-b097-7621ac8e15a6', '7f214497-e3c8-44d0-86b2-b8cc63260740'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '883d1b85-9356-4811-a8f4-96a21c67ad2d'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '92a2947d-5e7d-4be5-8a28-66cb9501b8dd'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', '9f72d445-d180-46ad-bb4d-fef86e893850'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'bc812bd0-4aee-48e1-8220-a6c9762a2873'),
 ('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'c4114751-4829-45a2-88f9-96b07f8c3ff8'),
 ('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'cd4b4da7-2d45-4729-b717-785e1cb7ffab'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'd55eefa2-0b1f-4149-a3b9-8f627fb92b38'),
+('36b9c86f-ec74-4100-b097-7621ac8e15a6', 'fa54349a-60d3-44bf-9784-8cc249f628aa'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '3d12e466-c9f3-4a82-ac6f-84bf0c15a16e'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '46d77d3e-690f-4305-bdb5-6f77e4a173c8'),
 ('4dd36f70-7a68-44e3-9b43-42d85c179f77', '47ba3e64-04be-4844-a58d-b12edce8a10d'),
@@ -777,8 +810,8 @@ CREATE TABLE `submissions` (
 --
 
 INSERT INTO `submissions` (`uid`, `no_perkara`, `submission_type`, `pemohon_uid`, `disdukcapil_uid`, `status`, `catatan`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
-('1f51b319-980c-4503-af11-0275b163f103', 'NOPER-123/V/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '0', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"nama saya bagus\",\"timestamp\":\"2025-05-24 17:14:23\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"sipp\",\"timestamp\":\"2025-05-25 23:01:23\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-06-19 01:45:09\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak\",\"timestamp\":\"2025-06-19 01:46:15\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"0\",\"catatan\":\"ditolak boss\",\"timestamp\":\"2025-06-19 10:41:12\"}]', '2025-06-19 03:41:12', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-05-24 17:14:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 03:41:12', NULL),
-('93a01e28-4d04-47b7-8863-6c47da5a47a4', 'TERBITNIKAH/V/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', '8a7fb795-51c5-49c1-a91d-403f43138a4e', '2', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":null,\"timestamp\":\"2025-06-19 00:30:34\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"sudah sesuai\",\"timestamp\":\"2025-06-19 01:37:42\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"mantap\",\"timestamp\":\"2025-06-19 01:38:40\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima sangat\",\"timestamp\":\"2025-06-19 10:33:33\"},{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"2\",\"catatan\":\"diterima sangat\",\"timestamp\":\"2025-06-19 10:40:17\"}]', '2025-06-19 03:40:17', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-18 17:30:34', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 03:40:17', NULL);
+('372f0518-4564-44b2-846b-9c33c1d47b01', 'ANGKATANAK/VI/2025', 'pengangkatan_anak', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '2', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"angkat\",\"timestamp\":\"2025-06-20 13:30:23\"},{\"role\":\"Disdukcapil Kota Cimahi\",\"name\":\"Disdukcapil Kota Cimahi\",\"status\":\"2\",\"catatan\":\"Dokumen sudah dilengkapi, mantapp\",\"timestamp\":\"2025-06-20 13:34:46\"}]', '2025-06-20 06:34:46', 'a9c33661-69a2-44b6-bf89-28b11ca14994', '2025-06-20 06:30:23', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-20 06:34:46', NULL),
+('44d725e0-1793-4bbe-a701-221c7d3b4886', 'TERBITNIKAH/V/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":null,\"timestamp\":\"2025-06-19 21:24:50\"}]', NULL, NULL, '2025-06-19 14:24:50', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-19 14:24:50', NULL);
 
 -- --------------------------------------------------------
 
@@ -800,15 +833,14 @@ CREATE TABLE `submission_documents` (
 --
 
 INSERT INTO `submission_documents` (`uid`, `submission_uid`, `document_name`, `document_type`, `file_path`, `uploaded_at`) VALUES
-('1b6a63d6-d515-469c-bbdd-01a1cef3839a', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'activity-delete-komputer.drawio.png', 'kk_pemohon', '63197e716b40aeece18f17f7dbbc0f791750267834.png', '2025-06-18 17:30:34'),
-('27389fe8-ca4d-4c57-ae01-afc71bf4cb46', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'Frame 44.png', 'penetapan_pengadilan', 'df0d3d10b3c17afd64d2f0580fde8a301750267834.png', '2025-06-18 17:30:34'),
-('41daf0f9-e9e1-4516-884d-72157902a68f', '1f51b319-980c-4503-af11-0275b163f103', 'Frame 44.png', 'keabsahan', '9af776b7ae5e63ac4dee80bba4f0137b1748106863.png', '2025-05-24 10:14:23'),
-('6db9cd63-7175-4bad-a902-032e7b999940', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'activity-show-history-komputer.drawio.png', 'akta_kelahiran', 'e34686107f1d10fe44a84feccab2bcd91750267834.png', '2025-06-18 17:30:34'),
-('7dda2223-3180-4e74-bee0-558552802dbd', '1f51b319-980c-4503-af11-0275b163f103', 'activity-show-history-komputer.drawio.png', 'penetapan_pengadilan', 'f2c6b16011b8bf5bb48ae2d0e166c3eb1748106863.png', '2025-05-24 10:14:23'),
-('8df7c2bc-d37b-46af-8a5d-5a9294d127cf', '93a01e28-4d04-47b7-8863-6c47da5a47a4', 'diagrams-USE CASE DIAGRAM.drawio.png', 'ktp_pemohon', 'be10a6de11e18c9986b5c702142b48b11750267834.png', '2025-06-18 17:30:34'),
-('9d2b36be-7a03-4ff0-a425-c8b313e6e523', '1f51b319-980c-4503-af11-0275b163f103', 'Soal UTS TRO_Genap2025.pdf', 'kk_pemohon', 'd9645afea1e257d8dcf1e963877641231748106863.pdf', '2025-05-24 10:14:23'),
-('9dbb741d-1fdb-4b52-b274-b95a4779fb93', '1f51b319-980c-4503-af11-0275b163f103', 'activity-list-komputer.drawio.png', 'akta_kelahiran', 'f9b04ff466a779ddef276eb81c7be3751748106863.png', '2025-05-24 10:14:23'),
-('d15821d6-7908-40f4-98de-f6e79f80036b', '1f51b319-980c-4503-af11-0275b163f103', 'activity-create-karyawan.drawio.png', 'ktp_pemohon', 'bb6b80e2914972170c837d143ca2c8e41748106863.png', '2025-05-24 10:14:23');
+('053580be-eb42-4b3a-bd64-7d7b8fb920b1', '372f0518-4564-44b2-846b-9c33c1d47b01', 'activity-edit-komputer.drawio.png', 'kk_orang_tua_angkat', '614f1c4d31559810b298093471f23cae1750401023.png', '2025-06-20 06:30:23'),
+('25e33f83-e8f7-4656-b0ee-7f27f1dfb661', '372f0518-4564-44b2-846b-9c33c1d47b01', 'diagrams-USE CASE DIAGRAM.drawio.png', 'penetapan_pengadilan', '77fa58cfb12a18d00d3c05f1b996c64d1750401023.png', '2025-06-20 06:30:23'),
+('34ab2dcf-d4c3-443b-8c96-599089b27fea', '44d725e0-1793-4bbe-a701-221c7d3b4886', 'activity-edit-komputer.drawio.png', 'akta_kelahiran', 'dedfcc89c99903effbb4f05997d813df1750343090.png', '2025-06-19 14:24:50'),
+('81e58ac5-37c3-4f91-9045-7a29e7e37515', '372f0518-4564-44b2-846b-9c33c1d47b01', 'activity-login.drawio.png', 'ktp_pemohon', 'f7f803c0836e8bbba02ea0c01f8edaf41750401023.png', '2025-06-20 06:30:23'),
+('8d298a1e-198e-4ebf-b7a7-4581fc7ef938', '372f0518-4564-44b2-846b-9c33c1d47b01', 'Frame 44.png', 'akta_kelahiran', 'b0cb852dca8c1971957629e7fbc661b01750401023.png', '2025-06-20 06:30:23'),
+('b536f207-7ed7-484e-86be-38d7e47fff8d', '44d725e0-1793-4bbe-a701-221c7d3b4886', 'activity-list-komputer.drawio.png', 'kk_pemohon', '0c396b44738725b11d30cbf15e9246a61750343090.png', '2025-06-19 14:24:50'),
+('d324924c-1d2b-4d61-82e1-a459849fcd7e', '44d725e0-1793-4bbe-a701-221c7d3b4886', 'diagrams-USE CASE DIAGRAM.drawio.png', 'ktp_pemohon', '971f42707cd460bac453159f3f02d4041750343090.png', '2025-06-19 14:24:50'),
+('db3f8620-a846-49c5-86a7-046078b27af3', '44d725e0-1793-4bbe-a701-221c7d3b4886', 'Frame 44.png', 'penetapan_pengadilan', 'ce2c26645a74098a4d1c051686121ea71750343090.png', '2025-06-19 14:24:50');
 
 -- --------------------------------------------------------
 

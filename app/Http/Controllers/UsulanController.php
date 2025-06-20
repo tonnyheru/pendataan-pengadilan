@@ -4,9 +4,13 @@ namespace App\Http\Controllers;
 
 use App\DataTables\UsulanDataTable;
 use App\Helpers\PermissionCommon;
+use App\Helpers\WhatsappHelper;
+use App\Http\Resources\PostResource;
+use App\Mail\ApprovalEmail;
 use App\Mail\NotifEmail;
 use App\Models\Disdukcapil;
 use App\Models\Pemohon;
+use App\Models\Submission;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -764,59 +768,10 @@ class UsulanController extends Controller
             $role = auth()->user()->role->slug;
             $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
                 ->value('uid');
-            $query = Usulan::with(['pemohon', 'disdukcapil'])
-                ->select('uid', 'pemohon_uid', 'disdukcapil_uid', 'no_perkara', 'jenis_perkara', 'is_approve', 'path_ktp', 'path_kk', 'path_akta', 'path_pendukung', 'path_penetapan', 'path_nikah', 'path_pengantar')
-                ->where('disdukcapil_uid', $uid)
-                ->get();
-            // Pilih hanya kolom yang diperlukan dan tidak menyertakan disdukcapil_uid
-
-            $ret = DataTables::of($query)
-                ->addColumn('is_approve', function ($data) {
-                    switch ($data->is_approve) {
-                        case '0':
-                            return 'Ditolak';
-                        case '1':
-                            return 'Perlu Disetujui Disdukcapil';
-                        case '2':
-                            return 'Disetujui';
-                        default:
-                            return 'Tidak Diketahui';
-                    }
-                })
-                ->addColumn('path_ktp', function ($data) {
-                    return asset('upload/file_ktp/' . $data->path_ktp);
-                })
-                ->addColumn('path_kk', function ($data) {
-                    return asset('upload/file_kk/' . $data->path_kk);
-                })
-                ->addColumn('path_akta', function ($data) {
-                    return asset('upload/file_akta/' . $data->path_akta);
-                })
-                ->addColumn('path_pendukung', function ($data) {
-                    return asset('upload/file_pendukung/' . $data->path_pendukung);
-                })
-                ->addColumn('path_penetapan', function ($data) {
-                    return asset('upload/file_penetapan/' . $data->path_penetapan);
-                })
-                ->addColumn('path_nikah', function ($data) {
-                    return asset('upload/file_nikah/' . $data->path_nikah);
-                })
-                ->addColumn('path_pengantar', function ($data) {
-                    return asset('upload/file_pengantar/' . $data->path_pengantar);
-                })
-                ->rawColumns(['is_approve'])
-                ->make(true);
-            return json_encode([
-                'status' => true,
-                'message' => 'Data Berhasil Diambil',
-                'data' => $ret,
-            ]);
+            $usulan = Submission::where('disdukcapil_uid', $uid)->latest()->paginate(5);
+            return new PostResource(true, 'Berhasil mengambil data usulan', $usulan);
         } catch (\Throwable $th) {
-            return json_encode([
-                'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
-                'data' => []
-            ]);
+            return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         }
     }
 
@@ -840,15 +795,15 @@ class UsulanController extends Controller
                 ], 400);
             }
 
-            $usulan = Usulan::find($uid);
+            $usulan = Submission::find($uid);
             $formData = $request->except('_token', '_method');
             if ($usulan) {
-                if ($usulan->is_approve == 2) {
+                if ($usulan->status == 2) {
                     return response([
                         'status' => false,
                         'message' => 'Data Sudah Disetujui'
                     ], 400);
-                } else if ($usulan->is_approve == 0) {
+                } else if ($usulan->status == 0) {
                     return response([
                         'status' => false,
                         'message' => 'Data Sudah Ditolak'
@@ -859,13 +814,13 @@ class UsulanController extends Controller
                 $role = auth()->user()->role->name;
                 $slug = auth()->user()->role->slug;
 
-                $formData['is_approve'] = '2';
+                $formData['status'] = '2';
 
                 $catatan = json_decode($usulan->catatan);
                 $catatan[] = [
                     'role' => $role,
                     'name' => $name,
-                    'status' => $formData['is_approve'],
+                    'status' => $formData['status'],
                     'catatan' => $formData['catatan'],
                     'timestamp' => date('Y-m-d H:i:s')
                 ];
@@ -876,33 +831,68 @@ class UsulanController extends Controller
 
                 $trx = $usulan->update($formData);
                 if ($trx) {
-                    return response([
-                        'status' => true,
-                        'message' => 'Data Berhasil Disetujui'
-                    ], 200);
+                    $jenis_permohonan = $usulan->submission_type;
+                    if(in_array($jenis_permohonan, ['pengangkatan_anak','pengakuan_anak','pembatalan_akta_kelahiran','pembatalan_perceraian','pembatalan_perkawinan'])){
+                        $notif = [];
+                        $notif['logo'] = $usulan->disdukcapil->cdn_picture;
+                        $notif['approval'] = "approve";
+                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                        $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
+                        $nama_disdukcapil = $usulan->disdukcapil->nama;
+                        switch($nama_disdukcapil) {
+                            case 'Disdukcapil Kabupaten Bandung Barat':
+                                $notif['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
+                                break;
+                            case 'Disdukcapil Kabupaten Bandung':
+                                $notif['alamat-line2'] = 'Telp. (022) 5892126';
+                                break;
+                            case 'Disdukcapil Kota Cimahi':
+                                $notif['alamat-line2'] = 'Telepon: (022) 6631885 | Website: <a href="https://disdukcapil.cimahikota.go.id">https://disdukcapil.cimahikota.go.id</a> | Email: <a href="mailto:disdukcapil@cimahikota.go.id">disdukcapil@cimahikota.go.id</a>';
+                                break;
+                            default:
+                                $notif['alamat-line2'] = '';
+                        }
+                        $notif['nama'] = $usulan->pemohon->name;
+                        $notif['no_perkara'] = $usulan->no_perkara;
+                        $notif['jenis_perkara'] = $jenis_permohonan;
+                        $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                        // kirim ke pengadilan
+                        $email_pengadilan = env('EMAIL_PENGADILAN');
+                        Mail::to($email_pengadilan)->send(new ApprovalEmail($notif));
+                        $disdukcapil = $usulan->disdukcapil->nama;
+                        $nama_pemohon = $usulan->pemohon->name;
+                        $nomor_perkara = $usulan->no_perkara;
+                        $tanggal_pengajuan = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                        $message = <<<EOT
+                        Yth. Pengadilan Negeri Bale Bandung,
+
+                        Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang diajukan oleh Pengadilan Negeri Bale Bandung *telah diterima dan disetujui* oleh pihak Disdukcapil. Proses pembaharuan dokumen catatan sipil untuk pemohon akan segera diproses sesuai dengan prosedur yang berlaku.
+
+                        Informasi Terkait Usulan yang Dikirimkan:
+
+                        📝 Nama Pemohon      : $nama_pemohon
+                        📑 Nomor Perkara     : $nomor_perkara
+                        📅 Tanggal Pengajuan : $tanggal_pengajuan
+                        🗃 Jenis Permohonan  : $jenis_permohonan
+
+                        Terima kasih atas kerjasamanya.
+                        $disdukcapil
+                        EOT;
+                        $nomor_pengadilan = env('NOMOR_PENGADILAN');
+                        WhatsappHelper::sendSingleMessage($nomor_pengadilan, $message);
+                    }
+                    return new PostResource(true, 'Data Berhasil Disetujui', $trx);
                 } else {
-                    return response([
-                        'status' => false,
-                        'message' => 'Data Gagal Disetujui'
-                    ], 400);
+                    return new PostResource(false, 'Data Gagal Disetujui', []);
                 }
             } else {
-                return response([
-                    'status' => false,
-                    'message' => 'Data Tidak Ditemukan'
-                ], 400);
+                return new PostResource(false, 'Data Tidak Ditemukan', []);
             }
         } catch (\Throwable $th) {
             throw $th;
-            return response([
-                'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
-            ], 400);
+            return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         } catch (\Illuminate\Database\QueryException $e) {
-            return response([
-                'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
-            ], 400);
+            return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         }
     }
 
@@ -960,76 +950,68 @@ class UsulanController extends Controller
 
                 $trx = $usulan->update($formData);
                 if ($trx) {
-                    $createdBy = $usulan->createdBy();
-                    try {
-                        $options = [
-                            'multipart' => [
-                                [
-                                    'name' => 'device_id',
-                                    'contents' => '93ce715666c4811b544060462e10db8f'
-                                ],
-                                [
-                                    'name' => 'number',
-                                    'contents' => $createdBy->no_telp,
-                                ],
-                                [
-                                    'name' => 'message',
-                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $createdBy->operator . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dari pemohon *' . $usulan->pemohon->name . '* kami tolak karena beberapa pertimbangan.'
-                                ]
-                            ]
-                        ];
-                        $client = new GuzzleClient([
-                            'http_errors' => false
-                        ]);
-                        $res1 = $client->postAsync('https://app.whacenter.com/api/send', $options)->wait();
+                    $jenis_permohonan = $usulan->submission_type;
+                    if(in_array($jenis_permohonan, ['pengangkatan_anak','pengakuan_anak','pembatalan_akta_kelahiran','pembatalan_perceraian','pembatalan_perkawinan'])){
+                        $notif = [];
+                        $notif['logo'] = $usulan->disdukcapil->cdn_picture;
+                        $notif['approval'] = "reject";
+                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                        $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
+                        $nama_disdukcapil = $usulan->disdukcapil->nama;
+                        switch($nama_disdukcapil) {
+                            case 'Disdukcapil Kabupaten Bandung Barat':
+                                $notif['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
+                                break;
+                            case 'Disdukcapil Kabupaten Bandung':
+                                $notif['alamat-line2'] = 'Telp. (022) 5892126';
+                                break;
+                            case 'Disdukcapil Kota Cimahi':
+                                $notif['alamat-line2'] = 'Telepon: (022) 6631885 | Website: <a href="https://disdukcapil.cimahikota.go.id">https://disdukcapil.cimahikota.go.id</a> | Email: <a href="mailto:disdukcapil@cimahikota.go.id">disdukcapil@cimahikota.go.id</a>';
+                                break;
+                            default:
+                                $notif['alamat-line2'] = '';
+                        }
+                        $notif['nama'] = $usulan->pemohon->name;
+                        $notif['no_perkara'] = $usulan->no_perkara;
+                        $notif['jenis_perkara'] = $jenis_permohonan;
+                        $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                        // kirim ke pengadilan
+                        $email_pengadilan = env('EMAIL_PENGADILAN');
+                        Mail::to($email_pengadilan)->send(new ApprovalEmail($notif));
+                        $disdukcapil = $usulan->disdukcapil->nama;
+                        $nama_pemohon = $usulan->pemohon->name;
+                        $nomor_perkara = $usulan->no_perkara;
+                        $tanggal_pengajuan = date("d-m-Y H:i:s", strtotime($usulan->created_at));
+                        $message = <<<EOT
+                        Yth. Pengadilan Negeri Bale Bandung,
 
-                        $options2 = [
-                            'multipart' => [
-                                [
-                                    'name' => 'device_id',
-                                    'contents' => '93ce715666c4811b544060462e10db8f'
-                                ],
-                                [
-                                    'name' => 'number',
-                                    'contents' => $usulan->pemohon->no_telp,
-                                ],
-                                [
-                                    'name' => 'message',
-                                    'contents' => 'Yang terhormat Bapak/Ibu *' . $usulan->pemohon->name . '*, Mohon maaf usulan dengan nomor perkara *' . $usulan->no_perkara . '* dengan jenis perkara *' . $usulan->jenis_perkara . '* kami tolak karena beberapa pertimbangan.'
-                                ]
-                            ]
-                        ];
-                        $res2 = $client->postAsync('https://app.whacenter.com/api/send', $options2)->wait();
-                    } catch (\Throwable $th) {
-                        //throw $th;
+                        Kami informasikan bahwa usulan pemohon terkait perkara perdata catatan sipil yang diajukan oleh Pengadilan Negeri Bale Bandung *ditolak* oleh pihak Disdukcapil. Mohon agar dapat melakukan verifikasi lebih lanjut dan mengajukan kembali permohonan yang sesuai dengan prosedur yang berlaku.
+
+                        Informasi Terkait Usulan yang Dikirimkan:
+
+                        📝 Nama Pemohon      : $nama_pemohon
+                        📑 Nomor Perkara     : $nomor_perkara
+                        📅 Tanggal Pengajuan : $tanggal_pengajuan
+                        🗃 Jenis Permohonan  : $jenis_permohonan
+
+                        Terima kasih atas kerjasamanya.
+                        $disdukcapil
+                        EOT;
+                        $nomor_pengadilan = env('NOMOR_PENGADILAN');
+                        WhatsappHelper::sendSingleMessage($nomor_pengadilan, $message);
                     }
-                    return response([
-                        'status' => true,
-                        'message' => 'Data Berhasil Ditolak'
-                    ], 200);
+                    return new PostResource(true, 'Data Berhasil Ditolak', $trx);
                 } else {
-                    return response([
-                        'status' => false,
-                        'message' => 'Data Gagal Ditolak'
-                    ], 400);
+                    return new PostResource(false, 'Data Gagal Ditolak', []);
                 }
             } else {
-                return response([
-                    'status' => false,
-                    'message' => 'Data Tidak Ditemukan'
-                ], 400);
+                return new PostResource(false, 'Data Tidak Ditemukan', []);
             }
         } catch (\Throwable $th) {
             //throw $th;
-            return response([
-                'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
-            ], 400);
+            return new PostResource(false, 'Data Berhasil Disetujui', []);
         } catch (\Illuminate\Database\QueryException $e) {
-            return response([
-                'status' => false,
-                'message' => 'Terjadi Kesalahan Internal',
-            ], 400);
+            return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         }
     }
 }

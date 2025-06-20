@@ -1,0 +1,239 @@
+type: collection.insomnia.rest/5.0
+name: Imported Workspace
+meta:
+  id: wrk_6aae3f90125d4b29b016c8e41994e4d7
+  created: 1744183155266
+  modified: 1744183155266
+collection:
+  - url: http://127.0.0.1:8000/api/send-email/5efbda93-4e7d-462b-acfb-1afc69899f71
+    name: SEND EMAIL
+    meta:
+      id: req_446b09e294e74a94a46bf2124179528b
+      created: 1744183155272
+      modified: 1744255640155
+      isPrivate: false
+      sortKey: -1744183155272
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: attachments[]
+          fileName: C:\Users\Tiara\Downloads\panduan_kp (1).pdf
+        - name: attachments[]
+        - name: attachments[]
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+        id: pair_3fbe5b719994402ba4fcb9222936b26a
+      - name: User-Agent
+        value: insomnia/11.0.0
+        id: pair_63861d9681d64bcb9965c1f35f04d1c1
+    authentication:
+      type: bearer
+      token: "{% response 'body', 'req_65274a9299fb4363bacddb0aa33975e2',
+        'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://127.0.0.1:8000/api/usulan
+    name: LIST USULAN
+    meta:
+      id: req_5ba171d6dcbb490389f0c239b3fd6a7b
+      created: 1744183155276
+      modified: 1750401101727
+      isPrivate: false
+      sortKey: -1744183155276
+    method: POST
+    body:
+      mimeType: application/json
+    parameters:
+      - id: pair_935038c7c46d4e40829762cfd1c29bfd
+        name: page
+        value: "1"
+        disabled: false
+    headers:
+      - name: Content-Type
+        value: application/json
+      - id: pair_5a259516e18843339319631ac9810d2a
+        disabled: false
+    authentication:
+      type: bearer
+      token: "{% response 'body', 'req_65274a9299fb4363bacddb0aa33975e2',
+        'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://127.0.0.1:8000/api/approvement/approve_usulan/372f0518-4564-44b2-846b-9c33c1d47b01
+    name: APPROVE USULAN
+    meta:
+      id: req_518a0b68d10141c4ab91da2d83bf089c
+      created: 1744183155281
+      modified: 1750401130171
+      isPrivate: false
+      sortKey: -1744183155281
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"catatan" : "Dokumen sudah dilengkapi, mantapp"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_1b2f058541614e1a85d20615a2b2c74c
+      - name: User-Agent
+        value: insomnia/11.0.0
+        id: pair_3314e5d27a3546608978350c71d49e93
+    authentication:
+      type: bearer
+      token: "{% response 'body', 'req_65274a9299fb4363bacddb0aa33975e2',
+        'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://127.0.0.1:8000/api/approvement/reject_usulan/de3aefa8-d667-4a6f-9ec8-4616c1a58ce2
+    name: REJECT USULAN
+    meta:
+      id: req_2bad6cd44568463c8386951cf08aaaee
+      created: 1744183155285
+      modified: 1744257636809
+      isPrivate: false
+      sortKey: -1744183155285
+    method: PUT
+    body:
+      mimeType: application/json
+      text: |-
+        {
+        	"catatan" : "Mohon maaf gabisa"
+        }
+    headers:
+      - name: Content-Type
+        value: application/json
+        id: pair_9da84d85ca2840fc9d33f92c070b85e4
+      - name: User-Agent
+        value: insomnia/11.0.0
+        id: pair_4a7f82aa2d2d48539be0e4bbbdce8aac
+    authentication:
+      type: bearer
+      token: "{% response 'body', 'req_65274a9299fb4363bacddb0aa33975e2',
+        'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://127.0.0.1:8000/api/login
+    name: LOGIN
+    meta:
+      id: req_65274a9299fb4363bacddb0aa33975e2
+      created: 1744183155288
+      modified: 1750343295928
+      isPrivate: false
+      sortKey: -1744183155288
+    method: POST
+    body:
+      mimeType: multipart/form-data
+      params:
+        - name: username
+          value: disdukcapil
+          id: pair_635fda97ab46400a99b922ce2fcb02f9
+        - name: password
+          value: disdukcapil
+          id: pair_10d1ccdaa6d748ecbaa03fe069e91c4d
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+      - name: User-Agent
+        value: insomnia/11.0.0
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+  - url: http://127.0.0.1:8000/api/logout
+    name: LOGOUT
+    meta:
+      id: req_29a68b0a71ba4995914823c6a2d4f8ad
+      created: 1744183155292
+      modified: 1744255623432
+      isPrivate: false
+      sortKey: -1744183155293
+    method: POST
+    body:
+      mimeType: multipart/form-data
+    headers:
+      - name: Content-Type
+        value: multipart/form-data
+        id: pair_a6e9899e63464ea9b3db63a8067f1d65
+      - name: User-Agent
+        value: insomnia/11.0.0
+        id: pair_f85a811c9546489295ef87a95bd0e832
+    authentication:
+      type: bearer
+      token: "{% response 'body', 'req_65274a9299fb4363bacddb0aa33975e2',
+        'b64::JC5hY2Nlc3NfdG9rZW4=::46b', 'never', 60 %}"
+    settings:
+      renderRequestBody: true
+      encodeUrl: true
+      followRedirects: global
+      cookies:
+        send: true
+        store: true
+      rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1442f6aae74004c90a3a78b2f5261248eb7d3123
+    created: 1744183155306
+    modified: 1744255975191
+  cookies:
+    - key: XSRF-TOKEN
+      value: eyJpdiI6IlNMbExwMWRlcE9aVjZSUVI4dXgwZEE9PSIsInZhbHVlIjoiT0tZaXVTeVdIWkwvR2U5MUZ3ZkF3Z0hyY1ZoZWF4S3hsb2Z6bG8rbEFrOTRlN01qazZ4czl6WUc1dHZsYW45Q1ZOSEZDQXMrOFZLOGFZN3ltTHhmenk1akRURlVFbUs4UlFYSjc0R0ZXNlhtRGVJejB6bkhXOURlWVZqUTUyT3IiLCJtYWMiOiI5ZGQyNDNmZjcwOTZlNGE4NjAzZmMzZDE4ZjZkNzRkZDM5NDQyZTkyNWY5MTk3M2JjY2VhMGRiMDg1MmQwYmI0IiwidGFnIjoiIn0%3D
+      maxAge: 7200
+      domain: 127.0.0.1
+      path: /
+      hostOnly: true
+      creation: 2025-04-10T03:32:55.188Z
+      lastAccessed: 2025-04-10T03:32:55.188Z
+      sameSite: lax
+      id: 7e6f88c0-479b-4198-99fd-04694f8e0a6c
+    - key: laravel_session
+      value: eyJpdiI6Ii9vb3pvWkdPQi8xNm1wV2FqeklLRWc9PSIsInZhbHVlIjoiMGNGNDcxSUNRdHFLczdMdWVJK3dKK0F4R1J2aWVQb3krZlZYRG9INUxYRTJCd2hLSlZBZU5HZ2pxdUJFaWhJSjhncnlvZVVDR3VwRWZyR1gxaXdUeWtGcExpYm5PenlML1haekQzSjVRM2hwZVNJQ2UxNHgrRmpjNzlaL3ptV2wiLCJtYWMiOiI2ZTg5NWI2MTVjODFkYjhkNzQ2YTlkZGJiODIyZjQ4OTMwMmQ0OTc1M2M0ZDljMDdkMDg4MmE2M2E1N2Q4ZWFiIiwidGFnIjoiIn0%3D
+      maxAge: 7200
+      domain: 127.0.0.1
+      path: /
+      httpOnly: true
+      hostOnly: true
+      creation: 2025-04-10T03:32:55.191Z
+      lastAccessed: 2025-04-10T03:32:55.191Z
+      sameSite: lax
+      id: 0aa4edaf-f007-461b-96b7-f2533032052a
+environments:
+  name: Base Environment
+  meta:
+    id: env_1442f6aae74004c90a3a78b2f5261248eb7d3123
+    created: 1744183155301
+    modified: 1744183155301
+    isPrivate: false

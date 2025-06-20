@@ -225,7 +225,8 @@ class SubmissionController extends Controller
                     $notif['jenis_perkara'] = $jenis;
                     $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
                     // kirim ke pengadilan
-                    Mail::to("kevinbramasta321@gmail.com")->send(new ApprovalEmail($notif));
+                    $email_pengadilan = env('EMAIL_PENGADILAN');
+                    Mail::to($email_pengadilan)->send(new ApprovalEmail($notif));
                     $disdukcapil = $usulan->disdukcapil->nama;
                     $nama_pemohon = $usulan->pemohon->name;
                     $nomor_perkara = $usulan->no_perkara;
@@ -246,7 +247,8 @@ class SubmissionController extends Controller
                     $disdukcapil
                     EOT;
                     //ieu whatsapp pengadilan
-                    WhatsappHelper::sendSingleMessage('08562122827', $message);
+                    $nomor_pengadilan = env('NOMOR_PENGADILAN');
+                    WhatsappHelper::sendSingleMessage($nomor_pengadilan, $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Disetujui'
@@ -472,7 +474,8 @@ class SubmissionController extends Controller
                     $notif['jenis_perkara'] = $jenis;
                     $notif['tanggal_pengajuan'] = date("d-m-Y H:i:s", strtotime($usulan->created_at));
                     // kirim ke pengadilan
-                    Mail::to("tonnyheru29@gmail.com")->send(new ApprovalEmail($notif));
+                    $email_pengadilan = env('EMAIL_PENGADILAN');
+                    Mail::to($email_pengadilan)->send(new ApprovalEmail($notif));
                     $disdukcapil = $usulan->disdukcapil->nama;
                     $nama_pemohon = $usulan->pemohon->name;
                     $nomor_perkara = $usulan->no_perkara;
@@ -492,7 +495,8 @@ class SubmissionController extends Controller
                     Terima kasih atas kerjasamanya.
                     $disdukcapil
                     EOT;
-                    WhatsappHelper::sendSingleMessage('08562122827', $message);
+                    $nomor_pengadilan = env('NOMOR_PENGADILAN');
+                    WhatsappHelper::sendSingleMessage($nomor_pengadilan, $message);
                     return response([
                         'status' => true,
                         'message' => 'Data Berhasil Ditolak'

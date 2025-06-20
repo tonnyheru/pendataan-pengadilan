@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\PermissionCommon;
+use App\Models\Submission;
 use App\Models\Usulan;
 use Illuminate\Http\Request;
 use GuzzleHttp\Client as GuzzleClient;
@@ -13,9 +14,9 @@ class DashboardController extends Controller
     public function index()
     {
         $statistics = [];
-        $statistics['total_usulan'] = Usulan::count();
-        $statistics['total_usulan_approve'] = Usulan::where('is_approve', 2)->count();
-        $statistics['total_usulan_reject'] = Usulan::where('is_approve', 0)->count();
+        $statistics['total_usulan'] = Submission::count();
+        $statistics['total_usulan_approve'] = Submission::where('status', 2)->count();
+        $statistics['total_usulan_reject'] = Submission::where('status', 0)->count();
 
         $chartData = [
             'labels' => ['Ditolak', 'Disetujui'],
