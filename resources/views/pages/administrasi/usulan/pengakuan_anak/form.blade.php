@@ -133,6 +133,7 @@
     const dokumen = [
       'penetapan_pengadilan',
       'akta_kelahiran',
+      'pemberkatan_nikah',
       'kk_orangtua',
       'ktp_pemohon'
     ]
