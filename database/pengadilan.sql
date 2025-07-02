@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 24 Jun 2025 pada 06.46
+-- Waktu pembuatan: 02 Jul 2025 pada 08.49
 -- Versi server: 10.4.32-MariaDB
 -- Versi PHP: 8.1.25
 
@@ -478,6 +478,13 @@ CREATE TABLE `perbaikan_akta_details` (
   `data_sesudah` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `perbaikan_akta_details`
+--
+
+INSERT INTO `perbaikan_akta_details` (`uid`, `submission_uid`, `jenis_akta`, `nomor_akta`, `jenis_elemen_perbaikan`, `data_sebelum`, `data_sesudah`) VALUES
+('c1557bc5-7e1b-4d93-b11c-c32e4fabe892', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'akta_kelahiran', '12345', 'nama', 'Tonny Heru', 'Spongebob Squarepants');
+
 -- --------------------------------------------------------
 
 --
@@ -792,6 +799,13 @@ CREATE TABLE `submissions` (
   `updated_by` varchar(40) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data untuk tabel `submissions`
+--
+
+INSERT INTO `submissions` (`uid`, `no_perkara`, `submission_type`, `pemohon_uid`, `disdukcapil_uid`, `status`, `catatan`, `approved_at`, `approved_by`, `created_at`, `created_by`, `updated_at`, `updated_by`) VALUES
+('0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'NOPER.09/IV/2025', 'perbaikan_akta', '468239ba-5c5b-4e16-b356-90ae1260084b', 'b7ae3d2f-0243-4a83-9092-8ee3ee36afeb', '1', '[{\"role\":\"Super Admin\",\"name\":\"Super Admin\",\"status\":\"1\",\"catatan\":\"spongbob\",\"timestamp\":\"2025-06-24 15:37:50\"}]', NULL, NULL, '2025-06-24 08:37:50', 'a9467865-37c1-4104-bd63-b26a33c915db', '2025-06-24 08:37:50', NULL);
+
 -- --------------------------------------------------------
 
 --
@@ -806,6 +820,17 @@ CREATE TABLE `submission_documents` (
   `file_path` varchar(255) DEFAULT NULL,
   `uploaded_at` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `submission_documents`
+--
+
+INSERT INTO `submission_documents` (`uid`, `submission_uid`, `document_name`, `document_type`, `file_path`, `uploaded_at`) VALUES
+('0578dea6-a8e1-4cc5-aaef-670d794cf95b', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'penetapan.jpeg', 'penetapan_pengadilan', '7b6f6feeac8941a393b161b5e9f690521750754270.jpeg', '2025-06-24 08:37:50'),
+('141ed789-2f74-4b86-82f9-d600a5c1f5db', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'kk.jpg', 'kk_pemohon', '9b5e188f2e5f431f061077d24d1932f31750754270.jpg', '2025-06-24 08:37:50'),
+('1c000615-02b6-4e14-8365-8d0096ab677c', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'akta.jpg', 'akta_kelahiran', '73d38f911a61bd6377fb0360a50b9d461750754270.jpg', '2025-06-24 08:37:50'),
+('40e1bfb1-a89d-490a-a2ec-c9536b9ccaf3', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'ktp.jpg', 'ktp_pemohon', '14aaec079f1dc7f4f0e660da43f1752c1750754270.jpg', '2025-06-24 08:37:50'),
+('71f42ca3-44bc-43f2-9fea-986b858716dd', '0a0579bd-8c6c-4c06-a713-3f68eb87dcdf', 'surat pengantar.jpeg', 'keabsahan', 'b7ac3eac57eeb4d6af8c8f85be85dff31750754270.jpeg', '2025-06-24 08:37:50');
 
 -- --------------------------------------------------------
 
