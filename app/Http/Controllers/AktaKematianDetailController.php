@@ -14,6 +14,7 @@ use App\Models\SubmissionDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client as GuzzleClient;
 
 class AktaKematianDetailController extends Controller
 {
@@ -284,6 +285,17 @@ class AktaKematianDetailController extends Controller
                     Pengadilan Negeri Bale Bandung
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
+
+                    if (strtolower($disdukcapil->nama) == "disdukcapil kota cimahi") {
+                        // Lakukan sesuatu jika Disdukcapil adalah Kota Cimahi
+                        $client = new GuzzleClient([
+                            'http_errors' => false
+                        ]);
+                        $url = 'https://gsb.cimahikota.go.id/api/disdukcapil/pn_bale_bandung/perbaikan_data';
+                        $response = $client->request('POST', $url, ['headers' => [], 'json' => []]);
+                        $status = $response->getStatusCode();
+                        echo $response->getBody();
+                    }
                 }
 
 

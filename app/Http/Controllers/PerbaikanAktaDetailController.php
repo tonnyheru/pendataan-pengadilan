@@ -14,6 +14,7 @@ use App\Models\SubmissionDocument;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
+use GuzzleHttp\Client as GuzzleClient;
 
 class PerbaikanAktaDetailController extends Controller
 {
@@ -270,8 +271,94 @@ class PerbaikanAktaDetailController extends Controller
                     Pengadilan Negeri Bale Bandung
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
-                }
 
+                    if (strtolower($disdukcapil->nama) == "disdukcapil kota cimahi") {
+                        // Lakukan sesuatu jika Disdukcapil adalah Kota Cimahi
+                        $client = new GuzzleClient([
+                            'http_errors' => false
+                        ]);
+                        $url = 'https://gsb.cimahikota.go.id/api/disdukcapil/pn_bale_bandung/perbaikan_data';
+                        $response = $client->request('POST', $url, ['headers' => [
+                            'Authorization' => 'Bearer ' . env('CIMAHI_API_TOKEN'),
+                        ], 'json' => [
+                            'name' => $nomor_perkara,
+                            'requirement' => [
+                                'form' => [
+                                    'province' => [
+                                        'id' => '',
+                                        'name' => '',
+                                    ],
+                                    'city' => [
+                                        'id' => '',
+                                        'name' => '',
+                                    ],
+                                    'district' => [
+                                        'id' => '',
+                                        'name' => '',
+                                    ],
+                                    'village' => [
+                                        'id' => '',
+                                        'name' => '',
+                                    ],
+                                    'region_code' => '',
+                                    'informant_name' => '',
+                                    'informant_identity_number' => '',
+                                    'informant_family_number' => '',
+                                    'informant_citizenship' => '',
+                                    'informant_travel_document_number' => '',
+                                    'informant_gender' => '',
+                                    'informant_occupation' => '',
+                                    'informant_email' => '',
+                                    'informant_phone' => '',
+
+                                    'birth_place' => '',
+                                    'birth_date' => '',
+                                    'birth_certificate_number' => '',
+                                    'blood_type' => '',
+                                    'religion' => '',
+                                    'marriage_status' => '',
+                                    'marriage_certificate_number' => '',
+                                    'marriage_date' => '',
+                                    'divorce_certificate_number' => '',
+                                    'divorce_date' => '',
+                                    'family_relationship_status' => '',
+                                    'last_education' => '',
+                                    'occupation' => '',
+                                    'passport_number' => '',
+                                    'passport_expired_date' => '',
+                                    'data_identity_number' => '',
+                                    'data_name' => '',
+                                    'father_name' => '',
+                                    'father_date_of_birth' => '',
+                                    'father_place_of_birth' => '',
+                                    'father_identity_number' => '',
+                                    'father_citizenship' => '',
+                                    'mother_name' => '',
+                                    'mother_date_of_birth' => '',
+                                    'mother_place_of_birth' => '',
+                                    'mother_identity_number' => '',
+                                    'mother_citizenship' => '',
+                                    'notes_citizenship' => '',
+                                    'notes_officer' => '',
+                                ],
+                                'attachment' => [
+                                    'birth_certificate' => '',
+                                    'mariage_certificate' => '',
+                                    'divorce_certificate' => '',
+                                    'medical_information' => '',
+                                    'education_certificate' => '',
+                                    'employment_status' => '',
+                                    'passport' => '',
+                                    'court_order_letter' => '',
+                                    'sptjm' => '',
+                                    'additional_document' => '',
+                                ],
+                            ],
+                        ]]);
+                        $status = $response->getStatusCode();
+                        echo $response->getBody();
+                    }
+                }
 
                 return response([
                     'status' => true,

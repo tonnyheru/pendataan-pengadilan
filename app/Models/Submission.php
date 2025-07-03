@@ -31,6 +31,21 @@ class Submission extends Model
         'uid' => 'string',
     ];
 
+    protected $appends = ['details'];
+
+    function snakeToCamelWithSuffix($string, $suffix = 'Detail')
+    {
+        // Ubah ke camelCase
+        $camel = lcfirst(str_replace(' ', '', ucwords(str_replace('_', ' ', $string))));
+        // Tambahkan suffix
+        return $camel . $suffix;
+    }
+
+    public function getDetailsAttribute()
+    {
+        return $this->snakeToCamelWithSuffix($this->submission_type);
+    }
+
     public function pemohon()
     {
         return $this->belongsTo(Pemohon::class, 'pemohon_uid', 'uid');

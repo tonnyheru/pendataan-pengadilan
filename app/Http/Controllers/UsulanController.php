@@ -768,9 +768,30 @@ class UsulanController extends Controller
             $role = auth()->user()->role->slug;
             $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
                 ->value('uid');
-            $usulan = Submission::where('disdukcapil_uid', $uid)->latest()->paginate(5);
+            $usulan = Submission::select('uid', 'no_perkara', 'submission_type')
+                ->with([
+                    'documents' => function ($query) {
+                        $query->select('submission_uid', 'document_type', 'document_name', 'file_path');
+                    },
+                    'perbaikanAktaDetail',
+                    'aktaKematianDetail',
+                    'aktaPerkawinanDetail',
+                    'aktaPerceraianDetail',
+                    'pengangkatanAnakDetail',
+                    'pengakuanAnakDetail',
+                    'pembatalanAktaKelahiranDetail',
+                    'pembatalanPerceraianDetail',
+                    'pembatalanPerkawinanDetail',
+                ])
+                ->where('disdukcapil_uid', $uid)
+                ->paginate(1);
+            // foreach ($usulan as $item) {
+            //     $detailRelation = $item->details; // misal: aktaKematianDetail
+            //     $item->setRelation($item->details, $item->$detailRelation); // inject hasilnya
+            // }
             return new PostResource(true, 'Berhasil mengambil data usulan', $usulan);
         } catch (\Throwable $th) {
+            dd($th);
             return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         }
     }
@@ -832,14 +853,14 @@ class UsulanController extends Controller
                 $trx = $usulan->update($formData);
                 if ($trx) {
                     $jenis_permohonan = $usulan->submission_type;
-                    if(in_array($jenis_permohonan, ['pengangkatan_anak','pengakuan_anak','pembatalan_akta_kelahiran','pembatalan_perceraian','pembatalan_perkawinan'])){
+                    if (in_array($jenis_permohonan, ['pengangkatan_anak', 'pengakuan_anak', 'pembatalan_akta_kelahiran', 'pembatalan_perceraian', 'pembatalan_perkawinan'])) {
                         $notif = [];
                         $notif['logo'] = $usulan->disdukcapil->cdn_picture;
                         $notif['approval'] = "approve";
-                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil", "", strtolower($usulan->disdukcapil->nama)));
                         $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
                         $nama_disdukcapil = $usulan->disdukcapil->nama;
-                        switch($nama_disdukcapil) {
+                        switch ($nama_disdukcapil) {
                             case 'Disdukcapil Kabupaten Bandung Barat':
                                 $notif['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
                                 break;
@@ -951,14 +972,14 @@ class UsulanController extends Controller
                 $trx = $usulan->update($formData);
                 if ($trx) {
                     $jenis_permohonan = $usulan->submission_type;
-                    if(in_array($jenis_permohonan, ['pengangkatan_anak','pengakuan_anak','pembatalan_akta_kelahiran','pembatalan_perceraian','pembatalan_perkawinan'])){
+                    if (in_array($jenis_permohonan, ['pengangkatan_anak', 'pengakuan_anak', 'pembatalan_akta_kelahiran', 'pembatalan_perceraian', 'pembatalan_perkawinan'])) {
                         $notif = [];
                         $notif['logo'] = $usulan->disdukcapil->cdn_picture;
                         $notif['approval'] = "reject";
-                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil","",strtolower($usulan->disdukcapil->nama)));
+                        $notif['daerah_disdukcapil'] = strtoupper(str_replace("disdukcapil", "", strtolower($usulan->disdukcapil->nama)));
                         $notif['alamat_disdukcapil'] = $usulan->disdukcapil->alamat;
                         $nama_disdukcapil = $usulan->disdukcapil->nama;
-                        switch($nama_disdukcapil) {
+                        switch ($nama_disdukcapil) {
                             case 'Disdukcapil Kabupaten Bandung Barat':
                                 $notif['alamat-line2'] = 'E-mail : <a href="mailto:disdukcapil@bandungbaratkab.go.id">disdukcapil@bandungbaratkab.go.id</a>  Web : <a href="http://bandungbaratkab.go.id">http://bandungbaratkab.go.id</a>';
                                 break;

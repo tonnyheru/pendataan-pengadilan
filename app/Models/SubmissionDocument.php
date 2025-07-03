@@ -25,8 +25,15 @@ class SubmissionDocument extends Model
         'uid' => 'string',
     ];
 
+    protected $appends = ['full_path'];
+
     public function submission()
     {
         return $this->belongsTo(Submission::class, 'submission_uid', 'uid');
+    }
+
+    public function getFullPathAttribute()
+    {
+        return asset("upload/file_" . $this->document_type . "/" . $this->file_path);
     }
 }
