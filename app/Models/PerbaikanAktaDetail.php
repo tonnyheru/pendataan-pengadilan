@@ -21,6 +21,7 @@ class PerbaikanAktaDetail extends Model
         'jenis_elemen_perbaikan',
         'data_sebelum',
         'data_sesudah',
+        'data_subject',
     ];
 
     protected $casts = [

@@ -126,6 +126,7 @@ class PemohonController extends Controller
                 'message' => 'Terjadi Kesalahan Internal'
             ], 400);
         } catch (\Illuminate\Database\QueryException $e) {
+            // dd($e);
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',
@@ -224,7 +225,7 @@ class PemohonController extends Controller
                 ], 400);
             }
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             return response([
                 'status' => false,
                 'message' => 'Terjadi Kesalahan Internal',

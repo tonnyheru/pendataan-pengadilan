@@ -22,6 +22,11 @@
 </style>
 <div class="row">
 
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Pengadilan</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+
   <div class="form-group col-md-12">
     <label>Nomor Perkara <span class="text-danger">*</span></label>
     <input type="text" name="no_perkara" class="form-control" placeholder="Nomor Perkara" value="{{ @$data->submission->no_perkara }}">
@@ -102,6 +107,194 @@
       </div>
     </div>
   @endif
+</div>
+<div class="row" id="form-cimahi" style="display: none;">
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Data Yang Diusulkan</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
+  {{-- provinsi --}}
+  <div class="form-group col-md-6">
+    <label>Provinsi <span class="text-danger">*</span></label>
+    <select id="province" class="form-control select2-province" name="subject[province]" data-selected="{{ @$data->province }}" aria-describedby="validateProvince">
+        <option value=""></option>
+        @foreach($provinces as $province)
+            <option value="{{ $province->id }}">{{ $province->name }}</option>
+        @endforeach
+    </select>
+    <div id="validateProvince" class="invalid-feedback">
+      Kolom provinsi harus diisi.
+    </div>
+  </div>
+  {{-- kabupaten / kota --}}
+  <div class="form-group col-md-6">
+    <label>Kabupaten / Kota <span class="text-danger">*</span></label>
+    <select id="regency" class="form-control select2-regency" name="subject[regency]" data-selected="{{ @$data->regency }}" aria-describedby="validateRegency">
+        <option value=""></option>
+    </select>
+    <div id="validateRegency" class="invalid-feedback">
+      Kolom Kabupaten / Kota harus diisi.
+    </div>
+  </div>
+  {{-- kecamatan --}}
+  <div class="form-group col-md-6">
+    <label>Kecamatan <span class="text-danger">*</span></label>
+    <select id="district" class="form-control select2-district" name="subject[district]" data-selected="{{ @$data->district }}" aria-describedby="validateDistrict">
+        <option value=""></option>
+    </select>
+    <div id="validateDistrict" class="invalid-feedback">
+      Kolom Kecamatan harus diisi.
+    </div>
+  </div>
+  {{-- desa / kelurahan --}}
+  <div class="form-group col-md-6">
+    <label>Desa / Kelurahan <span class="text-danger">*</span></label>
+    <select id="village" class="form-control select2-village" name="subject[village]" data-selected="{{ @$data->village }}" aria-describedby="validateVillage">
+        <option value=""></option>
+    </select>
+    <div id="validateVillage" class="invalid-feedback">
+      Kolom Desa / Kelurahan harus diisi.
+    </div>
+  </div>
+
+  <div class="form-group col-md-12">
+    <label>Nomor Induk Kependudukan (NIK) <span class="text-danger">*</span></label>
+    <input type="text" name="subject[nik]" class="form-control" placeholder="Nomor NIK" value="{{ @$data->nik }}" oninput="javascript: if (this.value.length > this.maxLength) this.value = this.value.slice(0, this.maxLength);"  maxlength="16">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Nama Yang Diusulkan <span class="text-danger">*</span></label>
+    <input type="text" name="subject[name]" class="form-control" placeholder="Nama Yang Diusulkan" value="{{ @$data->name }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Jenis Kelamin</label>
+    <select id="gender" class="form-control select2-gender" name="subject[gender]" >
+        <option value=""></option>
+        <option value="1" {{ @$data->gender == '1' ? 'selected' : '' }}>1 - Laki-laki</option>
+        <option value="2" {{ @$data->gender == '2' ? 'selected' : '' }}>2 - Perempuan</option>
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Tempat Lahir</label>
+    <input type="text" name="subject[tempat_lahir]" class="form-control" placeholder="Tempat Lahir" value="{{ @$data->tempat_lahir }}" aria-describedby="validateTempatLahir">
+    <div id="validateTempatLahir" class="invalid-feedback">
+      Kolom Tempat Lahir harus diisi.
+    </div>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Tanggal Lahir</label>
+    <div class='date'>
+      <input type='text' class="form-control" name="subject[tanggal_lahir]" id='tanggal_lahir' style="background-color: white; " placeholder="Pilih Tanggal Lahir" value="{{ @$data->tanggal_lahir }}"  aria-describedby="validateTanggalLahir" />
+      <div id="validateTanggalLahir" class="invalid-feedback">
+        Kolom Tanggal Lahir harus diisi.
+      </div>
+    </div>
+  </div>
+  <div class="form-group col-md-12">
+    <label>Akta Kelahiran</label>
+    <input type="text" name="subject[akta_kelahiran]" class="form-control" placeholder="Akta Kelahiran" value="{{ @$data->akta_kelahiran }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Golongan Darah</label>
+    <select id="blood_type" class="form-control select2-blood-type" name="subject[blood_type]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getGolonganDarah() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->blood_type == $key ? 'selected' : '' }}>{{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Agama</label>
+    <select id="religion" class="form-control select2-religion" name="subject[religion]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getAgama() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->agama == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-12">
+    <label>Status Kawin</label>
+    <select id="marital_status" class="form-control select2-marital-status" name="subject[status_kawin]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getStatusPernikahan() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->status_kawin == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+      <label>Akta Kawin</label>
+      <input type="text" name="subject[akta_kawin]" class="form-control" placeholder="Akta Kawin" value="{{ @$data->akta_kawin }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Tanggal Kawin</label>
+    <div class='date'>
+      <input type='text' class="form-control" name="subject[tanggal_kawin]" id='tanggal_kawin' style="background-color: white; " placeholder="Pilih Tanggal Kawin" value="{{ @$data->tanggal_kawin }}" />
+    </div>
+  </div>
+  <div class="form-group col-md-6">
+      <label>Akta Cerai</label>
+      <input type="text" name="subject[akta_cerai]" class="form-control" placeholder="Akta Cerai" value="{{ @$data->akta_cerai }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Tanggal Terbit Akta Cerai</label>
+    <div class='date'>
+      <input type='text' class="form-control" name="subject[tanggal_cerai]" id='tanggal_cerai' style="background-color: white; " placeholder="Pilih Tanggal Cerai" value="{{ @$data->tanggal_cerai }}" />
+    </div>
+  </div>
+  <div class="form-group col-md-12">
+    <label>Status Hubungan Keluarga</label>
+    <select id="family_relationship" class="form-control select2-family-relationship" name="subject[family_relationship]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getStatusHubunganKeluarga() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->family_relationship == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Pendidikan</label>
+    <select id="education" class="form-control select2-education" name="subject[education]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getPendidikan() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->education == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-6">
+    <label>Pekerjaan</label>
+    <select id="job" class="form-control select2-job" name="subject[job]">
+        <option value=""></option>
+        @foreach(\App\Helpers\DataHelper::getPekerjaan() as $key => $value)
+            <option value="{{ $key }}" {{ @$data->job == $key ? 'selected' : '' }}>{{ $key }} - {{ $value }}</option>
+        @endforeach
+    </select>
+  </div>
+  <div class="form-group col-md-12">
+      <label>Nama Ibu</label>
+      <input type="text" name="subject[nama_ibu]" class="form-control" placeholder="Nama Ibu" value="{{ @$data->nama_ibu }}">
+  </div>
+  <div class="form-group col-md-12">
+      <label>Nama Ayah</label>
+      <input type="text" name="subject[nama_ayah]" class="form-control" placeholder="Nama Ayah" value="{{ @$data->nama_ayah }}">
+  </div>
+  <div class="form-group col-md-6">
+      <label>Nomor Paspor</label>
+      <input type="text" name="subject[nomor_paspor]" class="form-control" placeholder="Nomor Paspor" value="{{ @$data->nomor_paspor }}">
+  </div>
+  <div class="form-group col-md-6">
+    <label>Tanggal Berlaku Paspor</label>
+    <div class='date'>
+      <input type='text' class="form-control" name="subject[tanggal_berlaku_paspor]" id='tanggal_berlaku_paspor' style="background-color: white; " placeholder="Pilih Tanggal Berlaku Paspor" value="{{ @$data->tanggal_berlaku_paspor }}" />
+    </div>
+  </div>
+  <div class="form-group col-md-12">
+      <label>Keterangan</label>
+      <textarea name="subject[keterangan]" class="form-control" placeholder="Keterangan">{{ @$data->keterangan }}</textarea>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12 justify-content-start">
+    <h5 style="color: #016004">Dokumen Persyaratan</h5>
+    <hr class="bg-diy"style="height: 2px; margin-top: 0px !important; margin-bottom: 10px !important;">
+  </div>
   @php
   $dokumen = [
     'penetapan_pengadilan' => 'Penetapan Pengadilan',
@@ -109,11 +302,19 @@
     'kk_pemohon' => 'Kartu Keluarga Pemohon',
     'ktp_pemohon' => 'KTP Pemohon',
     'keabsahan' => 'Keabsahan Akta Kelahiran',
+    'akta_perkawinan' => 'Akta Perkawinan',
+    'akta_perceraian' => 'Akta Perceraian',
+    'keterangan_medis' => 'Keterangan Medis',
+    'ijazah' => 'Ijazah',
+    'keterangan_status_pekerjaan' => 'Keterangan Status Pekerjaan',
+    'paspor' => 'Paspor',
+    'sptjm' => 'Surat Pernyataan Tanggung Jawab Mutlak (SPTJM)',
+    'dokumen_tambahan' => 'Dokumen Tambahan'
   ];
   @endphp
   @foreach($dokumen as $key => $dok)
-    <div class="col-md-3">
-        <label for="foto_{{$key}}">{{ $dok }} @if($key != 'keabsahan') @if(!@$data)<span class="text-danger">*</span> @endif @endif</label>
+    <div class="col-md-3 mt-3">
+        <label for="foto_{{$key}}">{{ $dok }} @if($key != 'keabsahan' && $key != 'akta_perkawinan' && $key != 'akta_perceraian' && $key != 'keterangan_medis' && $key != 'ijazah' && $key != 'keterangan_status_pekerjaan' && $key != 'paspor' && $key != 'sptjm' && $key != 'dokumen_tambahan') @if(!@$data)<span class="text-danger">*</span> @endif @endif</label>
         <div class="{{$key}}_picker my-1 position-relative rounded overflow-hidden d-flex justify-content-center align-items-center" style="height: 150px; width: 150px; border: 1.5px dotted #dee2e6; cursor: pointer;">
             <div class="text-center {{$key}}-upload-placeholder">
                 <i class="fas fa-upload fa-2x"></i>
@@ -137,12 +338,29 @@
 </div>
 <script>
   $(() => {
+    let regencies = [];
+    let districts = [];
+    let villages = [];
+
+    const selectedProvince = $('#province').data('selected');
+    const selectedRegency = $('#regency').data('selected');
+    const selectedDistrict = $('#district').data('selected');
+    const selectedVillage = $('#village').data('selected');
+
     const dokumen = [
       'penetapan_pengadilan',
       'akta_kelahiran',
       'kk_pemohon',
       'ktp_pemohon',
-      'keabsahan'
+      'keabsahan',
+      'akta_perkawinan',
+      'akta_perceraian',
+      'keterangan_medis',
+      'ijazah',
+      'keterangan_status_pekerjaan',
+      'paspor',
+      'sptjm',
+      'dokumen_tambahan'
     ]
     dokumen.forEach(dok => {
       $(`.${dok}_picker`).on('click', function() {
@@ -196,6 +414,70 @@
         }, 1000); // Adjust as needed
       });
     });
+
+    $('.select2-province').select2({
+      placeholder: "Pilih Provinsi",
+      allowClear: true
+    });
+    $('.select2-regency').select2({
+      placeholder: "Pilih Kabupaten / Kota",
+      allowClear: true
+    });
+    $('.select2-district').select2({
+      placeholder: "Pilih Kabupaten / Kota",
+      allowClear: true
+    });
+    $('.select2-village').select2({
+      placeholder: "Pilih Desa / Kelurahan",
+      allowClear: true
+    });
+    $('.select2-gender').select2({
+      placeholder: "Pilih Jenis Kelamin",
+      allowClear: true
+    });
+    $('#tanggal_lahir').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('.select2-blood-type').select2({
+      placeholder: "Pilih Golongan Darah",
+      allowClear: true
+    });
+    $('.select2-religion').select2({
+      placeholder: "Pilih Agama",
+      allowClear: true
+    });
+    $('.select2-marital-status').select2({
+      placeholder: "Pilih Status Kawin",
+      allowClear: true
+    });
+    $('.select2-family-relationship').select2({
+      placeholder: "Pilih Status Hubungan Keluarga",
+      allowClear: true
+    });
+    $('.select2-education').select2({
+      placeholder: "Pilih Pendidikan",
+      allowClear: true
+    });
+    $('.select2-job').select2({
+      placeholder: "Pilih Pekerjaan",
+      allowClear: true
+    });
+
+    $('#tanggal_kawin').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('#tanggal_cerai').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+    $('#tanggal_berlaku_paspor').flatpickr({
+      static: true,
+      dateFormat: "Y-m-d",
+    })
+
+
     $('.select2-pemohon').select2({
       placeholder: "Pilih Pemohon",
       allowClear: true,
@@ -273,6 +555,94 @@
     $('.select2-elemen-perbaikan').select2({
       placeholder: "Pilih Elemen Perbaikan / Perubahan",
       allowClear: true
+    });
+
+    // Load JSON files (async chaining)
+    $.when(
+      $.getJSON('/data/regencies.json', data => { regencies = data }),
+      $.getJSON('/data/districts.json', data => { districts = data }),
+      $.getJSON('/data/villages.json', data => { villages = data })
+    ).done(function () {
+      // Prefill data for edit
+      if (selectedProvince) {
+        $('#province').val(selectedProvince).trigger('change');
+
+        const filteredRegencies = regencies.filter(r => r.province_id === selectedProvince);
+        $.each(filteredRegencies, function (i, regency) {
+          $('#regency').append(`<option value="${regency.id}" ${regency.id == selectedRegency ? 'selected' : ''}>${regency.name}</option>`);
+        });
+
+        if (selectedRegency) {
+          $('#regency').val(selectedRegency).trigger('change');
+
+          const filteredDistricts = districts.filter(d => d.regency_id === selectedRegency);
+          $.each(filteredDistricts, function (i, district) {
+            $('#district').append(`<option value="${district.id}" ${district.id == selectedDistrict ? 'selected' : ''}>${district.name}</option>`);
+          });
+
+          if (selectedDistrict) {
+            $('#district').val(selectedDistrict).trigger('change');
+
+            const filteredVillages = villages.filter(v => v.district_id === selectedDistrict);
+            $.each(filteredVillages, function (i, village) {
+              $('#village').append(`<option value="${village.id}" ${village.id == selectedVillage ? 'selected' : ''}>${village.name}</option>`);
+            });
+
+            $('#village').val(selectedVillage).trigger('change');
+          }
+        }
+      }
+    });
+
+    // Handle province change
+    $('#province').on('change', function () {
+      const provinceId = $(this).val();
+      $('#regency').empty().append('<option value=""></option>');
+      $('#district').empty().append('<option value=""></option>');
+      $('#village').empty().append('<option value=""></option>');
+
+      const filteredRegencies = regencies.filter(r => r.province_id === provinceId);
+      $.each(filteredRegencies, function (i, regency) {
+        $('#regency').append(`<option value="${regency.id}">${regency.name}</option>`);
+      });
+    });
+
+    // Handle regency change
+    $('#regency').on('change', function () {
+      const regencyId = $(this).val();
+      $('#district').empty().append('<option value=""></option>');
+      $('#village').empty().append('<option value=""></option>');
+
+      const filteredDistricts = districts.filter(d => d.regency_id === regencyId);
+      $.each(filteredDistricts, function (i, district) {
+        $('#district').append(`<option value="${district.id}">${district.name}</option>`);
+      });
+    });
+
+    // Handle district change
+    $('#district').on('change', function () {
+      const districtId = $(this).val();
+      $('#village').empty().append('<option value=""></option>');
+
+      const filteredVillages = villages.filter(v => v.district_id === districtId);
+      $.each(filteredVillages, function (i, village) {
+        $('#village').append(`<option value="${village.id}">${village.name}</option>`);
+      });
+    });
+
+    function toggleCimahiForm() {
+      const selectedText = $('.select2-disdukcapil option:selected').text().toLowerCase();
+      if (selectedText.includes('cimahi')) {
+        $('#form-cimahi').show();
+      } else {
+        $('#form-cimahi').hide();
+      }
+    }
+
+    // Jalankan saat halaman pertama kali dimuat (untuk mode edit)
+    toggleCimahiForm();
+    $('.select2-disdukcapil').on('change', function () {
+      toggleCimahiForm();
     });
   })
 </script>

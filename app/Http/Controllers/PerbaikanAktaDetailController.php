@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\DataTables\PerbaikanAktaDetailDataTable;
+use App\Helpers\DataHelper;
 use App\Helpers\PermissionCommon;
 use App\Helpers\WhatsappHelper;
 use App\Mail\NotifEmail;
@@ -35,7 +36,9 @@ class PerbaikanAktaDetailController extends Controller
         if (!PermissionCommon::check('perbaikan_akta.create')) abort(403);
         $pemohon = Pemohon::all();
         $disdukcapil = Disdukcapil::all();
-        $body = view('pages.administrasi.usulan.perbaikan_akta.create', compact('pemohon', 'disdukcapil'))->render();
+
+        $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
+        $body = view('pages.administrasi.usulan.perbaikan_akta.create', compact('pemohon', 'disdukcapil', 'provinces'))->render();
         $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
 
@@ -62,6 +65,13 @@ class PerbaikanAktaDetailController extends Controller
             'data_sebelum' => 'required',
             'data_sesudah' => 'required',
 
+            'subject.province' => 'required',
+            'subject.regency' => 'required',
+            'subject.district' => 'required',
+            'subject.village' => 'required',
+            'subject.nik' => 'required',
+            'subject.name' => 'required',
+
             'file_penetapan_pengadilan' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta_kelahiran' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_kk_pemohon' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
@@ -77,6 +87,13 @@ class PerbaikanAktaDetailController extends Controller
             'jenis_elemen_perbaikan.required' => 'Jenis Elemen Perbaikan tidak boleh kosong',
             'data_sebelum.required' => 'Data Sebelum tidak boleh kosong',
             'data_sesudah.required' => 'Data Sesudah tidak boleh kosong',
+
+            'subject.province.required' => 'Provinsi tidak boleh kosong',
+            'subject.regency.required' => 'Kabupaten / Kota tidak boleh kosong',
+            'subject.district.required' => 'Kecamatan tidak boleh kosong',
+            'subject.village.required' => 'Desa / Kelurahan tidak boleh kosong',
+            'subject.nik.required' => 'NIK tidak boleh kosong',
+            'subject.name.required' => 'Nama tidak boleh kosong',
 
             'file_penetapan_pengadilan.required' => 'File Penetapan Pengadilan tidak boleh kosong',
             'file_penetapan_pengadilan.mimes' => 'Format file harus JPG, PNG, atau PDF',
@@ -190,6 +207,118 @@ class PerbaikanAktaDetailController extends Controller
                 ];
             }
 
+            if ($request->hasFile('file_akta_perkawinan')) {
+                $file_akta_perkawinan = $request->file('file_akta_perkawinan');
+                $file_akta_perkawinan_name = md5('akta_perkawinan' . time()) . time() . '.' . $file_akta_perkawinan->getClientOriginalExtension();
+                $data['path_akta_perkawinan'] = $file_akta_perkawinan_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_akta_perkawinan->getClientOriginalName(),
+                    'document_type' => 'akta_perkawinan',
+                    'file_path' => $file_akta_perkawinan_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_akta_perceraian')) {
+                $file_akta_perceraian = $request->file('file_akta_perceraian');
+                $file_akta_perceraian_name = md5('akta_perceraian' . time()) . time() . '.' . $file_akta_perceraian->getClientOriginalExtension();
+                $data['path_akta_perceraian'] = $file_akta_perceraian_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_akta_perceraian->getClientOriginalName(),
+                    'document_type' => 'akta_perceraian',
+                    'file_path' => $file_akta_perceraian_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_keterangan_medis')) {
+                $file_keterangan_medis = $request->file('file_keterangan_medis');
+                $file_keterangan_medis_name = md5('keterangan_medis' . time()) . time() . '.' . $file_keterangan_medis->getClientOriginalExtension();
+                $data['path_keterangan_medis'] = $file_keterangan_medis_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_keterangan_medis->getClientOriginalName(),
+                    'document_type' => 'keterangan_medis',
+                    'file_path' => $file_keterangan_medis_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_ijazah')) {
+                $file_ijazah = $request->file('file_ijazah');
+                $file_ijazah_name = md5('ijazah' . time()) . time() . '.' . $file_ijazah->getClientOriginalExtension();
+                $data['path_ijazah'] = $file_ijazah_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_ijazah->getClientOriginalName(),
+                    'document_type' => 'ijazah',
+                    'file_path' => $file_ijazah_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_keterangan_status_pekerjaan')) {
+                $file_keterangan_status_pekerjaan = $request->file('file_keterangan_status_pekerjaan');
+                $file_keterangan_status_pekerjaan_name = md5('keterangan_status_pekerjaan' . time()) . time() . '.' . $file_keterangan_status_pekerjaan->getClientOriginalExtension();
+                $data['path_keterangan_status_pekerjaan'] = $file_keterangan_status_pekerjaan_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_keterangan_status_pekerjaan->getClientOriginalName(),
+                    'document_type' => 'keterangan_status_pekerjaan',
+                    'file_path' => $file_keterangan_status_pekerjaan_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_paspor')) {
+                $file_paspor = $request->file('file_paspor');
+                $file_paspor_name = md5('paspor' . time()) . time() . '.' . $file_paspor->getClientOriginalExtension();
+                $data['path_paspor'] = $file_paspor_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_paspor->getClientOriginalName(),
+                    'document_type' => 'paspor',
+                    'file_path' => $file_paspor_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_sptjm')) {
+                $file_sptjm = $request->file('file_sptjm');
+                $file_sptjm_name = md5('sptjm' . time()) . time() . '.' . $file_sptjm->getClientOriginalExtension();
+                $data['path_sptjm'] = $file_sptjm_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_sptjm->getClientOriginalName(),
+                    'document_type' => 'sptjm',
+                    'file_path' => $file_sptjm_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
+            if ($request->hasFile('file_dokumen_tambahan')) {
+                $file_dokumen_tambahan = $request->file('file_dokumen_tambahan');
+                $file_dokumen_tambahan_name = md5('dokumen_tambahan' . time()) . time() . '.' . $file_dokumen_tambahan->getClientOriginalExtension();
+                $data['path_dokumen_tambahan'] = $file_dokumen_tambahan_name;
+                $documents[] = [
+                    'uid' => Str::uuid()->toString(),
+                    'submission_uid' => $submission->uid,
+                    'document_name' => $file_dokumen_tambahan->getClientOriginalName(),
+                    'document_type' => 'dokumen_tambahan',
+                    'file_path' => $file_dokumen_tambahan_name,
+                    'uploaded_at' => date('Y-m-d H:i:s'),
+                ];
+            }
+
 
             // status 0 = ditolak / revisi
             // status 1 = belum di approve
@@ -205,6 +334,7 @@ class PerbaikanAktaDetailController extends Controller
                 'jenis_elemen_perbaikan' => $data['jenis_elemen_perbaikan'],
                 'data_sebelum' => $data['data_sebelum'],
                 'data_sesudah' => $data['data_sesudah'],
+                'data_subject' => json_encode($data['subject']),
             ]);
 
             if ($trx) {
@@ -231,6 +361,46 @@ class PerbaikanAktaDetailController extends Controller
                 if ($request->hasFile('file_keabsahan')) {
                     $file_keabsahan = $request->file('file_keabsahan');
                     $file_keabsahan->move(public_path('upload/file_keabsahan'), $data['path_keabsahan']);
+                }
+
+                if ($request->hasFile('file_akta_perkawinan')) {
+                    $file_akta_perkawinan = $request->file('file_akta_perkawinan');
+                    $file_akta_perkawinan->move(public_path('upload/file_akta_perkawinan'), $data['path_akta_perkawinan']);
+                }
+
+                if ($request->hasFile('file_akta_perceraian')) {
+                    $file_akta_perceraian = $request->file('file_akta_perceraian');
+                    $file_akta_perceraian->move(public_path('upload/file_akta_perceraian'), $data['path_akta_perceraian']);
+                }
+
+                if ($request->hasFile('file_keterangan_medis')) {
+                    $file_keterangan_medis = $request->file('file_keterangan_medis');
+                    $file_keterangan_medis->move(public_path('upload/file_keterangan_medis'), $data['path_keterangan_medis']);
+                }
+
+                if ($request->hasFile('file_ijazah')) {
+                    $file_ijazah = $request->file('file_ijazah');
+                    $file_ijazah->move(public_path('upload/file_ijazah'), $data['path_ijazah']);
+                }
+
+                if ($request->hasFile('file_keterangan_status_pekerjaan')) {
+                    $file_keterangan_status_pekerjaan = $request->file('file_keterangan_status_pekerjaan');
+                    $file_keterangan_status_pekerjaan->move(public_path('upload/file_keterangan_status_pekerjaan'), $data['path_keterangan_status_pekerjaan']);
+                }
+
+                if ($request->hasFile('file_paspor')) {
+                    $file_paspor = $request->file('file_paspor');
+                    $file_paspor->move(public_path('upload/file_paspor'), $data['path_paspor']);
+                }
+
+                if ($request->hasFile('file_sptjm')) {
+                    $file_sptjm = $request->file('file_sptjm');
+                    $file_sptjm->move(public_path('upload/file_sptjm'), $data['path_sptjm']);
+                }
+
+                if ($request->hasFile('file_dokumen_tambahan')) {
+                    $file_dokumen_tambahan = $request->file('file_dokumen_tambahan');
+                    $file_dokumen_tambahan->move(public_path('upload/file_dokumen_tambahan'), $data['path_dokumen_tambahan']);
                 }
 
                 $disdukcapil = Disdukcapil::find($data['disdukcapil']);
@@ -272,7 +442,7 @@ class PerbaikanAktaDetailController extends Controller
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
 
-                    if (strtolower($disdukcapil->nama) == "disdukcapil kota cimahi") {
+                    if (str_contains(strtolower($disdukcapil->nama), 'cimahi')) {
                         // Lakukan sesuatu jika Disdukcapil adalah Kota Cimahi
                         $client = new GuzzleClient([
                             'http_errors' => false
@@ -285,78 +455,79 @@ class PerbaikanAktaDetailController extends Controller
                             'requirement' => [
                                 'form' => [
                                     'province' => [
-                                        'id' => '',
-                                        'name' => '',
+                                        'id' => $data['subject']['province'],
+                                        'name' => DataHelper::getProvinceLabel($data['subject']['province']),
                                     ],
                                     'city' => [
-                                        'id' => '',
-                                        'name' => '',
+                                        'id' => $data['subject']['regency'],
+                                        'name' => DataHelper::getRegencyLabel($data['subject']['regency']),
                                     ],
                                     'district' => [
-                                        'id' => '',
-                                        'name' => '',
+                                        'id' => $data['subject']['district'],
+                                        'name' => DataHelper::getDistrictLabel($data['subject']['district']),
                                     ],
                                     'village' => [
-                                        'id' => '',
-                                        'name' => '',
+                                        'id' => $data['subject']['village'],
+                                        'name' => DataHelper::getVillageLabel($data['subject']['village']),
                                     ],
                                     'region_code' => '',
-                                    'informant_name' => '',
-                                    'informant_identity_number' => '',
-                                    'informant_family_number' => '',
+                                    'informant_name' => $pemohon->name,
+                                    'informant_identity_number' => $pemohon->nik,
+                                    'informant_family_number' => $pemohon->kk,
                                     'informant_citizenship' => '',
-                                    'informant_travel_document_number' => '',
-                                    'informant_gender' => '',
-                                    'informant_occupation' => '',
-                                    'informant_email' => '',
-                                    'informant_phone' => '',
+                                    'informant_travel_document_number' => $pemohon->nomor_paspor,
+                                    'informant_gender' => strtolower($pemohon->jenis_kelamin) == "laki-laki" ? "1" : "2",
+                                    'informant_occupation' => $pemohon->job,
+                                    'informant_email' => $pemohon->email,
+                                    'informant_phone' => $pemohon->no_telp,
 
-                                    'birth_place' => '',
-                                    'birth_date' => '',
-                                    'birth_certificate_number' => '',
-                                    'blood_type' => '',
-                                    'religion' => '',
-                                    'marriage_status' => '',
-                                    'marriage_certificate_number' => '',
-                                    'marriage_date' => '',
-                                    'divorce_certificate_number' => '',
-                                    'divorce_date' => '',
-                                    'family_relationship_status' => '',
-                                    'last_education' => '',
-                                    'occupation' => '',
-                                    'passport_number' => '',
-                                    'passport_expired_date' => '',
-                                    'data_identity_number' => '',
-                                    'data_name' => '',
-                                    'father_name' => '',
+                                    'birth_place' => $data['subject']['tempat_lahir'],
+                                    'birth_date' => $data['subject']['tanggal_lahir'],
+                                    'birth_certificate_number' => $data['subject']['akta_kelahiran'],
+                                    'blood_type' => $data['subject']['blood_type'],
+                                    'religion' => $data['subject']['religion'],
+                                    'marriage_status' => $data['subject']['status_kawin'],
+                                    'marriage_certificate_number' => $data['subject']['akta_kawin'],
+                                    'marriage_date' => $data['subject']['tanggal_kawin'],
+                                    'divorce_certificate_number' => $data['subject']['akta_cerai'],
+                                    'divorce_date' => $data['subject']['tanggal_cerai'],
+                                    'family_relationship_status' => $data['subject']['family_relationship'],
+                                    'last_education' => $data['subject']['education'],
+                                    'occupation' => $data['subject']['job'],
+                                    'passport_number' => $data['subject']['nomor_paspor'],
+                                    'passport_expired_date' => $data['subject']['tanggal_berlaku_paspor'],
+                                    'data_identity_number' => $data['subject']['nik'],
+                                    'data_name' => $data['subject']['name'],
+                                    'father_name' => $data['subject']['nama_ayah'],
                                     'father_date_of_birth' => '',
                                     'father_place_of_birth' => '',
                                     'father_identity_number' => '',
                                     'father_citizenship' => '',
-                                    'mother_name' => '',
+                                    'mother_name' => $data['subject']['nama_ibu'],
                                     'mother_date_of_birth' => '',
                                     'mother_place_of_birth' => '',
                                     'mother_identity_number' => '',
                                     'mother_citizenship' => '',
                                     'notes_citizenship' => '',
-                                    'notes_officer' => '',
+                                    'notes_officer' => $data['subject']['keterangan'],
                                 ],
                                 'attachment' => [
-                                    'birth_certificate' => '',
-                                    'mariage_certificate' => '',
-                                    'divorce_certificate' => '',
-                                    'medical_information' => '',
-                                    'education_certificate' => '',
-                                    'employment_status' => '',
-                                    'passport' => '',
-                                    'court_order_letter' => '',
-                                    'sptjm' => '',
-                                    'additional_document' => '',
+                                    'birth_certificate' => $data['path_akta_kelahiran'] ? asset("upload/file_akta_kelahiran/" . $data['path_akta_kelahiran']) : "",
+                                    'mariage_certificate' => $data['path_akta_perkawinan'] ? asset("upload/file_akta_perkawinan/" . $data['path_akta_perkawinan']) : "",
+                                    'divorce_certificate' => $data['path_akta_perceraian'] ? asset("upload/file_akta_perceraian/" . $data['path_akta_perceraian']) : "",
+                                    'medical_information' => $data['path_keterangan_medis'] ? asset("upload/file_keterangan_medis/" . $data['path_keterangan_medis']) : "",
+                                    'education_certificate' => $data['path_ijazah'] ? asset("upload/file_ijazah/" . $data['path_ijazah']) : "",
+                                    'employment_status' => $data['path_keterangan_status_pekerjaan'] ? asset("upload/file_keterangan_status_pekerjaan/" . $data['path_keterangan_status_pekerjaan']) : "",
+                                    'passport' => $data['path_paspor'] ? asset("upload/file_paspor/" . $data['path_paspor']) : "",
+                                    'court_order_letter' => $data['path_penetapan'] ? asset("upload/file_penetapan_pengadilan/" . $data['path_penetapan']) : "",
+                                    'sptjm' => $data['path_sptjm'] ? asset("upload/file_sptjm/" . $data['path_sptjm']) : "",
+                                    'additional_document' => $data['path_dokumen_tambahan'] ? asset("upload/file_dokumen_tambahan/" . $data['path_dokumen_tambahan']) : "",
                                 ],
                             ],
                         ]]);
                         $status = $response->getStatusCode();
-                        echo $response->getBody();
+                        $resCimahi = json_decode($response->getBody()->getContents());
+                        // echo $response->getBody();
                     }
                 }
 
