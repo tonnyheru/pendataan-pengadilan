@@ -334,7 +334,7 @@ class PerbaikanAktaDetailController extends Controller
                 'jenis_elemen_perbaikan' => $data['jenis_elemen_perbaikan'],
                 'data_sebelum' => $data['data_sebelum'],
                 'data_sesudah' => $data['data_sesudah'],
-                'data_subject' => json_encode($data['subject']),
+                'data_subject' => $data['subject'] ? json_encode($data['subject']) : "",
             ]);
 
             if ($trx) {
@@ -527,6 +527,8 @@ class PerbaikanAktaDetailController extends Controller
                         ]]);
                         $status = $response->getStatusCode();
                         $resCimahi = json_decode($response->getBody()->getContents());
+                        $trx->response_cimahi = json_encode($resCimahi);
+                        $trx->save();
                         // echo $response->getBody();
                     }
                 }

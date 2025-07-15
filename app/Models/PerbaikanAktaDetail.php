@@ -22,6 +22,7 @@ class PerbaikanAktaDetail extends Model
         'data_sebelum',
         'data_sesudah',
         'data_subject',
+        'response_cimahi',
     ];
 
     protected $casts = [
