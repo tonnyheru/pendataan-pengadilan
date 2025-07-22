@@ -784,7 +784,7 @@ class UsulanController extends Controller
                     'pembatalanPerkawinanDetail',
                 ])
                 ->where('disdukcapil_uid', $uid)
-                ->paginate(1);
+                ->paginate(5);
             // foreach ($usulan as $item) {
             //     $detailRelation = $item->details; // misal: aktaKematianDetail
             //     $item->setRelation($item->details, $item->$detailRelation); // inject hasilnya
@@ -796,16 +796,18 @@ class UsulanController extends Controller
         }
     }
 
-    public function approvement_disduk(Request $request, $uid)
+    public function approvement_disduk(Request $request)
     {
         try {
             date_default_timezone_set('Asia/Jakarta');
             $validate = Validator::make(
                 $request->all(),
                 [
+                    'no_perkara' => 'required',
                     'catatan' => 'required',
                 ],
                 [
+                    'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
                     'catatan.required' => 'Catatan tidak boleh kosong',
                 ]
             );
@@ -816,8 +818,8 @@ class UsulanController extends Controller
                 ], 400);
             }
 
-            $usulan = Submission::find($uid);
             $formData = $request->except('_token', '_method');
+            $usulan = Submission::where('no_perkara',$formData['no_perkara'])->first();
             if ($usulan) {
                 if ($usulan->status == 2) {
                     return response([
@@ -917,16 +919,18 @@ class UsulanController extends Controller
         }
     }
 
-    public function rejectment_disduk(Request $request, $uid)
+    public function rejectment_disduk(Request $request)
     {
         try {
             date_default_timezone_set('Asia/Jakarta');
             $validate = Validator::make(
                 $request->all(),
                 [
+                    'no_perkara' => 'required',
                     'catatan' => 'required',
                 ],
                 [
+                    'no_perkara.required' => 'Nomor Perkara tidak boleh kosong',
                     'catatan.required' => 'Catatan tidak boleh kosong',
                 ]
             );
@@ -937,15 +941,15 @@ class UsulanController extends Controller
                 ], 400);
             }
 
-            $usulan = Usulan::find($uid);
             $formData = $request->except('_token', '_method');
+            $usulan = Submission::where('no_perkara',$formData['no_perkara'])->first();
             if ($usulan) {
-                if ($usulan->is_approve == 2) {
+                if ($usulan->status == 2) {
                     return response([
                         'status' => false,
                         'message' => 'Data Sudah Disetujui'
                     ], 400);
-                } else if ($usulan->is_approve == 0) {
+                } else if ($usulan->status == 0) {
                     return response([
                         'status' => false,
                         'message' => 'Data Sudah Ditolak'
@@ -955,12 +959,12 @@ class UsulanController extends Controller
                 $name = auth()->user()->name;
                 $slug = auth()->user()->role->slug;
 
-                $formData['is_approve'] = '0';
+                $formData['status'] = '0';
                 $catatan = json_decode($usulan->catatan);
                 $catatan[] = [
                     'role' => $role,
                     'name' => $name,
-                    'status' => $formData['is_approve'],
+                    'status' => $formData['status'],
                     'catatan' => $formData['catatan'],
                     'timestamp' => date('Y-m-d H:i:s')
                 ];

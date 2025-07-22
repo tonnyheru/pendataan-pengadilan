@@ -448,9 +448,7 @@ class PerbaikanAktaDetailController extends Controller
                             'http_errors' => false
                         ]);
                         $url = 'https://gsb.cimahikota.go.id/api/disdukcapil/pn_bale_bandung/perbaikan_data';
-                        $response = $client->request('POST', $url, ['headers' => [
-                            'Authorization' => 'Bearer ' . env('CIMAHI_API_TOKEN'),
-                        ], 'json' => [
+                        $senddata = [
                             'name' => $nomor_perkara,
                             'requirement' => [
                                 'form' => [
@@ -524,11 +522,17 @@ class PerbaikanAktaDetailController extends Controller
                                     'additional_document' => $data['path_dokumen_tambahan'] ? asset("upload/file_dokumen_tambahan/" . $data['path_dokumen_tambahan']) : "",
                                 ],
                             ],
-                        ]]);
+                        ];
+                        $response = $client->request('POST', $url, [
+                        'headers' => [
+                            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkVrYSBDaGFuZHJhIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+                        ],
+                        'json' => $senddata]);
                         $status = $response->getStatusCode();
                         $resCimahi = json_decode($response->getBody()->getContents());
                         $trx->response_cimahi = json_encode($resCimahi);
                         $trx->save();
+                        dd(json_encode($senddata));
                         // echo $response->getBody();
                     }
                 }
