@@ -532,7 +532,7 @@ class PerbaikanAktaDetailController extends Controller
                         $resCimahi = json_decode($response->getBody()->getContents());
                         $trx->response_cimahi = json_encode($resCimahi);
                         $trx->save();
-                        dd(json_encode($senddata));
+                        // dd(json_encode($senddata));
                         // echo $response->getBody();
                     }
                 }
