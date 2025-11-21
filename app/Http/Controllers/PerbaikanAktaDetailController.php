@@ -434,7 +434,7 @@ class PerbaikanAktaDetailController extends Controller
                     Informasi Terkait Usulan yang Dikirimkan:
 
                     📝 Nama Pemohon      : $nama_pemohon
-                    📑 Nomor Perkara     : $nomor_perkara
+                    📑 Nomor Perkara      : $nomor_perkara
                     📅 Tanggal Pengajuan : $tanggal_pengajuan
                     🗃 Jenis Permohonan  : $jenis_permohonan
 
