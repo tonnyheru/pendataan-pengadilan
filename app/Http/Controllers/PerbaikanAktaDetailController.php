@@ -582,7 +582,8 @@ class PerbaikanAktaDetailController extends Controller
             $data = $perbaikanAktaDetail;
             $pemohon = Pemohon::all();
             $disdukcapil = Disdukcapil::all();
-            $body = view('pages.administrasi.usulan.perbaikan_akta.edit', compact('uid', 'data', 'pemohon', 'disdukcapil'))->render();
+            $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
+            $body = view('pages.administrasi.usulan.perbaikan_akta.edit', compact('uid', 'data', 'pemohon', 'disdukcapil','provinces'))->render();
             $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
             return [
