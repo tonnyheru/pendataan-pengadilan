@@ -4,6 +4,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UsulanController;
 use App\Mail\SendEmail;
 use App\Models\Usulan;
+use App\Models\Submission;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Mail;
@@ -27,17 +28,19 @@ Route::post('logout', [AuthController::class, 'logoutApi'])->middleware('auth:ap
 Route::prefix('/')->middleware('auth:api')->group(function () {
     Route::post('/usulan', [UsulanController::class, 'list']);
     Route::prefix('approvement')->group(function () {
-        Route::put('/approve_usulan/{uid}', [UsulanController::class, 'approvement_disduk']);
-        Route::put('/reject_usulan/{uid}', [UsulanController::class, 'rejectment_disduk']);
+        Route::put('/approve_usulan', [UsulanController::class, 'approvement_disduk']);
+        Route::put('/reject_usulan', [UsulanController::class, 'rejectment_disduk']);
     });
-    Route::post('/send-email/{uid}', function (Request $request, $uid) {
+    Route::post('/send-email', function (Request $request) {
         $validate = Validator::make(
             $request->all(),
             [
+                'no_perkara' => 'required',
                 'attachments'   => 'required|array|min:1|max:3', // Minimal 1 file, maksimal 3 file
                 'attachments.*' => 'file|mimes:jpeg,png,gif,pdf|max:2048', // Format: JPG, PNG, GIF, PDF (maks 2MB)
             ],
             [
+                'no_perkara.required' => 'Nomor Perkara Wajib Diisi',
                 'attachments.required' => 'File Lampiran Wajib Diisi',
                 'attachments.array' => 'File Lampiran Harus Berupa Array',
                 'attachments.min' => 'Minimal 1 File Lampiran',
@@ -54,9 +57,9 @@ Route::prefix('/')->middleware('auth:api')->group(function () {
             ], 400);
         }
         $data = $request->except('_token');
-        $usulan = Usulan::find($uid);
+        $usulan = Submission::where('no_perkara',$data['no_perkara'])->first();
         if ($usulan) {
-            if ($usulan->is_approve != '2') {
+            if ($usulan->status != '2') {
                 return response([
                     'status' => false,
                     'message' => 'Usulan Belum Disetujui'

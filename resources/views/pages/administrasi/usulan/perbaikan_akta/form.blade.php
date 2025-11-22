@@ -51,6 +51,8 @@
       @endforeach
     </select>
   </div>
+  <input type="hidden" name="disdukcapil_nama" id="disdukcapil_nama">
+
 
   <div class="form-group col-md-6">
     <label>Jenis Akta <span class="text-danger">*</span></label>
@@ -643,6 +645,19 @@
     toggleCimahiForm();
     $('.select2-disdukcapil').on('change', function () {
       toggleCimahiForm();
+    });
+
+    function updateDisdukcapilNama() {
+        var selectedText = $('.select2-disdukcapil option:selected').text();
+        $('#disdukcapil_nama').val(selectedText);
+    }
+
+    // Trigger saat pertama kali halaman dimuat (jika ada selected)
+    updateDisdukcapilNama();
+
+    // Trigger setiap kali user mengganti pilihan
+    $('.select2-disdukcapil').on('change', function () {
+        updateDisdukcapilNama();
     });
   })
 </script>

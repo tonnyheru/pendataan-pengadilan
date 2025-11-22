@@ -55,6 +55,7 @@ class PerbaikanAktaDetailController extends Controller
     public function store(Request $request)
     {
         if (!PermissionCommon::check('perbaikan_akta.create')) abort(403);
+
         $request->validate([
             'no_perkara' => 'required|unique:submissions,no_perkara',
             'pemohon_uid' => 'required',
@@ -65,12 +66,12 @@ class PerbaikanAktaDetailController extends Controller
             'data_sebelum' => 'required',
             'data_sesudah' => 'required',
 
-            'subject.province' => 'required',
-            'subject.regency' => 'required',
-            'subject.district' => 'required',
-            'subject.village' => 'required',
-            'subject.nik' => 'required',
-            'subject.name' => 'required',
+            'subject.province' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
+            'subject.regency' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
+            'subject.district' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
+            'subject.village' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
+            'subject.nik' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
+            'subject.name' => 'required_if:disdukcapil_nama,Disdukcapil Kota Cimahi',
 
             'file_penetapan_pengadilan' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
             'file_akta_kelahiran' => 'required|mimes:jpg,jpeg,png,gif,pdf|max:2048',
@@ -433,7 +434,7 @@ class PerbaikanAktaDetailController extends Controller
                     Informasi Terkait Usulan yang Dikirimkan:
 
                     📝 Nama Pemohon      : $nama_pemohon
-                    📑 Nomor Perkara     : $nomor_perkara
+                    📑 Nomor Perkara      : $nomor_perkara
                     📅 Tanggal Pengajuan : $tanggal_pengajuan
                     🗃 Jenis Permohonan  : $jenis_permohonan
 
@@ -449,9 +450,7 @@ class PerbaikanAktaDetailController extends Controller
                             'http_errors' => false
                         ]);
                         $url = 'https://gsb.cimahikota.go.id/api/disdukcapil/pn_bale_bandung/perbaikan_data';
-                        $response = $client->request('POST', $url, ['headers' => [
-                            'Authorization' => 'Bearer ' . env('CIMAHI_API_TOKEN'),
-                        ], 'json' => [
+                        $senddata = [
                             'name' => $nomor_perkara,
                             'requirement' => [
                                 'form' => [
@@ -513,23 +512,29 @@ class PerbaikanAktaDetailController extends Controller
                                     'notes_officer' => $data['subject']['keterangan'],
                                 ],
                                 'attachment' => [
-                                    'birth_certificate' => $data['path_akta_kelahiran'] ? asset("upload/file_akta_kelahiran/" . $data['path_akta_kelahiran']) : "",
-                                    'mariage_certificate' => $data['path_akta_perkawinan'] ? asset("upload/file_akta_perkawinan/" . $data['path_akta_perkawinan']) : "",
-                                    'divorce_certificate' => $data['path_akta_perceraian'] ? asset("upload/file_akta_perceraian/" . $data['path_akta_perceraian']) : "",
-                                    'medical_information' => $data['path_keterangan_medis'] ? asset("upload/file_keterangan_medis/" . $data['path_keterangan_medis']) : "",
-                                    'education_certificate' => $data['path_ijazah'] ? asset("upload/file_ijazah/" . $data['path_ijazah']) : "",
-                                    'employment_status' => $data['path_keterangan_status_pekerjaan'] ? asset("upload/file_keterangan_status_pekerjaan/" . $data['path_keterangan_status_pekerjaan']) : "",
-                                    'passport' => $data['path_paspor'] ? asset("upload/file_paspor/" . $data['path_paspor']) : "",
-                                    'court_order_letter' => $data['path_penetapan'] ? asset("upload/file_penetapan_pengadilan/" . $data['path_penetapan']) : "",
-                                    'sptjm' => $data['path_sptjm'] ? asset("upload/file_sptjm/" . $data['path_sptjm']) : "",
-                                    'additional_document' => $data['path_dokumen_tambahan'] ? asset("upload/file_dokumen_tambahan/" . $data['path_dokumen_tambahan']) : "",
+                                    'birth_certificate' => isset($data['path_akta_kelahiran']) ? asset("upload/file_akta_kelahiran/" . $data['path_akta_kelahiran']) : "",
+                                    'mariage_certificate' => isset($data['path_akta_perkawinan']) ? asset("upload/file_akta_perkawinan/" . $data['path_akta_perkawinan']) : "",
+                                    'divorce_certificate' => isset($data['path_akta_perceraian']) ? asset("upload/file_akta_perceraian/" . $data['path_akta_perceraian']) : "",
+                                    'medical_information' => isset($data['path_keterangan_medis']) ? asset("upload/file_keterangan_medis/" . $data['path_keterangan_medis']) : "",
+                                    'education_certificate' => isset($data['path_ijazah']) ? asset("upload/file_ijazah/" . $data['path_ijazah']) : "",
+                                    'employment_status' => isset($data['path_keterangan_status_pekerjaan']) ? asset("upload/file_keterangan_status_pekerjaan/" . $data['path_keterangan_status_pekerjaan']) : "",
+                                    'passport' => isset($data['path_paspor']) ? asset("upload/file_paspor/" . $data['path_paspor']) : "",
+                                    'court_order_letter' => isset($data['path_penetapan']) ? asset("upload/file_penetapan_pengadilan/" . $data['path_penetapan']) : "",
+                                    'sptjm' => isset($data['path_sptjm']) ? asset("upload/file_sptjm/" . $data['path_sptjm']) : "",
+                                    'additional_document' => isset($data['path_dokumen_tambahan']) ? asset("upload/file_dokumen_tambahan/" . $data['path_dokumen_tambahan']) : "",
                                 ],
                             ],
-                        ]]);
+                        ];
+                        $response = $client->request('POST', $url, [
+                        'headers' => [
+                            'Authorization' => 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkVrYSBDaGFuZHJhIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c',
+                        ],
+                        'json' => $senddata]);
                         $status = $response->getStatusCode();
                         $resCimahi = json_decode($response->getBody()->getContents());
                         $trx->response_cimahi = json_encode($resCimahi);
                         $trx->save();
+                        // dd(json_encode($senddata));
                         // echo $response->getBody();
                     }
                 }
@@ -578,7 +583,8 @@ class PerbaikanAktaDetailController extends Controller
             $data = $perbaikanAktaDetail;
             $pemohon = Pemohon::all();
             $disdukcapil = Disdukcapil::all();
-            $body = view('pages.administrasi.usulan.perbaikan_akta.edit', compact('uid', 'data', 'pemohon', 'disdukcapil'))->render();
+            $provinces = json_decode(file_get_contents(public_path('data/provinces.json')));
+            $body = view('pages.administrasi.usulan.perbaikan_akta.edit', compact('uid', 'data', 'pemohon', 'disdukcapil','provinces'))->render();
             $footer = '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary" onclick="save()">Save</button>';
             return [

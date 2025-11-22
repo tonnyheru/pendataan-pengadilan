@@ -30,7 +30,9 @@ class PerbaikanAktaDetailDataTable extends DataTable
                 $html = '';
                 $html = '<div class="btn-group btn-group-sm">';
                 if (PermissionCommon::check('perbaikan_akta.update')) {
+                    if ($item->submission->status != 2) {
                     $html .= '<button onclick="edit(\'' . $item->uid . '\')" type="button" class="btn btn-sm btn-info" title="Edit"><i class="fas fa-pen"></i></button>';
+                    }
                 }
                 if (PermissionCommon::check('perbaikan_akta.delete')) {
                     if ($item->submission->status != 0 && $item->submission->status != 2) {
