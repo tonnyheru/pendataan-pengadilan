@@ -384,6 +384,7 @@ class AktaPerkawinanDetailController extends Controller
                     Pengadilan Negeri Bale Bandung
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
+                    WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
 
                     if (strtolower($disdukcapil->nama) == "disdukcapil kota cimahi") {
                         // Lakukan sesuatu jika Disdukcapil adalah Kota Cimahi

@@ -441,6 +441,7 @@ class PerbaikanAktaDetailController extends Controller
                     Pengadilan Negeri Bale Bandung
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
+                    WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
 
                     if (str_contains(strtolower($disdukcapil->nama), 'cimahi')) {
                         // Lakukan sesuatu jika Disdukcapil adalah Kota Cimahi

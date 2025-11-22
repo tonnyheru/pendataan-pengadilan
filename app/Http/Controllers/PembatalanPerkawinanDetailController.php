@@ -248,6 +248,7 @@ class PembatalanPerkawinanDetailController extends Controller
                     Pengadilan Negeri Bale Bandung
                     EOT;
                     WhatsappHelper::sendSingleMessage($disdukcapil->no_telp, $message);
+                    WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
                 }
 
 
