@@ -6,6 +6,7 @@ use App\DataTables\PengangkatanAnakDetailDataTable;
 use App\Helpers\PermissionCommon;
 use App\Helpers\WhatsappHelper;
 use App\Mail\NotifEmail;
+use App\Mail\NotifEmailCust;
 use App\Models\Disdukcapil;
 use App\Models\Pemohon;
 use App\Models\PengangkatanAnakDetail;
@@ -245,6 +246,47 @@ class PengangkatanAnakDetailController extends Controller
                     WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
                 }
 
+                if ($pemohon) {
+                    $notif = [];
+                    $notif['logo'] = $disdukcapil->cdn_picture;
+                    $notif['title'] = 'Notifikasi Perubahan Usulan';
+                    $notif['nama'] = $pemohon->name;
+                    $notif['nama_pemohon'] = $pemohon->name;
+                    $notif['no_telp'] = $pemohon->no_telp;
+                    $notif['no_perkara'] = $data['no_perkara'];
+                    $notif['alamat'] = $pemohon->alamat;
+                    $notif['alamat_pemohon'] = $pemohon->alamat;
+                    $notif['email'] = $pemohon->email;
+                    $notif['jenis_perkara'] = "Pengangkatan Anak";
+                    $notif['nama_disdukcapil'] = $disdukcapil->nama;
+                    $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
+                    $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
+                    $notif['tanggal_pengajuan'] = date('d-m-Y H:i:s');
+                    Mail::to($pemohon->email)->send(new NotifEmailCust($notif));
+                    $nama_pemohon = $pemohon->name;
+                    $alamat_pemohon = $pemohon->alamat;
+                    $nomor_perkara = $data['no_perkara'];
+                    $tanggal_pengajuan = date('d-m-Y H:i:s');
+                    $jenis_permohonan = "Pengangkatan Anak";
+                    $message = <<<EOT
+                        Yth. $nama_pemohon,
+                        $alamat_pemohon
+
+                        Pengajuan dokumen administrasi catatan sipil Anda telah berhasil dikirim melalui Pengadilan Negeri Bale Bandung dan saat ini menunggu proses verifikasi serta validasi dari Disdukcapil. Mohon tunggu notifikasi selanjutnya terkait hasil pengajuan Anda.
+
+                        Informasi Pengajuan Anda:
+
+                        📝 Nama Pemohon      : $nama_pemohon
+                        📑 Nomor Perkara      : $nomor_perkara
+                        📅 Tanggal Pengajuan : $tanggal_pengajuan
+                        🗃 Jenis Permohonan  : $jenis_permohonan
+
+                        Terima kasih atas kerjasamanya.
+                        Pengadilan Negeri Bale Bandung
+                        EOT;
+                    WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
+                }
+
 
                 return response([
                     'status' => true,
@@ -394,6 +436,49 @@ class PengangkatanAnakDetailController extends Controller
             $pengangkatanAnakDetail->nama_anak = $formData['nama_anak'];
 
             $trx = $pengangkatanAnakDetail->save();
+
+            $disdukcapil = Disdukcapil::find($formData['disdukcapil']);
+            $pemohon = Pemohon::find($formData['pemohon_uid']);
+            if ($pemohon) {
+                $notif = [];
+                $notif['logo'] = $disdukcapil->cdn_picture;
+                $notif['title'] = 'Notifikasi Perubahan Usulan';
+                $notif['nama'] = $pemohon->name;
+                $notif['nama_pemohon'] = $pemohon->name;
+                $notif['no_telp'] = $pemohon->no_telp;
+                $notif['no_perkara'] = $formData['no_perkara'];
+                $notif['alamat'] = $pemohon->alamat;
+                $notif['alamat_pemohon'] = $pemohon->alamat;
+                $notif['email'] = $pemohon->email;
+                $notif['jenis_perkara'] = "Pengangkatan Anak";
+                $notif['nama_disdukcapil'] = $disdukcapil->nama;
+                $notif['alamat_disdukcapil'] = $disdukcapil->alamat;
+                $notif['no_telp_disdukcapil'] = $disdukcapil->no_telp;
+                $notif['tanggal_pengajuan'] = date('d-m-Y H:i:s');
+                Mail::to($pemohon->email)->send(new NotifEmailCust($notif));
+                $nama_pemohon = $pemohon->name;
+                $alamat_pemohon = $pemohon->alamat;
+                $nomor_perkara = $formData['no_perkara'];
+                $tanggal_pengajuan = date('d-m-Y H:i:s');
+                $jenis_permohonan = "Pengangkatan Anak";
+                $message = <<<EOT
+                    Yth. $nama_pemohon,
+                    $alamat_pemohon
+
+                    Pengajuan dokumen administrasi catatan sipil Anda telah berhasil dikirim melalui Pengadilan Negeri Bale Bandung dan saat ini menunggu proses verifikasi serta validasi dari Disdukcapil. Mohon tunggu notifikasi selanjutnya terkait hasil pengajuan Anda.
+
+                    Informasi Pengajuan Anda:
+
+                    📝 Nama Pemohon      : $nama_pemohon
+                    📑 Nomor Perkara      : $nomor_perkara
+                    📅 Tanggal Pengajuan : $tanggal_pengajuan
+                    🗃 Jenis Permohonan  : $jenis_permohonan
+
+                    Terima kasih atas kerjasamanya.
+                    Pengadilan Negeri Bale Bandung
+                    EOT;
+                WhatsappHelper::sendSingleMessage($pemohon->no_telp, $message);
+            }
 
             if ($trx) {
                 return response([
