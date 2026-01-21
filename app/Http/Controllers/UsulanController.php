@@ -788,20 +788,19 @@ class UsulanController extends Controller
                 ->when($search, function ($query, $search) {
                     $query->where(function ($q) use ($search) {
                         $q->where('no_perkara', 'like', "%{$search}%")
-                        ->orWhere('submission_type', 'like', "%{$search}%");
+                            ->orWhere('submission_type', 'like', "%{$search}%");
                     });
                 })
+                ->orderBy('created_at', 'desc')  // Add this line to sort by created_at field
                 ->paginate(5);
-            // foreach ($usulan as $item) {
-            //     $detailRelation = $item->details; // misal: aktaKematianDetail
-            //     $item->setRelation($item->details, $item->$detailRelation); // inject hasilnya
-            // }
+
             return new PostResource(true, 'Berhasil mengambil data usulan', $usulan);
         } catch (\Throwable $th) {
             dd($th);
             return new PostResource(false, 'Terjadi Kesalahan Internal', []);
         }
     }
+
 
     public function approvement_disduk(Request $request)
     {

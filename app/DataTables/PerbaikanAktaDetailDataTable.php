@@ -88,6 +88,26 @@ class PerbaikanAktaDetailDataTable extends DataTable
                     $direction
                 );
             })
+            ->addColumn('created_at', function ($data) {
+                $created_at = "";
+                if (isset($data->submission)) {
+                    $created_at = $data->submission->created_at;
+                }
+                return $created_at;
+            })
+            ->filterColumn('created_at', function ($query, $keyword) {
+                $query->whereHas('submission', function ($q) use ($keyword) {
+                    $q->where('created_at', 'like', "%{$keyword}%");
+                });
+            })
+            ->orderColumn('created_at', function ($query, $direction) {
+                $query->orderBy(
+                    Submission::select('created_at')
+                        ->whereColumn('submissions.uid', 'perbaikan_akta_details.submission_uid')
+                        ->limit(1),
+                    $direction
+                );
+            })
 
             ->addColumn('pemohon', function ($data) {
                 $pemohon = "";
@@ -272,6 +292,9 @@ class PerbaikanAktaDetailDataTable extends DataTable
             ->width(60)
             ->title("Dokumen - Dokumen")
             ->addClass('text-center');
+            
+        $column[] = Column::make('created_at')
+            ->title('Tanggal Pengajuan');
         $column[] = Column::make('no_perkara');
         $column[] = Column::make('status');
         $column[] = Column::make('pemohon');
