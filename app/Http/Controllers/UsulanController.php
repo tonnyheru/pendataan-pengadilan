@@ -765,6 +765,7 @@ class UsulanController extends Controller
     public function list(Request $request)
     {
         try {
+            $search = request()->query('search');
             $role = auth()->user()->role->slug;
             $uid = Disdukcapil::whereRaw("LOWER(REPLACE(nama, ' ', '_')) = ?", [$role])
                 ->value('uid');
@@ -784,6 +785,12 @@ class UsulanController extends Controller
                     'pembatalanPerkawinanDetail',
                 ])
                 ->where('disdukcapil_uid', $uid)
+                ->when($search, function ($query, $search) {
+                    $query->where(function ($q) use ($search) {
+                        $q->where('no_perkara', 'like', "%{$search}%")
+                        ->orWhere('submission_type', 'like', "%{$search}%");
+                    });
+                })
                 ->paginate(5);
             // foreach ($usulan as $item) {
             //     $detailRelation = $item->details; // misal: aktaKematianDetail
